@@ -19,7 +19,7 @@ class Summarizer():
                 summary += line[0:remaining] + '\n'
                 length += len(line)
 
-        summary += '--- end summary: "{}" ---\nDone.\n'.format(filename)
+        summary += '--- end summary: "{}" ---\n'.format(filename)
         return summary
 
 if __name__ == "__main__":
@@ -35,4 +35,5 @@ if __name__ == "__main__":
 
     for file_name in args.filename:
         print(smry.summarize(file_name))
+    print('Done.')
 

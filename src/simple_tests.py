@@ -14,8 +14,7 @@ class TestSummarizer(unittest.TestCase):
                        'This is a story about summarization. It is important to have enough\n' \
                        'characters here to fill out the text. Also, it is important to summarize\n' \
                        't\n' \
-                       '--- end summary: "test.dat" ---\n' \
-                       'Done.\n' \
+                       '--- end summary: "test.dat" ---\n'
 
     # Not a great test, but mostly a template for mocking file reading in Python
     # (Seems readline iteration is broken in unittest mock, hence the weird StringIO invocation)
