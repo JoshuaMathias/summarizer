@@ -1,25 +1,25 @@
 #!/bin/python3
 import sys
 import argparse
+import content_provider
 
 
 class Summarizer():
     def __init__(self, nchars):
         self.nchars = nchars
 
-    def summarize(self, filename):
-        summary = '--- begin summary: "{}" ---\n'.format(filename)
-        with open(filename, 'r') as f:
-            length = 0
-            for line in f:
-                line = line.strip()
-                remaining = self.nchars - length
-                if remaining < 1:
-                    break
-                summary += line[0:remaining] + '\n'
-                length += len(line)
+    def summarize(self, article):
+        summary = '--- begin summary: "{}" ---\n'.format(article.id)
+        length = 0
+        for para in article.body:
+            line = para.strip()
+            remaining = self.nchars - length
+            if remaining < 1:
+                break
+            summary += line[0:remaining] + '\n'
+            length += len(line)
 
-        summary += '--- end summary: "{}" ---\n'.format(filename)
+        summary += '--- end summary: "{}" ---\n'.format(article.id)
         return summary
 
 if __name__ == "__main__":
@@ -33,7 +33,8 @@ if __name__ == "__main__":
     nchars = 140 # tweet-size
     smry = Summarizer(nchars)
 
-    for file_name in args.filename:
-        print(smry.summarize(file_name))
-    print('Done.')
+    articles = content_provider.ContentReader().read_raw_files(args.filename)
 
+    for article in articles:
+        print(smry.summarize(article))
+    print('Done.')
