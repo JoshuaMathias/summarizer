@@ -2,6 +2,7 @@ import unittest
 import summarizer
 import content_provider
 from unittest.mock import patch
+from bs4 import BeautifulSoup as BS
 import io
 
 class TestSummarizer(unittest.TestCase):
@@ -20,6 +21,13 @@ class TestSummarizer(unittest.TestCase):
                          'the main issues of summarization. Excuse me. Hi, Mom! Sorry, where was I? ' \
                          'Oh, yeah. It is important to give the summarizer irrelevant asides not ' \
                          'important to the main subject, whatever that is. '
+        self.storySGML = '<DOC>\n<DOCNO> TEST.0001 </DOCNO>\n<BODY>\n<TEXT>\n' \
+                         '<P>\nThis is a story about summarization. It is important to have enough\n' \
+                         'characterss here to fill out the text.\n</P>\n' \
+                         '<P>\nAlso, it is important to summarize the main issues of summarization.\n' \
+                         'Excuse me. Hi, Mom! Sorry, where was I? Oh, yeah.\n</P>\n' \
+                         '<P>\nIt is important to give the summarizer irrelevant asides not important\n' \
+                         'to the main subject, whatever that is.</P>'
 
     # Not a great test, but mostly a template for mocking file reading in Python
     # (Seems readline iteration is broken in unittest mock, hence the weird StringIO invocation)
@@ -47,6 +55,13 @@ class TestSummarizer(unittest.TestCase):
             self.assertEqual(articles[0].body[0], self.storyBody)
             self.assertEquals(len(articles[0].body), 1)
             self.assertEquals(len(articles), 1)
+
+    def test_ContentReadSGML(self):
+        cr = content_provider.ContentReader()
+        mock_file = io.StringIO(''.join(self.storySGML))
+        with patch('content_provider.open', reeturn_value=mock_file, create=True):
+            articles = cr.read_raw_files('test.dat')
+            self.assertEqual(len(articles[0].body), 1)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,13 +1,21 @@
+import bs4
+#from beautifulsoup4 import BeautifulSoup as BS
+
+
 class ArticleContent():
-    def __init__(self, id='', type = 'story', headline='', dateline='', body=[]):
+    def __init__(self, id='', type = 'story', headline='', dateline='', date='', body=[]):
         self.id = id
         self.type = type
         self.headline = headline
         self.dateline = dateline
+        self.date = date
         self.setBody(body)
 
     def setBody(self, bodyText):
         self.body = bodyText
+
+    def setHeadline(self, headline):
+        self.headline = headline
 
     def addParagraph(self, paraText):
         if self.body is None:
@@ -36,6 +44,36 @@ class ContentReader():
                 if len(para) > 0:
                     art.addParagraph(para)
 
+            articles.append(art)
+
+        return articles
+
+    def __extract_tag__(self, body, tagid):
+        coll = body.find(tagid)
+        if len(coll) > 0:
+            return coll[0].content[0]
+        else:
+            return ''
+
+    def __extract_tag_or_attr(self, body, tagid, attrid):
+        if body.has_attr(attrid):
+            return body[attrid]
+        else:
+            return body.find(tagid).contents[0]
+
+    def read_sgml_repo(self, filename):
+        articles = list()
+        doctree = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
+        for doc in doctree.find_all('doc'):
+            art = ArticleContent(id = self.__extract_tag_or_attr(doc, 'docno', 'id'),
+                                 type = self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
+                                 headline = self.__extract_tag__(doc, 'headline'),
+                                 date = self.__extract_tag__(doc, 'datetime'),
+                                 dateline = self.__extract_tag__(doc, 'dateline'))
+
+            for text_block in doc.find_all('text'):
+                for para in text_block.find_all('p'):
+                    art.addParagraph(para.contents[0])
             articles.append(art)
 
         return articles
