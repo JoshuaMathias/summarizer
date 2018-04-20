@@ -1,6 +1,4 @@
 import bs4
-#from beautifulsoup4 import BeautifulSoup as BS
-
 
 class ArticleContent():
     def __init__(self, id='', type = 'story', headline='', dateline='', date='', body=[]):

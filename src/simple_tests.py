@@ -1,8 +1,8 @@
 import unittest
 import summarizer
 import content_provider
+import rougescore
 from unittest.mock import patch
-from bs4 import BeautifulSoup as BS
 import io
 
 class TestSummarizer(unittest.TestCase):
@@ -28,6 +28,9 @@ class TestSummarizer(unittest.TestCase):
                          'Excuse me. Hi, Mom! Sorry, where was I? Oh, yeah.\n</P>\n' \
                          '<P>\nIt is important to give the summarizer irrelevant asides not important\n' \
                          'to the main subject, whatever that is.</P>'
+        self.peer1 =     ['the', 'cat', 'was', 'found', 'under', 'the', 'bed']
+        self.peer2 =     ['the', 'tiny', 'little', 'cat', 'was', 'found', 'under', 'the', 'big', 'funny', 'bed']
+        self.model =     ['the', 'cat', 'was', 'under', 'the', 'bed']
 
     # Not a great test, but mostly a template for mocking file reading in Python
     # (Seems readline iteration is broken in unittest mock, hence the weird StringIO invocation)
@@ -62,6 +65,14 @@ class TestSummarizer(unittest.TestCase):
         with patch('content_provider.open', reeturn_value=mock_file, create=True):
             articles = cr.read_raw_files('test.dat')
             self.assertEqual(len(articles[0].body), 1)
+
+    def test_RougeScore(self):
+        rouge1 = rougescore.rouge_n(self.peer1, [self.model], 1, 0.5)
+        rouge2 = rougescore.rouge_n(self.peer1, [self.model], 2, 0.5)
+
+        print("ROUGE1 = %s  ROUGE2 = %s\n" % (rouge1, rouge2))
+
+        self.assertEqual(1, 1)
 
 if __name__ == '__main__':
     unittest.main()
