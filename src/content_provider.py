@@ -1,11 +1,8 @@
 import bs4
 import argparse
 
-AQUAINT2_PREFIX = ['AFP_ENG_', 'APW_ENG_', 'CNA_ENG_', 'LTW_ENG_', 'NYT_ENG_', 'XIN_ENG_']
-AQUAINT_PREFIX = ['APW', 'NYT', 'XIE']
-
 class ArticleContent():
-    def __init__(self, id='', type = 'story', headline='', dateline='', date='', body=[]):
+    def __init__(self, id='', type = 'story', headline='', dateline='', date='', body=list()):
         self.id = id
         self.type = type
         self.headline = headline
@@ -85,7 +82,8 @@ class ContentReader():
                                  type = self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
                                  headline = self.__extract_tag__(doc, 'headline'),
                                  date = self.__extract_tag__(doc, 'datetime'),
-                                 dateline = self.__extract_tag__(doc, 'dateline'))
+                                 dateline = self.__extract_tag__(doc, 'dateline'),
+                                 body=list())
 
             for text_block in doc.find_all('text'):
                 for para in text_block.find_all('p'):
@@ -109,6 +107,8 @@ class ContentReader():
                                          doc_id[3:doc_id.find('.')],
                                          file_extension)
 
+        art = None
+
         doctree = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
         for doc in doctree.find_all('doc'):
             id = self.__extract_tag_or_attr(doc, 'docno', 'id')
@@ -117,13 +117,15 @@ class ContentReader():
                                      type=self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
                                      headline=self.__extract_tag__(doc, 'headline'),
                                      date=self.__extract_tag__(doc, 'datetime'),
-                                     dateline=self.__extract_tag__(doc, 'dateline'))
+                                     dateline=self.__extract_tag__(doc, 'dateline'),
+                                     body=list())
 
-                for text_block in doc.find_all('text'):
-                    for para in text_block.find_all('p'):
-                        art.addParagraph(para.contents[0])
+                text_block = doc.find('text')
+                for para in text_block.find_all('p'):
+                    art.addParagraph(para.contents[0])
+                break
 
-                return art
+        return art
 
     def __read_aquaint_doc__(self, doc_id):
         return self.__aquaint_file__(doc_id)
@@ -157,7 +159,7 @@ if __name__ == "__main__":
         print('DOCSET: %s' % docset.id)
         for doc in docset.docs:
             if doc is not None:
-                print(doc.id)
+                print('doc %s -- %d paragraphs' % (doc.id, len(doc.body)))
             else:
                 print('DOC ERROR')
         print()
