@@ -1,21 +1,40 @@
 #!/bin/python3
 import sys
+import argparse
+import content_provider
 
 
-print('Hello from "summarizer.py" version 0.0 (by team "#e2jkplusplus").')
+class Summarizer():
+    def __init__(self, nchars):
+        self.nchars = nchars
 
-nchars = 140 # tweet-size
-for file_name in sys.argv[1:]:
-    with open( file_name, 'r') as f:
+    def summarize(self, article):
+        summary = '--- begin summary: "{}" ---\n'.format(article.id)
         length = 0
-        print('--- begin summary: "{}" ---'.format(file_name) )
-        for line in f:
-            line = line.strip()
-            remaining = nchars - length
+        for para in article.body:
+            line = para.strip()
+            remaining = self.nchars - length
             if remaining < 1:
                 break
-            print( line[0:remaining] )
+            summary += line[0:remaining] + '\n'
             length += len(line)
-            
-        print('--- end summary: "{}" ---'.format(file_name) )
-        print('Done.')
+
+        summary += '--- end summary: "{}" ---\n'.format(article.id)
+        return summary
+
+if __name__ == "__main__":
+    # Command Line Argument Parsing. Provides argument interpretation and help text.
+    argparser = argparse.ArgumentParser(description = 'summarizer.py v. 0.0 by team #e2jkplusplus')
+    argparser.add_argument('filename', metavar='FILE', nargs='+', help='Story File(s)')
+    args = argparser.parse_args()
+
+    print('Hello from "summarizer.py" version 0.0 (by team "#e2jkplusplus").')
+
+    nchars = 140 # tweet-size
+    smry = Summarizer(nchars)
+
+    articles = content_provider.ContentReader().read_raw_files(args.filename)
+
+    for article in articles:
+        print(smry.summarize(article))
+    print('Done.')
