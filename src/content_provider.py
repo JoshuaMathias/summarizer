@@ -65,17 +65,17 @@ class ContentReader():
         return articles
 
     def __extract_tag__(self, body, tagid):
-        coll = body.find(tagid)
-        if len(coll) > 0:
-            return coll[0].content[0]
+        tag = body.find(tagid)
+        if tag:
+            return tag.contents[0].strip()
         else:
             return ''
 
     def __extract_tag_or_attr(self, body, tagid, attrid):
         if body.has_attr(attrid):
-            return body[attrid]
+            return body[attrid].strip()
         else:
-            return body.find(tagid).contents[0]
+            return self.__extract_tag__(body, tagid)
 
     def read_sgml_repo(self, filename):
         articles = list()
@@ -98,17 +98,20 @@ class ContentReader():
         if doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 files
             filename = '%s/data/%s/%s.xml' % (self.AQUAINT2_DIR,
                                               doc_id[0:7].lower(),
-                                              doc_id[0:doc_id.find('.')].lower())
+                                              doc_id[0:doc_id.find('.')-2].lower())
         else:
-            filename = '%s/%s/%s/%s_%s_ENG' % (self.AQUAINT_DIR,
+            file_extension = doc_id[0:3].upper()
+            if file_extension != 'NYT':
+                file_extension += '_ENG'
+            filename = '%s/%s/%s/%s_%s' % (self.AQUAINT_DIR,
                                          doc_id[0:3].lower(),
                                          doc_id[3:7],
                                          doc_id[3:doc_id.find('.')],
-                                         doc_id[0:3].upper())
+                                         file_extension)
 
         doctree = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
         for doc in doctree.find_all('doc'):
-            id = self.__extract_tag_or_attr(doc, 'docno', 'id').strip()
+            id = self.__extract_tag_or_attr(doc, 'docno', 'id')
             if id == doc_id:
                 art = ArticleContent(id = id,
                                      type=self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
@@ -116,11 +119,11 @@ class ContentReader():
                                      date=self.__extract_tag__(doc, 'datetime'),
                                      dateline=self.__extract_tag__(doc, 'dateline'))
 
-            for text_block in doc.find_all('text'):
-                for para in text_block.find_all('p'):
-                    art.addParagraph(para.contents[0])
+                for text_block in doc.find_all('text'):
+                    for para in text_block.find_all('p'):
+                        art.addParagraph(para.contents[0])
 
-            return art
+                return art
 
     def __read_aquaint_doc__(self, doc_id):
         return self.__aquaint_file__(doc_id)
@@ -146,12 +149,15 @@ if __name__ == "__main__":
     argparser.add_argument('topic_file', metavar='TOPICFILE', help='Topic Index File')
     args = argparser.parse_args()
 
-    content_reader = ContentReader()
+    content_reader = ContentReader('aquaint_test1', 'aquaint_test2')
 
     print('reading file: "%s"' % args.topic_file)
 
     for docset in content_reader.read_topic_index(args.topic_file):
         print('DOCSET: %s' % docset.id)
         for doc in docset.docs:
-            print(doc.id)
+            if doc is not None:
+                print(doc.id)
+            else:
+                print('DOC ERROR')
         print()
