@@ -13,8 +13,8 @@ class TestSummarizer(unittest.TestCase):
                          'Oh, yeah. It is important to give the summarizer irrelevant asides not\n',
                          'important to the main subject, whatever that is.\n']
         self.summary = '--- begin summary: "test.dat" ---\n' \
-                       'This is a story about summarization. It is important to have enough ' \
-                       'characters here to fill out the text. Also, it is important to summarize\n' \
+                       ' This is a story about summarization. It is important to have enough ' \
+                       'characters here to fill out the text. Also, it is important to summarize\n\n' \
                        '--- end summary: "test.dat" ---\n'
         self.storyBody = 'This is a story about summarization. It is important to have enough ' \
                          'characters here to fill out the text. Also, it is important to summarize ' \
@@ -35,7 +35,7 @@ class TestSummarizer(unittest.TestCase):
     # Not a great test, but mostly a template for mocking file reading in Python
     # (Seems readline iteration is broken in unittest mock, hence the weird StringIO invocation)
     def test_SummaryReturnsMinSizeWhenStoryIsLarger(self):
-        smrzr = summarizer.Summarizer(140)
+        smrzr = summarizer.Summarizer(25)
         article = content_provider.ArticleContent(id='test.dat', body=[self.storyBody])
         summary = smrzr.summarize(article)
         self.assertEqual(summary, self.summary)
@@ -67,12 +67,12 @@ class TestSummarizer(unittest.TestCase):
             self.assertEqual(len(articles[0].body), 1)
 
     def test_RougeScore(self):
-        rouge1 = rougescore.rouge_n(self.peer1, [self.model], 1, 0.5)
-        rouge2 = rougescore.rouge_n(self.peer1, [self.model], 2, 0.5)
+        counter = rougescore.RougeCounter(0.5)
+        rouge1 = counter.rouge_n(self.peer1, [self.model], 1)
+        rouge2 = counter.rouge_n(self.peer1, [self.model], 2)
 
-        print("ROUGE1 = %s  ROUGE2 = %s\n" % (rouge1, rouge2))
-
-        self.assertEqual(1, 1)
+        self.assertAlmostEqual(rouge1, 0.923076923076923)
+        self.assertAlmostEqual(rouge2, 0.7272727272727272)
 
 if __name__ == '__main__':
     unittest.main()
