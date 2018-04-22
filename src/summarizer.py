@@ -1,7 +1,7 @@
 #!/bin/python3
 import argparse
-import yaml
 import content_provider
+import sum_config
 import nltk
 import os
 
@@ -61,33 +61,24 @@ if __name__ == "__main__":
 
     print('Hello from "summarizer.py" version '+version+' (by team "#e2jkplusplus").')
 
-    with open(args.config, 'r') as ymlfile:
-        cfg = yaml.load(ymlfile)
+    config = sum_config.SummaryConfig(args.config)
 
-    if 'aquaint' in cfg:
-        aquaint_cfg = cfg['aquaint']
-        aquaint1_directory = read_config(aquaint_cfg, 'aquaint1_directory', '/opt/dropbox/17-18/573/AQUAINT')
-        aquaint2_directory = read_config(aquaint_cfg, 'aquaint2_directory', '/opt/dropbox/17-18/573/AQUAINT-2')
-        aquaint_topic_index = read_config(aquaint_cfg, 'aquaint_topic_index', '/opt/dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml')
+    if config.AQUAINT:
+        reader = content_provider.ContentReader(aquaint=config.AQUAINT1_DIRECTORY,
+                                                aquaint2=config.AQUAINT2_DIRECTORY)
 
-        reader = content_provider.ContentReader(aquaint=aquaint1_directory, aquaint2=aquaint2_directory)
+        smry = Summarizer(config.MAX_WORDS)
 
-        smry = Summarizer(100)
-
-        for docset in reader.read_topic_index(aquaint_topic_index):
+        for docset in reader.read_topic_index(config.aquaint_topic_file_path()):
             print('%s : %s' % (docset.id, docset.topic_title))
             smry.summary = ''
             smry.summary_size = 0
             print(smry.summarize_docset(docset))
 
-    elif 'one_file' in cfg:
-        file_cfg = cfg['one_file']
-        nwords = read_config(cfg, 'word_count', 100)
-        raw_file = read_config(cfg, 'article_file', 'aquaint_test1/nyt/1999/19990330_NYT')
+    elif config.ONE_FILE:
+        smry = Summarizer(config.MAX_WORDS)
 
-        smry = Summarizer(nwords)
-
-        articles = content_provider.ContentReader().read_raw_files(args.filename)
+        articles = content_provider.ContentReader().read_raw_files(config.ARTICLE_FILE)
 
         for article in articles:
             print(smry.summarize(article))
