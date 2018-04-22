@@ -2,6 +2,7 @@ import unittest
 import summarizer
 import content_provider
 import rougescore
+import sum_config
 from unittest.mock import patch
 import io
 
@@ -31,6 +32,8 @@ class TestSummarizer(unittest.TestCase):
         self.peer1 =     ['the', 'cat', 'was', 'found', 'under', 'the', 'bed']
         self.peer2 =     ['the', 'tiny', 'little', 'cat', 'was', 'found', 'under', 'the', 'big', 'funny', 'bed']
         self.model =     ['the', 'cat', 'was', 'under', 'the', 'bed']
+
+        self.configText = 'project:\n    team_id: test\n    release_title: also test\n'
 
     # Not a great test, but mostly a template for mocking file reading in Python
     # (Seems readline iteration is broken in unittest mock, hence the weird StringIO invocation)
@@ -73,6 +76,15 @@ class TestSummarizer(unittest.TestCase):
 
         self.assertAlmostEqual(rouge1, 0.923076923076923)
         self.assertAlmostEqual(rouge2, 0.7272727272727272)
+
+    def test_Config(self):
+        mock_file = io.StringIO(''.join(self.configText))
+        with patch('sum_config.open', return_value=mock_file, create=True):
+            config = sum_config.SummaryConfig('test.dat')
+            self.assertEqual(config.TEAM_ID, 'test')
+            self.assertEqual(config.RELEASE_TITLE, 'also test')
+            self.assertFalse(config.AQUAINT)
+            self.assertFalse(config.ONE_FILE)
 
 if __name__ == '__main__':
     unittest.main()
