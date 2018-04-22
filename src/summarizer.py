@@ -1,9 +1,9 @@
 #!/bin/python3
-import sys
 import argparse
 import yaml
 import content_provider
 import nltk
+import os
 
 
 class Summarizer():
@@ -25,7 +25,6 @@ class Summarizer():
             self.summary_size += len(sentence_tokens)
 
         self.summary += '\n'
-
 
     def summarize(self, article):
         self.__init_summary__()
@@ -51,15 +50,18 @@ def read_config(cfg, label, default):
     else:
         return default
 
+
 if __name__ == "__main__":
     # Command Line Argument Parsing. Provides argument interpretation and help text.
-    argparser = argparse.ArgumentParser(description = 'summarizer.py v. 0.0 by team #e2jkplusplus')
-    argparser.add_argument('config', metavar='CONFIG', default='config.yml', help='Config File(s)')
+    version = "1.0"
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    argparser = argparse.ArgumentParser(description='summarizer.py v. '+version+' by team #e2jkplusplus')
+    argparser.add_argument('-c', '--config', metavar='CONFIG', default=os.path.join(dir_path, 'config.yml'), help='Config File(s)')
     args = argparser.parse_args()
 
-    print('Hello from "summarizer.py" version 0.0 (by team "#e2jkplusplus").')
+    print('Hello from "summarizer.py" version '+version+' (by team "#e2jkplusplus").')
 
-    with open(args.config, 'r') as  ymlfile:
+    with open(args.config, 'r') as ymlfile:
         cfg = yaml.load(ymlfile)
 
     if 'aquaint' in cfg:
