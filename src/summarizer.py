@@ -1,10 +1,12 @@
 #!/bin/python3
+# To run successfully, use the command below from the home directory of this project:
+# $ python3 src/summarizer.py -c config_un.yml
 import argparse
 import content_provider
 import sum_config
 import nltk
 import os
-
+import fss
 
 class Summarizer():
     def __init__(self, nwords):
@@ -73,7 +75,7 @@ if __name__ == "__main__":
             print('%s : %s' % (docset.id, docset.topic_title))
             smry.summary = ''
             smry.summary_size = 0
-            print(smry.summarize_docset(docset))
+            print(fss.first_sent_sum(docset, config) + "\n\n")
 
     elif config.ONE_FILE:
         smry = Summarizer(config.MAX_WORDS)
