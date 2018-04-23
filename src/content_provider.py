@@ -115,6 +115,8 @@ class ContentReader():
                                               doc_id[0:doc_id.find('.')-2].lower())
         else:
             file_extension = doc_id[0:3].upper()
+            if file_extension == 'XIE':
+                file_extension = 'XIN'
             if file_extension != 'NYT':
                 file_extension += '_ENG'
             filename = '%s/%s/%s/%s_%s' % (self.AQUAINT_DIR,
