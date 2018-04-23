@@ -78,6 +78,7 @@ if __name__ == "__main__":
 
         u.eprint('config.MAX_WORDS={}'.format(config.MAX_WORDS))
         smry = Summarizer(config.MAX_WORDS)
+        u.eprint('config.MAX_WORDS={}'.format(config.MAX_WORDS))
 
         u.eprint('config.topic_file_path()="{}"'.format(config.aquaint_topic_file_path()))
         for docset in reader.read_topic_index(config.aquaint_topic_file_path()):
