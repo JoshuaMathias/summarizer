@@ -19,15 +19,15 @@ class SummaryConfig():
 
         self.AQUAINT1_DIRECTORY = self.__read_config_val_2__(cfg,
                                                              'aquaint',
-                                                             'aquaint1',
+                                                             'aquaint1_directory',
                                                              SummaryConfig.DEFAULT_AQUAINT1_DIRECTORY)
         self.AQUAINT2_DIRECTORY = self.__read_config_val_2__(cfg,
                                                              'aquaint',
-                                                             'aquaint2',
+                                                             'aquaint2_directory',
                                                              SummaryConfig.DEFAULT_AQUAINT2_DIRECTORY)
         self.AQUAINT_DOC_DIRECTORY = self.__read_config_val_2__(cfg,
                                                                 'aquaint',
-                                                                'aqaint_doc_dir',
+                                                                'aquaint_doc_dir',
                                                                 SummaryConfig.DEFAULT_AQUAINT_DOC_DIR)
         self.AQUAINT_TOPIC_INDEX_FILE = self.__read_config_val_2__(cfg,
                                                                    'aquaint',
@@ -70,12 +70,13 @@ class SummaryConfig():
 
     def __read_config_val1__(self, cfg, label, default):
         if label in cfg:
-            return cfg[label]
+            if cfg[label]:
+                return cfg[label]
         else:
             return default
 
     def aquaint_topic_file_path(self):
-        if len(self.AQUAINT_DOC_DIRECTORY.strip()) > 0:
+        if self.AQUAINT_DOC_DIRECTORY is not None and len(self.AQUAINT_DOC_DIRECTORY.strip()) > 0:
             return self.AQUAINT_DOC_DIRECTORY + "/" + self.AQUAINT_TOPIC_INDEX_FILE
         else:
             return self.AQUAINT_TOPIC_INDEX_FILE
