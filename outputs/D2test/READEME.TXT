@@ -1,0 +1,1 @@
+Just a test directory for me (John) to figure out how to run rouge stuff while condor handles a full run.

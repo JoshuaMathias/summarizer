@@ -7,72 +7,210 @@ config.AQUAINT2_DIRECTORY=/dropbox/17-18/573/AQUAINT-2
 config.MAX_WORDS=100
 config.topic_file_path()="/dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml"
 D1001A-A :  Columbine Massacre 
+docset=DocumentSet(): topic_id="D1001A" #docs=10
+   docset.id      ="D1001A-A"
+   docset.topic_id="D1001A"
 D1002A-A :  Diallo Trial 
+docset=DocumentSet(): topic_id="D1002A" #docs=10
+   docset.id      ="D1002A-A"
+   docset.topic_id="D1002A"
 D1003A-A :  Giant Panda 
+docset=DocumentSet(): topic_id="D1003A" #docs=10
+   docset.id      ="D1003A-A"
+   docset.topic_id="D1003A"
 D1004A-A :  Papua Tsunami 
-WARNING: empty article ArticleContent(): headline="At least 70 dead after tsunami hits Papua New Guinea coast" (#0 docset=DocumentSet(): topic_id="D1004A" #docs=10)
-WARNING: empty article ArticleContent(): headline="Wall of water crashes into remote Papua New Guinean villages" (#1 docset=DocumentSet(): topic_id="D1004A" #docs=10)
-WARNING: empty article ArticleContent(): headline="URGENT" (#2 docset=DocumentSet(): topic_id="D1004A" #docs=10)
-WARNING: empty article ArticleContent(): headline="PORT MORESBY: are found.''" (#3 docset=DocumentSet(): topic_id="D1004A" #docs=10)
-WARNING: empty article ArticleContent(): headline="URGENT" (#4 docset=DocumentSet(): topic_id="D1004A" #docs=10)
-WARNING: empty article ArticleContent(): headline="Wall of water crashes into remote Papua New Guinean villages" (#7 docset=DocumentSet(): topic_id="D1004A" #docs=10)
+docset=DocumentSet(): topic_id="D1004A" #docs=10
+WARNING: empty article ArticleContent(): headline="Wall of water crashes into remote Papua New Guinean villages" (#2 docset=DocumentSet(): topic_id="D1004A" #docs=10)
+WARNING: empty article ArticleContent(): headline="At least 70 dead after tsunami hits Papua New Guinea coast" (#3 docset=DocumentSet(): topic_id="D1004A" #docs=10)
+WARNING: empty article ArticleContent(): headline="Wall of water crashes into remote Papua New Guinean villages" (#4 docset=DocumentSet(): topic_id="D1004A" #docs=10)
+WARNING: empty article ArticleContent(): headline="URGENT" (#5 docset=DocumentSet(): topic_id="D1004A" #docs=10)
+WARNING: empty article ArticleContent(): headline="PORT MORESBY: are found.''" (#6 docset=DocumentSet(): topic_id="D1004A" #docs=10)
+WARNING: empty article ArticleContent(): headline="URGENT" (#7 docset=DocumentSet(): topic_id="D1004A" #docs=10)
+   docset.id      ="D1004A-A"
+   docset.topic_id="D1004A"
 D1005A-A :  Parkinson Disease 
+docset=DocumentSet(): topic_id="D1005A" #docs=10
+   docset.id      ="D1005A-A"
+   docset.topic_id="D1005A"
 D1006A-A :  Vioxx 
+docset=DocumentSet(): topic_id="D1006A" #docs=10
+   docset.id      ="D1006A-A"
+   docset.topic_id="D1006A"
 D1007B-A :  Bird Flu 
+docset=DocumentSet(): topic_id="D1007B" #docs=10
+   docset.id      ="D1007B-A"
+   docset.topic_id="D1007B"
 D1008B-A :  Chesapeake Bay 
+docset=DocumentSet(): topic_id="D1008B" #docs=10
+   docset.id      ="D1008B-A"
+   docset.topic_id="D1008B"
 D1009B-A :  Jon Benet Ramsey 
-WARNING: empty article ArticleContent(): headline="JonBenet's parents vow to find her killer" (#0 docset=DocumentSet(): topic_id="D1009B" #docs=10)
+docset=DocumentSet(): topic_id="D1009B" #docs=10
+WARNING: empty article ArticleContent(): headline="JonBenet's parents vow to find her killer" (#9 docset=DocumentSet(): topic_id="D1009B" #docs=10)
+   docset.id      ="D1009B-A"
+   docset.topic_id="D1009B"
 D1010B-A :  Mad Cow Disease 
+docset=DocumentSet(): topic_id="D1010B" #docs=10
+   docset.id      ="D1010B-A"
+   docset.topic_id="D1010B"
 D1011C-A :  Eating Disorders 
+docset=DocumentSet(): topic_id="D1011C" #docs=10
+   docset.id      ="D1011C-A"
+   docset.topic_id="D1011C"
 D1012C-A :  Helios Crash 
-WARNING: empty article ArticleContent(): headline="Timeline of crash of Cypriot airliner in Greece" (#8 docset=DocumentSet(): topic_id="D1012C" #docs=10)
+docset=DocumentSet(): topic_id="D1012C" #docs=10
+WARNING: empty article ArticleContent(): headline="Timeline of crash of Cypriot airliner in Greece" (#2 docset=DocumentSet(): topic_id="D1012C" #docs=10)
+   docset.id      ="D1012C-A"
+   docset.topic_id="D1012C"
 D1013C-A :  Identity Theft 
+docset=DocumentSet(): topic_id="D1013C" #docs=10
+   docset.id      ="D1013C-A"
+   docset.topic_id="D1013C"
 D1014C-A :  Obesity 
+docset=DocumentSet(): topic_id="D1014C" #docs=10
+   docset.id      ="D1014C-A"
+   docset.topic_id="D1014C"
 D1015C-A :  Rain Forest Destruction 
+docset=DocumentSet(): topic_id="D1015C" #docs=10
+   docset.id      ="D1015C-A"
+   docset.topic_id="D1015C"
 D1016C-A :  Soeharto Investigation 
-WARNING: empty article ArticleContent(): headline="INDONESIA" (#0 docset=DocumentSet(): topic_id="D1016C" #docs=10)
-WARNING: empty article ArticleContent(): headline="Soedjono denies claim on foreign lawyer, JAKARTA POST" (#2 docset=DocumentSet(): topic_id="D1016C" #docs=10)
-WARNING: empty article ArticleContent(): headline="Soeharto hires lawyers, JAKARTA POST" (#6 docset=DocumentSet(): topic_id="D1016C" #docs=10)
+docset=DocumentSet(): topic_id="D1016C" #docs=10
+WARNING: empty article ArticleContent(): headline="INDONESIA" (#3 docset=DocumentSet(): topic_id="D1016C" #docs=10)
+WARNING: empty article ArticleContent(): headline="Soedjono denies claim on foreign lawyer, JAKARTA POST" (#7 docset=DocumentSet(): topic_id="D1016C" #docs=10)
+WARNING: empty article ArticleContent(): headline="Soeharto hires lawyers, JAKARTA POST" (#9 docset=DocumentSet(): topic_id="D1016C" #docs=10)
+   docset.id      ="D1016C-A"
+   docset.topic_id="D1016C"
 D1017D-A :  Hurricane Floyd 
+docset=DocumentSet(): topic_id="D1017D" #docs=10
+   docset.id      ="D1017D-A"
+   docset.topic_id="D1017D"
 D1018D-A :  Joran Van Der Sloot 
+docset=DocumentSet(): topic_id="D1018D" #docs=10
+   docset.id      ="D1018D-A"
+   docset.topic_id="D1018D"
 D1019D-A :  Malaysia Resort Abduction 
+docset=DocumentSet(): topic_id="D1019D" #docs=10
+   docset.id      ="D1019D-A"
+   docset.topic_id="D1019D"
 D1020D-A :  Recall Food United States 
-WARNING: empty article ArticleContent(): headline="Distributor recalls batches of Heinz baby food" (#3 docset=DocumentSet(): topic_id="D1020D" #docs=10)
+docset=DocumentSet(): topic_id="D1020D" #docs=10
+WARNING: empty article ArticleContent(): headline="Distributor recalls batches of Heinz baby food" (#1 docset=DocumentSet(): topic_id="D1020D" #docs=10)
+   docset.id      ="D1020D-A"
+   docset.topic_id="D1020D"
 D1021D-A :  Debra La Fave 
+docset=DocumentSet(): topic_id="D1021D" #docs=10
+   docset.id      ="D1021D-A"
+   docset.topic_id="D1021D"
 D1022D-A :  Whale Conservation Japan 
+docset=DocumentSet(): topic_id="D1022D" #docs=10
+   docset.id      ="D1022D-A"
+   docset.topic_id="D1022D"
 D1023E-A :  Austrian Avalanches 
+docset=DocumentSet(): topic_id="D1023E" #docs=10
+   docset.id      ="D1023E-A"
+   docset.topic_id="D1023E"
 D1024E-A :  Bomb Khartoum 
-WARNING: empty article ArticleContent(): headline="Protesters gather around bombed-out factory" (#0 docset=DocumentSet(): topic_id="D1024E" #docs=10)
-WARNING: empty article ArticleContent(): headline="U.S. criticized for attacks on Sudan, Afghanistan" (#1 docset=DocumentSet(): topic_id="D1024E" #docs=10)
-WARNING: empty article ArticleContent(): headline="El-Bashir withdraws diplomats, calls on U.N. to investigate" (#2 docset=DocumentSet(): topic_id="D1024E" #docs=10)
-WARNING: empty article ArticleContent(): headline="On Arab streets, Clinton-Lewinsky affair seen behind attacks" (#3 docset=DocumentSet(): topic_id="D1024E" #docs=10)
-WARNING: empty article ArticleContent(): headline="Sudan council to meet, authorize UN fact-finding team" (#4 docset=DocumentSet(): topic_id="D1024E" #docs=10)
-WARNING: empty article ArticleContent(): headline="Diplomats tour battered factory, protesters denounce U.S." (#5 docset=DocumentSet(): topic_id="D1024E" #docs=10)
-WARNING: empty article ArticleContent(): headline="Minister: Sudan invites an American verification committee" (#6 docset=DocumentSet(): topic_id="D1024E" #docs=10)
-WARNING: empty article ArticleContent(): headline="El-Bashir withdraws diplomats, calls on U.N. to investigate" (#7 docset=DocumentSet(): topic_id="D1024E" #docs=10)
-WARNING: empty article ArticleContent(): headline="Sudan asks council to authorize fact-finding team" (#8 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+docset=DocumentSet(): topic_id="D1024E" #docs=10
+WARNING: empty article ArticleContent(): headline="Protesters gather around bombed-out factory" (#1 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+WARNING: empty article ArticleContent(): headline="U.S. criticized for attacks on Sudan, Afghanistan" (#2 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+WARNING: empty article ArticleContent(): headline="El-Bashir withdraws diplomats, calls on U.N. to investigate" (#3 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+WARNING: empty article ArticleContent(): headline="On Arab streets, Clinton-Lewinsky affair seen behind attacks" (#4 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+WARNING: empty article ArticleContent(): headline="Sudan council to meet, authorize UN fact-finding team" (#5 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+WARNING: empty article ArticleContent(): headline="Diplomats tour battered factory, protesters denounce U.S." (#6 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+WARNING: empty article ArticleContent(): headline="Minister: Sudan invites an American verification committee" (#7 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+WARNING: empty article ArticleContent(): headline="El-Bashir withdraws diplomats, calls on U.N. to investigate" (#8 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+WARNING: empty article ArticleContent(): headline="Sudan asks council to authorize fact-finding team" (#9 docset=DocumentSet(): topic_id="D1024E" #docs=10)
+   docset.id      ="D1024E-A"
+   docset.topic_id="D1024E"
 D1025E-A :  Grizzly Bears 
+docset=DocumentSet(): topic_id="D1025E" #docs=10
+   docset.id      ="D1025E-A"
+   docset.topic_id="D1025E"
 D1026E-A :  Head Injuries 
+docset=DocumentSet(): topic_id="D1026E" #docs=10
+   docset.id      ="D1026E-A"
+   docset.topic_id="D1026E"
 D1027E-A :  Shepard Beating Death Trial 
+docset=DocumentSet(): topic_id="D1027E" #docs=10
+   docset.id      ="D1027E-A"
+   docset.topic_id="D1027E"
 D1028E-A :  Unabomber Trial 
+docset=DocumentSet(): topic_id="D1028E" #docs=10
+   docset.id      ="D1028E-A"
+   docset.topic_id="D1028E"
 D1029F-A :  Baluchistan Uprising 
+docset=DocumentSet(): topic_id="D1029F" #docs=10
+   docset.id      ="D1029F-A"
+   docset.topic_id="D1029F"
 D1030F-A :  Ephedra 
+docset=DocumentSet(): topic_id="D1030F" #docs=10
+   docset.id      ="D1030F-A"
+   docset.topic_id="D1030F"
 D1031F-A :  Mangrove Forests 
+docset=DocumentSet(): topic_id="D1031F" #docs=10
+   docset.id      ="D1031F-A"
+   docset.topic_id="D1031F"
 D1032F-A :  Offshore Gas Leak 
+docset=DocumentSet(): topic_id="D1032F" #docs=10
+   docset.id      ="D1032F-A"
+   docset.topic_id="D1032F"
 D1033F-A :  South Korean Wire Tapping 
+docset=DocumentSet(): topic_id="D1033F" #docs=10
+   docset.id      ="D1033F-A"
+   docset.topic_id="D1033F"
 D1034F-A :  Threat To Frogs 
+docset=DocumentSet(): topic_id="D1034F" #docs=10
+   docset.id      ="D1034F-A"
+   docset.topic_id="D1034F"
 D1035G-A :  Agent Orange 
-WARNING: empty article ArticleContent(): headline="Vietnam to launch fund for victims of war-era defoliant" (#0 docset=DocumentSet(): topic_id="D1035G" #docs=10)
-WARNING: empty article ArticleContent(): headline="Veteran-sponsored village opens for kids, elderly in Vietnam" (#5 docset=DocumentSet(): topic_id="D1035G" #docs=10)
-WARNING: empty article ArticleContent(): headline="Red Cross launches fund for victims" (#8 docset=DocumentSet(): topic_id="D1035G" #docs=10)
+docset=DocumentSet(): topic_id="D1035G" #docs=10
+WARNING: empty article ArticleContent(): headline="Vietnam to launch fund for victims of war-era defoliant" (#2 docset=DocumentSet(): topic_id="D1035G" #docs=10)
+WARNING: empty article ArticleContent(): headline="Red Cross launches fund for victims" (#3 docset=DocumentSet(): topic_id="D1035G" #docs=10)
+WARNING: empty article ArticleContent(): headline="Veteran-sponsored village opens for kids, elderly in Vietnam" (#4 docset=DocumentSet(): topic_id="D1035G" #docs=10)
+   docset.id      ="D1035G-A"
+   docset.topic_id="D1035G"
 D1036G-A :  Dioxin Poisoning Yuschenko 
+docset=DocumentSet(): topic_id="D1036G" #docs=10
+   docset.id      ="D1036G-A"
+   docset.topic_id="D1036G"
 D1037G-A :  Maryland Oysters 
+docset=DocumentSet(): topic_id="D1037G" #docs=10
+   docset.id      ="D1037G-A"
+   docset.topic_id="D1037G"
 D1038G-A :  Mt St Helens 
+docset=DocumentSet(): topic_id="D1038G" #docs=10
+   docset.id      ="D1038G-A"
+   docset.topic_id="D1038G"
 D1039G-A :  Murder Van Gogh 
+docset=DocumentSet(): topic_id="D1039G" #docs=10
+   docset.id      ="D1039G-A"
+   docset.topic_id="D1039G"
 D1040G-A :  Robert Blake Murder Trial 
+docset=DocumentSet(): topic_id="D1040G" #docs=10
+   docset.id      ="D1040G-A"
+   docset.topic_id="D1040G"
 D1041H-A :  Coral Reefs 
+docset=DocumentSet(): topic_id="D1041H" #docs=10
+   docset.id      ="D1041H-A"
+   docset.topic_id="D1041H"
 D1042H-A :  Lynndie England 
+docset=DocumentSet(): topic_id="D1042H" #docs=10
+   docset.id      ="D1042H-A"
+   docset.topic_id="D1042H"
 D1043H-A :  Rafik Hariri 
+docset=DocumentSet(): topic_id="D1043H" #docs=10
+   docset.id      ="D1043H-A"
+   docset.topic_id="D1043H"
 D1044H-A :  Red Food Dye 
+docset=DocumentSet(): topic_id="D1044H" #docs=10
+   docset.id      ="D1044H-A"
+   docset.topic_id="D1044H"
 D1045H-A :  Songhua River 
+docset=DocumentSet(): topic_id="D1045H" #docs=10
+   docset.id      ="D1045H-A"
+   docset.topic_id="D1045H"
 D1046H-A :  Tsunami Indonesia 
+docset=DocumentSet(): topic_id="D1046H" #docs=10
+   docset.id      ="D1046H-A"
+   docset.topic_id="D1046H"
