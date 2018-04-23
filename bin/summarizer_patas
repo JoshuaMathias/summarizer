@@ -1,0 +1,19 @@
+#!/bin/sh
+
+SCRIPT=$(readlink -f "$0")
+# Absolute path this script is in, thus /home/user/bin
+SCRIPTPATH=$(dirname "$SCRIPT")
+# This is seems a little ridiculous, might be easier
+# to make whoever invokes the script set up some
+# env-vars first.
+#  +---------------------------------
+#  |  $ . bin/env_patas.sh
+#  |  $ bin/summarizer.py
+#  |  $ bin/summarizer.py
+#  +---------------------------------
+# Because if we do the "env_patas.sh" thing (or "env_test.sh" thing for laptop testing)
+# the need for all of the absolute-path real-link / dirname stuff just evaporates.
+# This is simpler and roughly as sane as assuming "bin" and "src" and "output" are all peers.
+#  jgreve 4/22/1018
+
+$SCRIPTPATH/summarizer -c $SCRIPTPATH/config_patas.yml

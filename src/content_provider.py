@@ -1,6 +1,9 @@
 import bs4
 import argparse
 
+import local_util as u
+# "local_util" mainly for u.eprint() which is like print but goes to stderr.
+
 class ArticleContent():
     def __init__(self, id='', type = 'story', headline='', dateline='', date='', body=list()):
         self.id = id
@@ -9,6 +12,9 @@ class ArticleContent():
         self.dateline = dateline
         self.date = date
         self.setBody(body)
+
+    def __str__(self):
+        return 'ArticleContent(): headline="{}"'.format(self.headline)
 
     def __extract_byline__(self, text):
         NYTStyle = text.find('_')
@@ -47,6 +53,9 @@ class DocumentSet():
         self.topic_title = topic_title
         self.docs = docs
 
+    def __str__(self):
+        return 'DocumentSet(): topic_id="{}" #docs={}'.format( self.topic_id, len(self.docs) )
+
     def addDoc(self, doc):
         self.docs.append(doc)
 
@@ -56,6 +65,9 @@ class ContentReader():
                  aquaint2 = '/opt/dropbox/17-18/573/AQUAINT-2'):
         self.AQUAINT_DIR = aquaint
         self.AQUAINT2_DIR = aquaint2
+
+    def __str__(self):
+        return 'ContentReader()'
 
     def read_raw_files(self, *filenames):
         articles = list()
