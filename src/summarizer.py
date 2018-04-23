@@ -1,4 +1,4 @@
-!/bin/python3
+#!/bin/python3
 # To run successfully, use the command below from the home directory of this project:
 # $ python3 src/summarizer.py -c config_un.yml
 import argparse
