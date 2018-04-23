@@ -1,6 +1,7 @@
 # This function taks a list of documents (from class) and writes a single file to summary
 import os
 import sum_config
+import local_util as u
 
 from nltk.tokenize import sent_tokenize
 
@@ -11,7 +12,12 @@ def first_sent_sum(docset, config):
     selected_content = ""
     word_count = 0
 
-    for article in docset.docs:
+    for idx, article in enumerate(docset.docs):
+        # jgreve: who knew articles can be empty?
+        if len(article.body) == 0:
+            u.eprint('WARNING: empty article {} (#{} docset={})'.format(article, idx, docset))
+            continue
+
         paragraph = article.body[0]
 
         sentences = sent_tokenize(paragraph)

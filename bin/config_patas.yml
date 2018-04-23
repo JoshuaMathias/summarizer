@@ -1,0 +1,18 @@
+project:
+    team_id: 9
+    release_title: D2
+aquaint:
+    aquaint1_directory: /dropbox/17-18/573/AQUAINT
+    aquaint2_directory: /dropbox/17-18/573/AQUAINT-2
+
+    aquaint_doc_dir: 
+    aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
+
+output:
+    summary_dir: output/D2
+    results_dir: output/results
+    max_words: 100
+
+# Test configuration to read one article file only
+# one_config:
+#    article_file: aquaint_test1/nyt/1999/19990330_NYT

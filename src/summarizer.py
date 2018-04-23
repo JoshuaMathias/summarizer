@@ -7,6 +7,8 @@ import sum_config
 import nltk
 import os
 import fss
+import local_util as u
+# "local_util" mainly for u.eprint() which is like print but goes to stderr.
 
 class Summarizer():
     def __init__(self, nwords):
@@ -61,17 +63,23 @@ if __name__ == "__main__":
     argparser.add_argument('-c', '--config', metavar='CONFIG', default=os.path.join(dir_path, 'config.yml'), help='Config File(s)')
     args = argparser.parse_args()
 
-    print('Hello from "summarizer.py" version '+version+' (by team "#e2jkplusplus").')
+    u.eprint('Hello from "summarizer.py" version '+version+' (by team "#e2jkplusplus").')
+    u.eprint('parsed args={}'.format(args))
 
     config = sum_config.SummaryConfig(args.config)
 
     if config.AQUAINT:
+        u.eprint('config.AQUAINT1_DIRECTORY={}'.format(config.AQUAINT1_DIRECTORY))
+        u.eprint('config.AQUAINT2_DIRECTORY={}'.format(config.AQUAINT2_DIRECTORY))
         reader = content_provider.ContentReader(aquaint=config.AQUAINT1_DIRECTORY,
                                                 aquaint2=config.AQUAINT2_DIRECTORY)
 
+        u.eprint('config.MAX_WORDS={}'.format(config.MAX_WORDS))
         smry = Summarizer(config.MAX_WORDS)
 
+        u.eprint('config.topic_file_path()="{}"'.format(config.aquaint_topic_file_path()))
         for docset in reader.read_topic_index(config.aquaint_topic_file_path()):
+            u.eprint('%s : %s' % (docset.id, docset.topic_title))
             print('%s : %s' % (docset.id, docset.topic_title))
             smry.summary = ''
             smry.summary_size = 0
@@ -80,6 +88,7 @@ if __name__ == "__main__":
     elif config.ONE_FILE:
         smry = Summarizer(config.MAX_WORDS)
 
+        u.eprint('config.ARTICLE_FILE="{}"'.format( config.ARTICLE_FILE ))
         articles = content_provider.ContentReader().read_raw_files(config.ARTICLE_FILE)
 
         for article in articles:
