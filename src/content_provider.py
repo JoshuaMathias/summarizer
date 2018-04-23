@@ -10,6 +10,20 @@ class ArticleContent():
         self.date = date
         self.setBody(body)
 
+    def __extract_byline__(self, text):
+        NYTStyle = text.find('_')
+        APStyle = text.find('--')
+
+        if NYTStyle > 0 and NYTStyle < 32:
+            self.byline = text[0:NYTStyle].strip()
+            return text[NYTStyle+1:].strip()
+
+        if APStyle > 0 and APStyle < 32:
+            self.byline = text[0:APStyle].strip()
+            return text[APStyle+2:].strip()
+
+        return text
+
     def setBody(self, bodyText):
         self.body = bodyText
 
@@ -20,16 +34,18 @@ class ArticleContent():
         if self.body is None:
             self.body = list()
 
+        if len(self.body) == 0:
+            paraText = self.__extract_byline__(paraText)
+
         self.body.append(paraText)
 
 class DocumentSet():
-    def __init__(self, id='', topic_id='', topic_cat='', topic_title=''):
+    def __init__(self, id='', topic_id='', topic_cat='', topic_title='', docs = list()):
         self.id = id
         self.topic_id = topic_id
         self.topic_cat = topic_cat
         self.topic_title = topic_title
-
-        self.docs = list()
+        self.docs = docs
 
     def addDoc(self, doc):
         self.docs.append(doc)
@@ -92,7 +108,7 @@ class ContentReader():
 
         return articles
 
-    def __aquaint_file__(self, doc_id):
+    def __aquaint_filename__(self, doc_id):
         if doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 files
             filename = '%s/data/%s/%s.xml' % (self.AQUAINT2_DIR,
                                               doc_id[0:7].lower(),
@@ -107,28 +123,49 @@ class ContentReader():
                                          doc_id[3:doc_id.find('.')],
                                          file_extension)
 
-        art = None
+        return filename
 
-        doctree = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
-        for doc in doctree.find_all('doc'):
-            id = self.__extract_tag_or_attr(doc, 'docno', 'id')
-            if id == doc_id:
-                art = ArticleContent(id = id,
-                                     type=self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
-                                     headline=self.__extract_tag__(doc, 'headline'),
-                                     date=self.__extract_tag__(doc, 'datetime'),
-                                     dateline=self.__extract_tag__(doc, 'dateline'),
-                                     body=list())
+    def __aquaint_file__(self, doc_id_list):
+        article_list = list()
+        document_sources = dict()
+        for doc_id in doc_id_list:
+            filename = self.__aquaint_filename__(doc_id)
+            if filename not in document_sources:
+                document_sources[filename] = list()
+            document_sources[filename].append(doc_id)
 
-                text_block = doc.find('text')
-                for para in text_block.find_all('p'):
-                    art.addParagraph(para.contents[0])
-                break
+        for filename in document_sources:
+            doc_ids = document_sources[filename]
+            try:
+                doc_count = 0
+                articles_file = open(filename,'r')
+                doctree = bs4.BeautifulSoup(articles_file.read(), 'html.parser')
+                for doc in doctree.find_all('doc'):
+                    id = self.__extract_tag_or_attr(doc, 'docno', 'id')
+                    if id in doc_ids:
+                        art = ArticleContent(id=id,
+                                             type=self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
+                                             headline=self.__extract_tag__(doc, 'headline'),
+                                             date=self.__extract_tag__(doc, 'datetime'),
+                                             dateline=self.__extract_tag__(doc, 'dateline'),
+                                             body=list())
 
-        return art
+                        text_block = doc.find('text')
+                        for para in text_block.find_all('p'):
+                            art.addParagraph(para.contents[0])
 
-    def __read_aquaint_doc__(self, doc_id):
-        return self.__aquaint_file__(doc_id)
+                        doc_count += 1
+                        article_list.append(art)
+
+                        if doc_count == len(doc_ids):
+                            articles_file.close()
+                            break
+                            
+                    articles_file.close()
+            except FileNotFoundError:
+                print('ERROR: File Not Found "%s"' % filename)
+
+        return article_list
 
     def read_topic_index(self, filename):
         topicIndex = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
@@ -136,11 +173,15 @@ class ContentReader():
             topic_id = topic['id']
             topic_cat = topic['category']
             topic_title = topic.find('title').contents[0]
+
             for docset_tag in topic.find_all('docseta'):
                 docset_id = docset_tag['id']
-                docset = DocumentSet(docset_id, topic_id, topic_cat, topic_title)
+                docs = list()
                 for doc in docset_tag.find_all('doc'):
-                    docset.addDoc(self.__read_aquaint_doc__(doc['id'].strip()))
+                    docs.append(doc['id'].strip())
+                articles = self.__aquaint_file__(docs)
+
+                docset = DocumentSet(docset_id, topic_id, topic_cat, topic_title, articles)
 
                 yield docset
 

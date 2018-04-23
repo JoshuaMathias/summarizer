@@ -40,7 +40,7 @@ class Summarizer():
         for article in docset.docs:
             para1 = article.body[0]
             sentences = nltk.sent_tokenize(para1)
-            self.__add_summary_sentence__(sentences[0])
+            self.__add_summary_sentence__(sentences[0].replace('\n',' '))
         return self.summary
 
 
