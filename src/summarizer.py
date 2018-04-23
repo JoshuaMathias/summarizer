@@ -6,9 +6,11 @@ import content_provider
 import sum_config
 import nltk
 import os
-import fss
 import local_util as u
 # "local_util" mainly for u.eprint() which is like print but goes to stderr.
+
+# import fss
+import qrmatrix
 
 class Summarizer():
     def __init__(self, nwords):
