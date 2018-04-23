@@ -160,7 +160,7 @@ class ContentReader():
                         if doc_count == len(doc_ids):
                             articles_file.close()
                             break
-                            
+
                     articles_file.close()
             except FileNotFoundError:
                 print('ERROR: File Not Found "%s"' % filename)
@@ -178,7 +178,10 @@ class ContentReader():
                 docset_id = docset_tag['id']
                 docs = list()
                 for doc in docset_tag.find_all('doc'):
-                    docs.append(doc['id'].strip())
+                    docid = doc['id'].strip()
+                    if docid == None or len(docid) == 0:
+                        print('ERROR: Unknown Document ID for doc %s' % doc)
+                    docs.append(docid)
                 articles = self.__aquaint_file__(docs)
 
                 docset = DocumentSet(docset_id, topic_id, topic_cat, topic_title, articles)
