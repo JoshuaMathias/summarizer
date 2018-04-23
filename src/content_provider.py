@@ -56,9 +56,6 @@ class DocumentSet():
     def __str__(self):
         return 'DocumentSet(): topic_id="{}" #docs={}'.format( self.topic_id, len(self.docs) )
 
-    def __str__(self):
-        return 'DocumentSet(): topic_id="{}" #docs={}'.format( self.topic_id, len(self.docs) )
-
     def addDoc(self, doc):
         self.docs.append(doc)
 
@@ -125,17 +122,14 @@ class ContentReader():
 
     def __aquaint_filename__(self, doc_id):
         if doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 files
-            reason = "doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 files"
             filename = '%s/data/%s/%s.xml' % (self.AQUAINT2_DIR,
                                               doc_id[0:7].lower(),
                                               doc_id[0:doc_id.find('.')-2].lower())
         else:
-            reason="Not doc_id[3:8] == '_ENG_'"
             file_extension = doc_id[0:3].upper()
             if file_extension == 'XIE':
                 file_extension = 'XIN'
             if file_extension != 'NYT':
-                reason += " (also file_extension='{}' != 'NYT')".format(file_extension)
                 file_extension += '_ENG'
             filename = '%s/%s/%s/%s_%s' % (self.AQUAINT_DIR,
                                          doc_id[0:3].lower(),
@@ -188,20 +182,13 @@ class ContentReader():
         return article_list
 
     def read_topic_index(self, filename):
-
-
-        u.eprint('ContentReader.read_topic_index(): filename={}'.format(filename))
         topicIndex = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
         for topic in topicIndex.find_all('topic'):
             topic_id = topic['id']
-            u.eprint('ContentReader.read_topic_index(): topic_id={}'.format(topic_id))
             topic_cat = topic['category']
-            u.eprint('ContentReader.read_topic_index(): topic_cat={}'.format(topic_cat))
             topic_title = topic.find('title').contents[0]
 
             for docset_tag in topic.find_all('docseta'):
-                docset_cnt += 1
-                u.eprint('ContentReader.read_topic_index():     docset_cnt={}, docset_tag={}'.format( docset_cnt, docset_tag ) )
                 docset_id = docset_tag['id']
                 docs = list()
                 for doc in docset_tag.find_all('doc'):
