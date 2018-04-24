@@ -21,13 +21,17 @@ def first_sent_sum(docset, config):
 
         paragraph = article.body[0]
 
+        paragraph = re.sub("(\n|\t)", " ", paragraph)
+        paragraph = re.sub("  +", " ", paragraph)
+        paragraph = re.sub("^ ", "", paragraph)
+
         sentences = sent_tokenize(paragraph)
 
         first_sentence = sentences[0]
         words = first_sentence.split(" ")
 
         if len(words) + word_count < 100:
-            selected_content += first_sentence
+            selected_content += first_sentence + "\n"
             word_count += len(words)
 
     directory = config.DEFAULT_SUMMARY_DIR
@@ -40,7 +44,7 @@ def first_sent_sum(docset, config):
     # (At any rate this is what we need to do to match the rouge logic.)
 
     # original logic: docsetID = docset.id # jgreve: turns out the 'id' is not actually the docset_id.
-    # id_part = docsetID.split("-") 
+    # id_part = docsetID.split("-")
     #full_file_name = id_part[0] + "-A.M.100." + id_part[1] + ".9"
     if len( docset.topic_id ) != 6:
         u.eprint('WARNING: expected 6 char topic_id instead of {} chars, topic_id="{}" for docset={})'.format( len(docset.topic_id), docset.topic_id, docset))
@@ -54,7 +58,7 @@ def first_sent_sum(docset, config):
     if not re.search( r'^[A-Z]$', part2  ):
         u.eprint('WARNING: expected exactly one uppercase letter A-Z for topic_id.part2 instead "{}" for docset={})'.format( part2, docset))
     full_file_name = part1 + "-A.M.100." + part2 + "." + group_num
-    
+
     if not os.path.exists(directory):
         os.makedirs(directory)
     wout = open(directory + "/" + full_file_name, "w+")
