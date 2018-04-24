@@ -4,8 +4,14 @@ note: the D2 requirements specify a "README" file, so here it is.
 I didn't want to assume "README.md" and miss the requirements.
 
 Overview
-Instructions for running the D2 code on pandas.
+========
+Instructions for running the D2 summarizer code on pandas.
 The two examples below show how to run via condor and the command line.
+See "Post-run" for how to run rouge scores.
+
+
+
+
 
 This is followed by an overview of the call sequence and a summary
 of the configuration details in case you want to run the system on
@@ -13,10 +19,24 @@ a different topic set.
 
 
 Prereqs:
+========
 To run the system your current working directory needs to be in the project root.
 Typically we extract into a summarizer folder.
 
 
+Post-run:
+========
+
+To get D2 rouge scores you need to run
++---------------------
+|    $ bin/rouge.sh
++---------------------
+
+This will write the rouge scores to .../results/D2_rouge_scores.out
+
+
+Run the D2 Summarizer:
+======================
 
 To run via condor:
 +---------------------
@@ -38,11 +58,14 @@ The actually summaries are written to STDOUT as well as the
 individual docset outputs/D2 files.  "run.dat" is just a
 convenience to gather operational data.
 
+Additional Information
+======================
+
     Call Sequence
 -------------------------------------
   (i)   bin/summarizer_patas
- (ii)   bin/summarizer bin/comfig_patas.yaml
-(iii)   src/summarizer.py -c bin/comfig_patas.yaml
+ (ii)   bin/summarizer bin/config_patas.yaml
+(iii)   src/summarizer.py -c bin/config_patas.yaml
 
 (i) is just a stub shell that has a suitable D2 config file hardwired into it.
 (ii) passes the config file from (i) into (iii).
@@ -81,7 +104,4 @@ sample config file (used for D2)
 | #    article_file: aquaint_test1/nyt/1999/19990330_NYT
 +--- end config_patas.yml ---
 
-
-
-
-bin/summarizer_patas
+--- end README ---

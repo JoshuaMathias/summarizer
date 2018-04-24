@@ -10,7 +10,7 @@ set -u
 ROUGE_OUT=results/D2_rouge_scores.out
 # used below in perl part
 
-set -x
+#set -x
 
 # Python part, creates the rouge config file for perl.
 MYDATA_DIR="outputs/D2"
@@ -33,5 +33,8 @@ ROUGE_PROG=$ROUGE_HOME/ROUGE-1.5.5.pl
 ROUGE_DATA_DIR=$ROUGE_HOME/data
 $ROUGE_PROG -e "$ROUGE_DATA_DIR" -a -n 4 -x -m -c 95 -r 1000 -f A -p 0.5 -t 0 -l 100 -s -d "$ROUGE_CONFIG" > "$ROUGE_OUT"
 
-echo "$0: wrote results to $ROUGE_OUT"
+TABLE_OUT="${ROUGE_OUT}.csv"
+src/rouge_tableize.py "$ROUGE_OUT" > "$TABLE_OUT"
+
+echo "$0: wrote results to $ROUGE_OUT, see $TABLE_OUT for excel-friendly version."
 
