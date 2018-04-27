@@ -101,7 +101,7 @@ In our QRM method, sentences that appear earlier in their article appear earlier
 This ordering decision has no effect on the ROUGE score for our summaries, but we subjectively believe that this ordering affects their readability.
 
 \subsection{Content Realization}
-To generate the summary, we look at each selected sentence sequentially. If the sum of the words in the summary and the words in the current selected sentence is less than 100, the sentence is added to the summary. This realization strategy isn’t particularly clever, but it does ensure that the summary adheres to the length requirement and contains only complete sentences. We chose to exclude sentences of less than six words.
+To generate the summary, we look at each selected sentence sequentially. If the sum of the words in the summary and the words in the current selected sentence is less than 100, the sentence is added to the summary. This realization strategy isn't particularly clever, but it does ensure that the summary adheres to the length requirement and contains only complete sentences. We chose to exclude sentences of less than six words.
 
 Each summary is written to a summary file formatted as described in the Delivery 2 specifications.
 
@@ -162,7 +162,7 @@ To drill into this a little further we are including a heat-map style representa
 
 \begin{figure}
 \caption{ROUGE heat map for FSS}
-\includegraphics[width=80mm,height=240mm,scale=0.1]{rouge_heat_map.png}
+\includegraphics[width=80mm,scale=0.5]{rouge_heat_map.png}
 \end{figure}
 
 This finding shows that we are missing scores, which suggests that the number of empty values will be one of the focuses of our research.
@@ -171,7 +171,7 @@ The important thing isn't numeric values but the patterns of zeros (darker red).
 
 We anticipate finding a number of surface features (punctuation, space formatting and so on) that will increase ROUGE scores against the gold standards. We also expect that the missing longer n-grams will yield direction for where to focus our summarization efforts.
 
-In analyzing our system’s results, we realized that we had overlooked the normalization of our feature vectors in terms of punctuation and capitalization. We cannot speak to the significance of the impact this lack of normalization had on our ROUGE scores, but we anticipate improved performance from our system once  our QRM method features normalization for punctuation and capitalization.
+In analyzing our system's results, we realized that we had overlooked the normalization of our feature vectors in terms of punctuation and capitalization. We cannot speak to the significance of the impact this lack of normalization had on our ROUGE scores, but we anticipate improved performance from our system once  our QRM method features normalization for punctuation and capitalization.
 
 % ~\cite{Du:12}
 % ~\cite{Lau:17}
