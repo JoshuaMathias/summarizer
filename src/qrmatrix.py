@@ -44,7 +44,15 @@ def qr_sum(docset, config):
             sentences = sent_tokenize(paragraph)
 
             for sentence in sentences:
-                words = word_tokenize(sentence)
+                raw_words = word_tokenize(sentence)
+
+                words = []
+
+                for w in raw_words:
+                    if re.search("[a-zA-Z]", w) != None:
+                        words.append(w.lower())
+                    # words.append(w)
+                    
                 article_word_count += len(words)
 
                 sentence_position += 1
