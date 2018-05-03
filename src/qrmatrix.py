@@ -8,12 +8,21 @@ from operator import itemgetter
 
 from nltk.tokenize import sent_tokenize, word_tokenize # for tokenizing sentences and words
 
+from scipy import spatial
+
 def qr_sum(docset, config):
 
     word_count = 0
 
     all_sentences = [] # contains lists with
-    # [sentence, sentence vec, sentece matrix vect, position in article, article index in article_length, score]
+    # SENTENCE LIST
+    # 0 sentenc
+    # 1 sentence vec
+    # 2 sentece matrix vect
+    # 3 position in article
+    # 4 article index in article_length
+    # 5 sentence score
+    # 6 cosine sim score
 
     words_dict = {} # {word, index}
     words_vec = [] # [word]
@@ -22,6 +31,18 @@ def qr_sum(docset, config):
 
     # TODO: Define method of refusing fragment sentences
     short = 100 # temporary solution to fragment sentences making it into summary
+
+    # TODO: make dictionary of stop words
+    stops = open("src/stop_words")
+    stop_lines = stops.read().split("\n")
+
+    stop_words = {}
+
+    for line in stop_lines:
+        line = line.lower()
+        if line not in stop_words:
+            stop_words[line] = 0
+
 
     u.eprint('docset={}'.format(docset) )
     for idx, article in enumerate(docset.docs):
@@ -45,25 +66,38 @@ def qr_sum(docset, config):
 
             for sentence in sentences:
                 raw_words = word_tokenize(sentence)
-
+                norm_words = []
                 words = []
 
                 for w in raw_words:
                     if re.search("[a-zA-Z]", w) != None:
-                        words.append(w.lower())
+                        norm_words.append(w.lower())
                     # words.append(w)
-                    
+
+                for w in norm_words:
+                    if w not in stop_words:
+                        words.append(w)
+
                 article_word_count += len(words)
 
                 sentence_position += 1
                 # print(sentence_position)
 
-                if len(words) > 6: #arbitrary length of fragments
-                    all_sentences.append([sentence, words, [None], sentence_position, len(article_length), 0])
+                first_char = False
+                last_char = False
+
+                if sentence[0].lower() != sentence[0]:
+                    first_char = True
+
+                if sentence[-1] == ".":
+                    last_char = True
+
+                if len(words) > 6 and first_char == True and last_char == True: #arbitrary length of fragments
+                    all_sentences.append([sentence, norm_words, [None], sentence_position, len(article_length), 0, 0])
                     if len(words) < short:
                         short = len(words)
 
-                for word in words:
+                for word in norm_words:
                     if word not in words_dict:
                         words_dict[word] = len(words_vec)
                         words_vec.append(word)
@@ -85,11 +119,19 @@ def qr_sum(docset, config):
         sentence[2] = feat_vec
 
 # QR MATRIX
-    selected_content = [] # list of sentences selected for summary
+    selected_content = [] # list of sentences selected for
+
+    cosine_out = open("cosine_results", "a+")
 
     # while 100 words not used up and shortest sentence isn't too long
     while word_count < 100 and word_count + short < 100:
+        cos = []
         for sentence in all_sentences:
+            total_sim = 0
+            for x in all_sentences:
+                total_sim += 1 - spatial.distance.cosine(sentence[3], x[3])
+            sentence[6] = total_sim / len(all_sentences)
+            cos.append(sentence)
 
             # TODO: implement computation for t and g values from CLASSY [2001]
             # t and g currently based on hardwired values from CLASSY [2001] article
@@ -107,12 +149,23 @@ def qr_sum(docset, config):
                 # print(sentence[0], sentence[5])
 
         ranked = sorted(all_sentences, key=itemgetter(5), reverse=True)
+        cosranked = sorted(cos, key=itemgetter(6), reverse=True)
+
+### CHECK COSINE EFFECTIVENESS
+        # x = 0
+        # while x < 5:
+        #     u.eprint(ranked[x][0])
+        #     u.eprint(cosranked[x][0])
+        #     cosine_out.write(cosranked[x][0] + "===========================\n")
+        #     print("===========================")
+        #     x += 1
 
         remove_words = []
         added = False
         while added == False:
             for x in ranked:
                 if len(x[1]) + word_count < 100:
+                    # u.eprint(len(x[1]), word_count, x[0], x[1])
                     selected_content.append(x)
                     word_count += len(x[1])
                     added = True
@@ -133,16 +186,15 @@ def qr_sum(docset, config):
     for s in ordered_sum:
         summary += s[0] + "\n"
 
+    cosine_out.close()
 
-
-# weighting function = g * exp(-8* j/n) + t
-# t = 3, g = 10 from CLASSY [2001]
 
 # WRITE SUMMARY TO FILE
     directory = config.DEFAULT_SUMMARY_DIR
 
-    u.eprint('   docset.id      ="{}"'.format(docset.id)) # both appear to be the same
-    u.eprint('   docset.topic_id="{}"'.format(docset.topic_id))
+    u.eprint('SUMMARY +++++++')
+    # u.eprint('   docset.id      ="{}"'.format(docset.id)) # both appear to be the same
+    # u.eprint('   docset.topic_id="{}"'.format(docset.topic_id))
     #docsetID = docset.topic_id # jgreve: apparently the id and the docset_id are different.
     # The D2 reqs say we need the docset_id.
     # (in case you're wondering I think the dash part is for -A and -B for test sets.)
