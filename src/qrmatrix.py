@@ -26,6 +26,7 @@ def qr_sum(docset, config):
 
     words_dict = {} # {word, index}
     words_vec = [] # [word]
+    words_tally = {}
 
     article_length = [] # num_words
 
@@ -93,14 +94,17 @@ def qr_sum(docset, config):
                     last_char = True
 
                 if len(words) > 6 and first_char == True and last_char == True: #arbitrary length of fragments
-                    all_sentences.append([sentence, norm_words, [None], sentence_position, len(article_length), 0, 0])
+                    all_sentences.append([sentence, norm_words, [None], sentence_position, len(article_length), 0])
                     if len(words) < short:
                         short = len(words)
 
                 for word in norm_words:
                     if word not in words_dict:
                         words_dict[word] = len(words_vec)
+                        words_tally[word] = 1
                         words_vec.append(word)
+                    else:
+                        words_tally[word] += 1
 
         article_length.append(article_word_count)
 
@@ -112,7 +116,7 @@ def qr_sum(docset, config):
 
         for word in sentence[1]:
             if word in words_dict:
-                feat_vec[words_dict[word]] = 1
+                feat_vec[words_dict[word]] = words_tally[word]
 
         # print(sum(feat_vec))
 
@@ -121,17 +125,9 @@ def qr_sum(docset, config):
 # QR MATRIX
     selected_content = [] # list of sentences selected for
 
-    cosine_out = open("cosine_results", "a+")
-
     # while 100 words not used up and shortest sentence isn't too long
     while word_count < 100 and word_count + short < 100:
-        cos = []
         for sentence in all_sentences:
-            total_sim = 0
-            for x in all_sentences:
-                total_sim += 1 - spatial.distance.cosine(sentence[3], x[3])
-            sentence[6] = total_sim / len(all_sentences)
-            cos.append(sentence)
 
             # TODO: implement computation for t and g values from CLASSY [2001]
             # t and g currently based on hardwired values from CLASSY [2001] article
@@ -149,16 +145,6 @@ def qr_sum(docset, config):
                 # print(sentence[0], sentence[5])
 
         ranked = sorted(all_sentences, key=itemgetter(5), reverse=True)
-        cosranked = sorted(cos, key=itemgetter(6), reverse=True)
-
-### CHECK COSINE EFFECTIVENESS
-        # x = 0
-        # while x < 5:
-        #     u.eprint(ranked[x][0])
-        #     u.eprint(cosranked[x][0])
-        #     cosine_out.write(cosranked[x][0] + "===========================\n")
-        #     print("===========================")
-        #     x += 1
 
         remove_words = []
         added = False
@@ -170,6 +156,12 @@ def qr_sum(docset, config):
                     word_count += len(x[1])
                     added = True
                     remove_words = x[1]
+                    break
+            if added == False:
+                word_count = 101
+                break
+
+        # u.eprint(ranked[0][0], word_count)
 
         r_index = []
         for item in remove_words:
@@ -186,13 +178,10 @@ def qr_sum(docset, config):
     for s in ordered_sum:
         summary += s[0] + "\n"
 
-    cosine_out.close()
-
 
 # WRITE SUMMARY TO FILE
     directory = config.DEFAULT_SUMMARY_DIR
 
-    u.eprint('SUMMARY +++++++')
     # u.eprint('   docset.id      ="{}"'.format(docset.id)) # both appear to be the same
     # u.eprint('   docset.topic_id="{}"'.format(docset.topic_id))
     #docsetID = docset.topic_id # jgreve: apparently the id and the docset_id are different.
