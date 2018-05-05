@@ -1,6 +1,7 @@
 import bs4
 import argparse
 import shelve
+import sys
 
 import local_util as u
 # "local_util" mainly for u.eprint() which is like print but goes to stderr.
@@ -17,34 +18,11 @@ class ArticleContent():
     def __str__(self):
         return 'ArticleContent(): headline="{}"'.format(self.headline)
 
-    def __extract_byline__(self, text):
-        NYTStyle = text.find('_')
-        APStyle = text.find('--')
-
-        if NYTStyle > 0 and NYTStyle < 32:
-            self.byline = text[0:NYTStyle].strip()
-            return text[NYTStyle+1:].strip()
-
-        if APStyle > 0 and APStyle < 32:
-            self.byline = text[0:APStyle].strip()
-            return text[APStyle+2:].strip()
-
-        return text
-
     def setBody(self, bodyText):
         self.body = bodyText
 
     def setHeadline(self, headline):
         self.headline = headline
-
-    def addParagraph(self, paraText):
-        if self.body is None:
-            self.body = list()
-
-        if len(self.body) == 0:
-            paraText = self.__extract_byline__(paraText)
-
-        self.body.append(paraText)
 
 class DocumentSet():
     def __init__(self, id='', topic_id='', topic_cat='', topic_title='', docs = list()):
@@ -96,13 +74,13 @@ class ContentReader():
                 para = ''
                 for line in f:
                     if len(line.strip()) == 0 and len(para) > 0:
-                        art.addParagraph(para)
+                        self.addParagraph(art, para)
                         para = ''
                     elif len(line.strip()) > 0:
                         para += (line.strip() + ' ')
 
                 if len(para) > 0:
-                    art.addParagraph(para)
+                    self.addParagraph(art, para)
 
             articles.append(art)
 
@@ -115,29 +93,34 @@ class ContentReader():
         else:
             return ''
 
+    def __extract_byline__(self, text):
+        NYTStyle = text.find('_')
+        APStyle = text.find('--')
+
+        if NYTStyle > 0 and NYTStyle < 32:
+            self.byline = text[0:NYTStyle].strip()
+            return text[NYTStyle+1:].strip()
+
+        if APStyle > 0 and APStyle < 32:
+            self.byline = text[0:APStyle].strip()
+            return text[APStyle+2:].strip()
+
+        return text
+
+    def addParagraph(self, article, paraText):
+        if article.body is None:
+            article.body = list()
+
+        if len(article.body) == 0:
+            paraText = self.__extract_byline__(paraText)
+
+            article.body.append(paraText)
+
     def __extract_tag_or_attr(self, body, tagid, attrid):
         if body.has_attr(attrid):
             return body[attrid].strip()
         else:
             return self.__extract_tag__(body, tagid)
-
-    def read_sgml_repo(self, filename):
-        articles = list()
-        doctree = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
-        for doc in doctree.find_all('doc'):
-            art = ArticleContent(id = self.__extract_tag_or_attr(doc, 'docno', 'id'),
-                                 type = self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
-                                 headline = self.__extract_tag__(doc, 'headline'),
-                                 date = self.__extract_tag__(doc, 'datetime'),
-                                 dateline = self.__extract_tag__(doc, 'dateline'),
-                                 body=list())
-
-            for text_block in doc.find_all('text'):
-                for para in text_block.find_all('p'):
-                    art.addParagraph(para.contents[0])
-            articles.append(art)
-
-        return articles
 
     def __aquaint_filename__(self, doc_id):
         if doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 files
@@ -158,11 +141,18 @@ class ContentReader():
 
         return filename
 
-    def __get_doc_list__(self, doc_ids):
+    def __read_doc_list__(self, doc_ids):
         result_articles = list()
-
         with shelve.open(self.dbname) as db:
             for doc_id in doc_ids:
+                if doc_id in db:
+                    result_articles.append(db[doc_id])
+
+    def __initialize_db__(self, all_doc_ids):
+        with shelve.open(self.dbname) as db:
+            current = sys.getrecursionlimit()
+            sys.setrecursionlimit(100000)
+            for doc_id in all_doc_ids:
                 if doc_id not in db:
                     filename = self.__aquaint_filename__(doc_id)
                     try:
@@ -170,24 +160,26 @@ class ContentReader():
                         doctree = bs4.BeautifulSoup(articles_file.read(), 'html.parser')
                         for doc in doctree.find_all('doc'):
                             id = self.__extract_tag_or_attr(doc, 'docno', 'id')
-                            if id not in db:
+                            if id in all_doc_ids and id not in db:
                                 art = ArticleContent(id=id,
-                                                     type=self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
-                                                     headline=self.__extract_tag__(doc, 'headline'),
-                                                     date=self.__extract_tag__(doc, 'datetime'),
-                                                     dateline=self.__extract_tag__(doc, 'dateline'),
-                                                     body=list())
+                                         type=self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
+                                         headline=self.__extract_tag__(doc, 'headline'),
+                                         date=self.__extract_tag__(doc, 'datetime'),
+                                         dateline=self.__extract_tag__(doc, 'dateline'),
+                                         body=list())
 
                                 text_block = doc.find('text')
                                 for para in text_block.find_all('p'):
-                                    art.addParagraph(para.contents[0])
+                                    self.addParagraph(art, para.contents[0])
+
+                                db[doc_id] = art
 
                         articles_file.close()
                     except FileNotFoundError:
                         print('ERROR: File Not Found "%s"' % filename)
-                    
-                result_articles.append(db[doc_id])
-        return result_articles
+
+            sys.setrecursionlimit(current)
+
 
     def __aquaint_file__(self, doc_id_list):
         article_list = list()
@@ -216,7 +208,7 @@ class ContentReader():
 
                         text_block = doc.find('text')
                         for para in text_block.find_all('p'):
-                            art.addParagraph(para.contents[0])
+                            self.addParagraph(art, para.contents[0])
 
                         doc_count += 1
                         article_list.append(art)
@@ -231,8 +223,16 @@ class ContentReader():
 
         return article_list
 
+    def __get_all_doc_ids__(self, topicIndex):
+        doc_id_set = set()
+        for doc in topicIndex.find_all('doc'):
+            doc_id_set.add(doc['id'].strip())
+
+        return doc_id_set
+
     def read_topic_index(self, filename):
         topicIndex = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
+        self.__initialize_db__(self.__get_all_doc_ids__(topicIndex))
         for topic_node in topicIndex.find_all('topic'):
             topic = Topic(topic_node['id'], topic_node['category'], topic_node.find('title').contents[0])
 
@@ -244,7 +244,7 @@ class ContentReader():
                     if docid == None or len(docid) == 0:
                         print('ERROR: Unknown Document ID for doc %s' % doc)
                     docs.append(docid)
-                articles = self.__aquaint_file__(docs)
+                articles = self.__read_doc_list__(docs)
 
                 topic.addDocumentSet(docset_id, articles)
 
