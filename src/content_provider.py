@@ -1,5 +1,6 @@
 import bs4
 import argparse
+import shelve
 
 import local_util as u
 # "local_util" mainly for u.eprint() which is like print but goes to stderr.
@@ -59,12 +60,30 @@ class DocumentSet():
     def addDoc(self, doc):
         self.docs.append(doc)
 
+class Topic():
+    def __init__(self, id, category, title):
+        self.id = id
+        self.category = category
+        self.title = title
+        self.doc_set = dict()
+
+    def addDocumentSet(self, docset_id, articles):
+        self.doc_set[docset_id] = DocumentSet(docset_id, self.id, self.category, self.title, articles)
+
+    def getDocumentSet(self, docset_id):
+        if docset_id in self.doc_set:
+            return self.doc_set[docset_id]
+        else:
+            return None
+
 class ContentReader():
     def __init__(self,
                  aquaint='/opt/dropbox/17-18/573/AQUAINT',
-                 aquaint2 = '/opt/dropbox/17-18/573/AQUAINT-2'):
+                 aquaint2 = '/opt/dropbox/17-18/573/AQUAINT-2',
+                 dbname='shelfdb'):
         self.AQUAINT_DIR = aquaint
         self.AQUAINT2_DIR = aquaint2
+        self.dbname = dbname
 
     def __str__(self):
         return 'ContentReader()'
@@ -139,6 +158,37 @@ class ContentReader():
 
         return filename
 
+    def __get_doc_list__(self, doc_ids):
+        result_articles = list()
+
+        with shelve.open(self.dbname) as db:
+            for doc_id in doc_ids:
+                if doc_id not in db:
+                    filename = self.__aquaint_filename__(doc_id)
+                    try:
+                        articles_file = open(filename, 'r')
+                        doctree = bs4.BeautifulSoup(articles_file.read(), 'html.parser')
+                        for doc in doctree.find_all('doc'):
+                            id = self.__extract_tag_or_attr(doc, 'docno', 'id')
+                            if id not in db:
+                                art = ArticleContent(id=id,
+                                                     type=self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
+                                                     headline=self.__extract_tag__(doc, 'headline'),
+                                                     date=self.__extract_tag__(doc, 'datetime'),
+                                                     dateline=self.__extract_tag__(doc, 'dateline'),
+                                                     body=list())
+
+                                text_block = doc.find('text')
+                                for para in text_block.find_all('p'):
+                                    art.addParagraph(para.contents[0])
+
+                        articles_file.close()
+                    except FileNotFoundError:
+                        print('ERROR: File Not Found "%s"' % filename)
+                    
+                result_articles.append(db[doc_id])
+        return result_articles
+
     def __aquaint_file__(self, doc_id_list):
         article_list = list()
         document_sources = dict()
@@ -183,12 +233,10 @@ class ContentReader():
 
     def read_topic_index(self, filename):
         topicIndex = bs4.BeautifulSoup(open(filename).read(), 'html.parser')
-        for topic in topicIndex.find_all('topic'):
-            topic_id = topic['id']
-            topic_cat = topic['category']
-            topic_title = topic.find('title').contents[0]
+        for topic_node in topicIndex.find_all('topic'):
+            topic = Topic(topic_node['id'], topic_node['category'], topic_node.find('title').contents[0])
 
-            for docset_tag in topic.find_all('docseta'):
+            for docset_tag in topic_node.find_all('docseta'):
                 docset_id = docset_tag['id']
                 docs = list()
                 for doc in docset_tag.find_all('doc'):
@@ -198,9 +246,9 @@ class ContentReader():
                     docs.append(docid)
                 articles = self.__aquaint_file__(docs)
 
-                docset = DocumentSet(docset_id, topic_id, topic_cat, topic_title, articles)
+                topic.addDocumentSet(docset_id, articles)
 
-                yield docset
+                yield topic.getDocumentSet(docset_id)
 
 
 if __name__ == "__main__":
