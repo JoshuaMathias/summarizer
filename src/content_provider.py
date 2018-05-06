@@ -179,49 +179,7 @@ class ContentReader():
                         print('ERROR: File Not Found "%s"' % filename)
 
             sys.setrecursionlimit(current)
-
-
-    def __aquaint_file__(self, doc_id_list):
-        article_list = list()
-        document_sources = dict()
-        for doc_id in doc_id_list:
-            filename = self.__aquaint_filename__(doc_id)
-            if filename not in document_sources:
-                document_sources[filename] = list()
-            document_sources[filename].append(doc_id)
-
-        for filename in document_sources:
-            doc_ids = document_sources[filename]
-            try:
-                doc_count = 0
-                articles_file = open(filename,'r')
-                doctree = bs4.BeautifulSoup(articles_file.read(), 'html.parser')
-                for doc in doctree.find_all('doc'):
-                    id = self.__extract_tag_or_attr(doc, 'docno', 'id')
-                    if id in doc_ids:
-                        art = ArticleContent(id=id,
-                                             type=self.__extract_tag_or_attr(doc, 'doctype', 'type').lower(),
-                                             headline=self.__extract_tag__(doc, 'headline'),
-                                             date=self.__extract_tag__(doc, 'datetime'),
-                                             dateline=self.__extract_tag__(doc, 'dateline'),
-                                             body=list())
-
-                        text_block = doc.find('text')
-                        for para in text_block.find_all('p'):
-                            self.addParagraph(art, para.contents[0])
-
-                        doc_count += 1
-                        article_list.append(art)
-
-                        if doc_count == len(doc_ids):
-                            articles_file.close()
-                            break
-
-                    articles_file.close()
-            except FileNotFoundError:
-                print('ERROR: File Not Found "%s"' % filename)
-
-        return article_list
+            sys.setrecursionlimit(current)
 
     def __get_all_doc_ids__(self, topicIndex):
         doc_id_set = set()

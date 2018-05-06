@@ -2,7 +2,7 @@
 # To run successfully, use the command below from the home directory of this project:
 # $ python3 src/summarizer.py -c config_un.yml
 import argparse
-import content_provider
+import topic_index_reader
 import sum_config
 import nltk
 import os
@@ -73,14 +73,17 @@ if __name__ == "__main__":
     if config.AQUAINT:
         u.eprint('config.AQUAINT1_DIRECTORY={}'.format(config.AQUAINT1_DIRECTORY))
         u.eprint('config.AQUAINT2_DIRECTORY={}'.format(config.AQUAINT2_DIRECTORY))
-        reader = content_provider.ContentReader(aquaint=config.AQUAINT1_DIRECTORY,
-                                                aquaint2=config.AQUAINT2_DIRECTORY)
+        index_reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
+                                                           aquaint1 = config.AQUAINT1_DIRECTORY,
+                                                           aquaint2 = config.AQUAINT2_DIRECTORY,
+                                                           dbname = 'shelve_db')
 
         u.eprint('config.MAX_WORDS={}'.format(config.MAX_WORDS))
         smry = Summarizer(config.MAX_WORDS)
 
         u.eprint('config.topic_file_path()="{}"'.format(config.aquaint_topic_file_path()))
-        for docset in reader.read_topic_index(config.aquaint_topic_file_path()):
+        topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
+        for docset in topic_index.documentSets(docset_type='docseta'):
             u.eprint('%s : %s' % (docset.id, docset.topic_title))
             print('%s : %s' % (docset.id, docset.topic_title))
             smry.summary = ''
