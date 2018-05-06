@@ -46,18 +46,18 @@ def qr_sum(docset, config):
 
 
     u.eprint('docset={}'.format(docset) )
-    for idx, article in enumerate(docset.docs):
+    for idx, article in enumerate(docset.articles):
 
         article_word_count = 0
         # TODO: GET ARTICLE ID INFORMATION AND STORE IT FOR LATER USE
 
         # jgreve: who knew articles can be empty?
-        if len(article.body) == 0:
+        if len(article.paragraphs) == 0:
             u.eprint('WARNING: empty article {} (#{} docset={})'.format(article, idx, docset))
             continue
 
         sentence_position = 0
-        for paragraph in article.body:
+        for paragraph in article.paragraphs:
 
             paragraph = re.sub("(\n|\t)", " ", paragraph)
             paragraph = re.sub("  +", " ", paragraph)

@@ -26,6 +26,7 @@ class E2JKTopicContentHandler(xml.sax.ContentHandler):
         elif name == 'docsetA' or name == 'docsetB':
             self.docset = article_content.DocSet(attrs.getValue('id'), name)
             self.docset.topic_title = self.topic.title
+            self.docset.topic_id = self.topic.id
             self.topic.addDocSet(self.docset)
             self.state = 'DOCSET'
         elif name == 'doc':

@@ -29,6 +29,7 @@ class DocSet():
         self.id = id
         self.type = type
         self.topic_title = ''
+        self.topic_id = ''
         self.documents = list()
         self.articles = list()   # Initialize in case articles can't be found
 
