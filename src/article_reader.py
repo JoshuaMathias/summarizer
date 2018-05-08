@@ -111,11 +111,12 @@ class ArticleReader():
         for doc_id in doc_ids:
             if doc_id not in db:
                 miss_cnt += 1
-                logger.debug('load_database(): adding %s to database...')
+                logger.debug('load_database(): adding to database: %s', doc_id)
                 articles = self.__load_doc_ids__(doc_id, doc_ids, db)
                 for article in articles:
                     db[article.id] = article.toDict()
             else:
+                logger.debug('load_database(): already in database: %s', doc_id)
                 hit_cnt += 1
         db.close()
         logger.info('load_database(): #doc_ids=%d, hit_cnt=%d miss_cnt=%d', len(doc_ids), hit_cnt, miss_cnt )

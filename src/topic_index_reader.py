@@ -72,6 +72,7 @@ class TopicIndexReader():
         return 'TopicIndexReader(dbname="{}", topic_file="{}")'.format(self.dbname, self.topic_filename)
 
     def read_topic_index_file(self, docset_type = 'all'):
+        logger.info('().__init__: content_handler=%s', self.content_handler  )
         xml.sax.parse(self.topic_file, self.content_handler)
 
         if self.content_handler.state != 'END':
