@@ -13,9 +13,16 @@ class E2JKTopicContentHandler(xml.sax.ContentHandler):
         xml.sax.ContentHandler.__init__(self)
         self.topic_index = topic_index
         self.state = 'START'
+        self.docset_type = 'all'
 
     def __str__( self ):
         return 'E2JKTopicContentHandler( "%s" )' % self.topic_index
+
+    def __docset_we_care_about__(self, docset_name):
+        if self.docset_type in ['docseta', 'docsetb']:
+            return docset_name.lower() == self.docset_type
+        else:
+            return True
 
 
     def startElement(self, name, attrs):
@@ -32,11 +39,12 @@ class E2JKTopicContentHandler(xml.sax.ContentHandler):
         elif name == 'title':
             self.state = 'TITLE'
         elif name == 'docsetA' or name == 'docsetB':
-            self.docset = article_content.DocSet(attrs.getValue('id'), name)
-            self.docset.topic_title = self.topic.title
-            self.docset.topic_id = self.topic.id
-            self.topic.addDocSet(self.docset)
-            self.state = 'DOCSET'
+            if self.__docset_we_care_about__(name):
+                self.docset = article_content.DocSet(attrs.getValue('id'), name)
+                self.docset.topic_title = self.topic.title
+                self.docset.topic_id = self.topic.id
+                self.topic.addDocSet(self.docset)
+                self.state = 'DOCSET'
         elif name == 'doc':
             self.docset.addDocument(attrs.getValue('id'))
 
@@ -73,6 +81,7 @@ class TopicIndexReader():
 
     def read_topic_index_file(self, docset_type = 'all'):
         logger.info('().__init__: content_handler=%s', self.content_handler  )
+        self.content_handler.docset_type = docset_type
         xml.sax.parse(self.topic_file, self.content_handler)
 
         if self.content_handler.state != 'END':
@@ -81,7 +90,7 @@ class TopicIndexReader():
         topic_index = self.content_handler.topic_index
 
         art_reader = article_reader.ArticleReader(self.dbname, self.aquaint1, self.aquaint2)
-        art_reader.load_database(topic_index.allDocuments(docset_type))
+        art_reader.load_database(topic_index.allDocuments())
         for topic in topic_index.topics:
             for docset in topic.docsets:
                 docset.articles = art_reader.get_articles(docset.documents)

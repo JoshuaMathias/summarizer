@@ -85,8 +85,19 @@ class ArticleReader():
                 art.dateline = self.__extract_tag__(doc, 'dateline')
 
                 text_block = doc.find('text')
-                for para in text_block.find_all('p'):
-                    self.__add_paragraph__(art, str(para.contents[0].encode('utf-8')))
+                all_para_tags = text_block.find_all('p')
+
+                if len(all_para_tags) > 0:
+                    for para in all_para_tags:
+                        self.__add_paragraph__(art, str(para.contents[0].encode('utf-8')))
+                else:
+                    blockText = str(text_block.contents[0].encode('utf-8'))
+                    if blockText:
+                        paraBreaks = blockText.split('\n\t')
+                        for para in paraBreaks:
+                            self.__add_paragraph__(art, para.strip())
+                    else:
+                        logger.warning('__load_doc_ids_from_doc_tree__(): Article %s has no text', doc_id)
 
                 return_articles.add(art)
 
@@ -100,7 +111,7 @@ class ArticleReader():
             articles = self.__load_doc_ids_from_doc_tree__(doctree, doc_ids)
             return articles
         except FileNotFoundError:
-            sys.stderr.write('ERROR: Could not find Article File "%s"\n' % article_filename)
+            logger.error('__load_doc_ids__(): Could not find Article File "%s"', article_filename)
             return []
 
     def load_database(self, doc_ids):
