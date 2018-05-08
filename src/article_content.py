@@ -6,6 +6,9 @@ class Article():
         self.dateline = ''
         self.paragraphs = list()
 
+    def __str__(self):
+        return 'Article( id:{} "{}" w/{}P )'.format(self.id, len(self.paragraphs), self.headline)
+
     def toDict(self):
         return {'id' : self.id,
                 'headline' : self.headline,
@@ -33,6 +36,13 @@ class DocSet():
         self.documents = list()
         self.articles = list()   # Initialize in case articles can't be found
 
+    def __str__(self):
+        size_info = '{}'.format( len(self.documents) )
+        if len(self.articles) != len(self.documents):
+            size_info += ' docs, but #articles={}?'.format( len(self.articles) )
+        return 'DocSet( id:{} "{}" {})'.format(self.id, self.topic_title, size_info )
+
+
     def addDocument(self, doc):
         self.documents.append(doc)
 
@@ -43,6 +53,9 @@ class Topic():
         self.title = ''
         self.docsets = list()
 
+    def __str__(self):
+        return 'Topic( id:{} category={} title={} #docsets={})'.format( self.id, self.category, self.title, len(self.docsets) )
+
     def addDocSet(self, docset):
         self.docsets.append(docset)
 
@@ -50,6 +63,9 @@ class Topic():
 class TopicIndex():
     def __init__(self):
         self.topics = list()
+
+    def __str__(self):
+        return 'TopicIndex( #topics={} )'.format( len(self.topics) )
 
     def addTopic(self, topic):
         self.topics.append(topic)

@@ -21,6 +21,7 @@ class ArticleReader():
             # Wow, this is ugly.
             # If this is an AQUAINT1 directory, use "XIN" as the code for "XIE" ids
             # and add "_ENG" to the end of all files EXCEPT for "NYT"
+            # jgreve: don't see a cleaner way to do it. :-(
             #--------------------------
             file_extension = doc_id[0:3].upper()
             if file_extension == 'XIE':
@@ -130,4 +131,4 @@ if __name__ == "__main__":
     reader.load_database([args.article_id])
 
     for article in reader.get_articles([args.article_id]):
-        print (article.toDict())
+        print (article.toDict()) 

@@ -13,6 +13,7 @@ from scipy import spatial
 def qr_sum(docset, config):
 
     word_count = 0
+    fname='qr_sum' # for labeling log statments.
 
     all_sentences = [] # contains lists with
     # SENTENCE LIST
@@ -45,7 +46,7 @@ def qr_sum(docset, config):
             stop_words[line] = 0
 
 
-    u.eprint('docset={}'.format(docset) )
+    u.eprint('{}: docset={}'.format(fname, docset) )
     for idx, article in enumerate(docset.articles):
 
         article_word_count = 0
@@ -59,6 +60,8 @@ def qr_sum(docset, config):
         sentence_position = 0
         for paragraph in article.paragraphs:
 
+            # jgreve: should this logic logic go into the article_content.Article(),
+            # or whatever populates Articels ?
             paragraph = re.sub("(\n|\t)", " ", paragraph)
             paragraph = re.sub("  +", " ", paragraph)
             paragraph = re.sub("^ ", "", paragraph)

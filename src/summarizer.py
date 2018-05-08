@@ -77,14 +77,17 @@ if __name__ == "__main__":
                                                            aquaint1 = config.AQUAINT1_DIRECTORY,
                                                            aquaint2 = config.AQUAINT2_DIRECTORY,
                                                            dbname = 'shelve_db')
+        # todo: move shelve_db into config.yaml ? (jgreve)
+        u.eprint('index_reader={}'.format(index_reader))
 
         u.eprint('config.MAX_WORDS={}'.format(config.MAX_WORDS))
         smry = Summarizer(config.MAX_WORDS)
 
         u.eprint('config.topic_file_path()="{}"'.format(config.aquaint_topic_file_path()))
         topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
+        u.eprint('topic_index={}'.format(topic_index))
         for docset in topic_index.documentSets(docset_type='docseta'):
-            u.eprint('%s : %s' % (docset.id, docset.topic_title))
+            u.eprint('processing {}'.format(docset) ) # %s : %s' % (docset.id, docset.topic_title))
             print('%s : %s' % (docset.id, docset.topic_title))
             smry.summary = ''
             smry.summary_size = 0
