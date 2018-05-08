@@ -1,0 +1,68 @@
+version: 1
+#----------------------------------------------------------------
+# added Tue May  8, jgreve
+#----------------------------------------------------------------
+# based on yaml example from 
+#     https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/
+#----------------------------------------------------------------
+# set up to:
+#     write ERROR level to stderr (see "conole" handler).
+#     write all log messages to "info.log" file.
+#     write all ERROR and WARNING messages to "err.log" file.
+#
+#----------------------------------------------------------------
+disable_existing_loggers: False
+formatters:
+    simple:
+        #format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        format: "%(asctime)s:%(levelname)3.3s:%(name)s: %(message)s"
+        #format: "%(levelname)3.3s:%(asctime)s:%(name)-10.10s: %(message)s"
+        # truncates level to 3 chars so that they align in the log file.
+        # (I hate skimming ragged text - jgreve)
+        #---------------+------------------------
+        #  normal...    | truncated...
+        #---------------+------------------------
+        # DEBUG foo     | DEB foo
+        # INFO bar      | INF bar
+        # WARNING grik  | WAR grik 
+        # ERROR gnomon  | ERR gnomon
+        #-------------------------------
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: WARNING
+        formatter: simple
+        stream: ext://sys.stderr
+
+    file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: INFO
+        formatter: simple
+        filename: info.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+
+    error_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        #level: ERROR
+        level: WARNING
+        formatter: simple
+        filename: err.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+
+loggers:
+    my_module:
+        level: ERROR
+        handlers: [console]
+        propagate: no
+
+root:
+    level: INFO
+    #level: DEBUG
+    # note: console logger set to write WARNING messages to stderr.
+    handlers: [console, file_handler, error_file_handler]
+    #handlers: [console, info_file_handler, error_file_handler]

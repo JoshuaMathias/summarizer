@@ -7,7 +7,8 @@ class Article():
         self.paragraphs = list()
 
     def __str__(self):
-        return 'Article( id:{} "{}" w/{}P )'.format(self.id, len(self.paragraphs), self.headline)
+        cutoff = self.headline if len(self.headline) <= 20 else self.headline[0:17]+'...'
+        return 'Article( id:{} "{:.20s}" para={} )'.format(self.id, cutoff, len(self.paragraphs))
 
     def toDict(self):
         return {'id' : self.id,

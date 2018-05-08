@@ -1,14 +1,22 @@
+import local_util as u
+logger = u.get_logger( __name__ ) # will call setup_logging() if needed
+
 import xml.sax
 import argparse
 
 import article_content
 import article_reader
 
+
 class E2JKTopicContentHandler(xml.sax.ContentHandler):
     def __init__(self, topic_index):
         xml.sax.ContentHandler.__init__(self)
         self.topic_index = topic_index
         self.state = 'START'
+
+    def __str__( self ):
+        return 'E2JKTopicContentHandler( "%s" )' % self.topic_index
+
 
     def startElement(self, name, attrs):
         if name == 'TACtaskdata':
@@ -52,11 +60,16 @@ class TopicIndexReader():
                  aquaint1 = '/opt/dropbox/17-18/573/AQUAINT',
                  aquaint2 = '/opt/dropbox/17-18/573/AQUAINT-2',
                  dbname = 'shelve_db'):
+        self.topic_filename = filename # jgreve: keep original name around for logging & __str__
         self.topic_file = open(filename, 'r')
         self.content_handler = E2JKTopicContentHandler(article_content.TopicIndex())
+        logger.info('TopicIndexReader().__init__: content_handler=%s', self.content_handler  )
         self.aquaint1 = aquaint1
         self.aquaint2 = aquaint2
         self.dbname = dbname
+
+    def __str__( self ):
+        return 'TopicIndexReader(dbname="{}", topic_file="{}")'.format(self.dbname, self.topic_filename)
 
     def read_topic_index_file(self, docset_type = 'all'):
         xml.sax.parse(self.topic_file, self.content_handler)
