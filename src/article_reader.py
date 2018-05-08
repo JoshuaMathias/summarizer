@@ -1,3 +1,6 @@
+import local_util as u
+logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
+
 import shelve
 import argparse
 import sys
@@ -21,6 +24,7 @@ class ArticleReader():
             # Wow, this is ugly.
             # If this is an AQUAINT1 directory, use "XIN" as the code for "XIE" ids
             # and add "_ENG" to the end of all files EXCEPT for "NYT"
+            # jgreve: don't see a cleaner way to do it. :-(
             #--------------------------
             file_extension = doc_id[0:3].upper()
             if file_extension == 'XIE':
@@ -100,13 +104,22 @@ class ArticleReader():
             return []
 
     def load_database(self, doc_ids):
+        logger.info('load_database(): #doc_ids=%d', len(doc_ids) )
+        hit_cnt = 0
+        miss_cnt = 0
         db = shelve.open(self.dbname, writeback=True)
         for doc_id in doc_ids:
             if doc_id not in db:
+                miss_cnt += 1
+                logger.debug('load_database(): adding to database: %s', doc_id)
                 articles = self.__load_doc_ids__(doc_id, doc_ids, db)
                 for article in articles:
                     db[article.id] = article.toDict()
+            else:
+                logger.debug('load_database(): already in database: %s', doc_id)
+                hit_cnt += 1
         db.close()
+        logger.info('load_database(): #doc_ids=%d, hit_cnt=%d miss_cnt=%d', len(doc_ids), hit_cnt, miss_cnt )
 
     def get_articles(self, doc_ids):
         articles = list()
@@ -115,7 +128,12 @@ class ArticleReader():
                 if doc_id in db:
                     dict_struct = db[doc_id]
                     articles.append(article_content.articleFromDict(dict_struct))
+                else:
+                    # jgreve: should this be a hard fail?
+                    logger.warning('get_articles(): doc_id="%s" not in database!', doc_id )
 
+        if len(doc_ids) != len(articles):
+             logger.warning( 'get_articles(): expected %d doc_ids but only found %d', len(doc_ids), len(articles) )
         return articles
 
 if __name__ == "__main__":
@@ -130,4 +148,4 @@ if __name__ == "__main__":
     reader.load_database([args.article_id])
 
     for article in reader.get_articles([args.article_id]):
-        print (article.toDict())
+        print (article.toDict()) 
