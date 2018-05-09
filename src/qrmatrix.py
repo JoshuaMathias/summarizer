@@ -1,7 +1,9 @@
 # This function taks a list of documents (from class) and writes a single file to summary
+import local_util as u
+logger = u.get_logger( __name__ ) #  https://docs.python.org/3/howto/logging.html 
+
 import os
 import sum_config
-import local_util as u
 import re # for removing multiple \s characters and source formatting
 import math # for exp for weighting function
 from operator import itemgetter
@@ -10,9 +12,11 @@ from nltk.tokenize import sent_tokenize, word_tokenize # for tokenizing sentence
 
 from scipy import spatial
 
+
 def qr_sum(docset, config):
 
     word_count = 0
+    fname='qr_sum' # for labeling log statments.
 
     all_sentences = [] # contains lists with
     # SENTENCE LIST
@@ -45,7 +49,7 @@ def qr_sum(docset, config):
             stop_words[line] = 0
 
 
-    u.eprint('docset={}'.format(docset) )
+    logger.info('%s: docset=%s', fname, docset )
     for idx, article in enumerate(docset.articles):
 
         article_word_count = 0
@@ -53,12 +57,14 @@ def qr_sum(docset, config):
 
         # jgreve: who knew articles can be empty?
         if len(article.paragraphs) == 0:
-            u.eprint('WARNING: empty article {} (#{} docset={})'.format(article, idx, docset))
+            logger.warning('empty %s in docset#%s=%s)', article, idx, docset)
             continue
 
         sentence_position = 0
         for paragraph in article.paragraphs:
 
+            # jgreve: should this logic logic go into the article_content.Article(),
+            # or whatever populates Articels ?
             paragraph = re.sub("(\n|\t)", " ", paragraph)
             paragraph = re.sub("  +", " ", paragraph)
             paragraph = re.sub("^ ", "", paragraph)
@@ -151,7 +157,7 @@ def qr_sum(docset, config):
         while added == False:
             for x in ranked:
                 if len(x[1]) + word_count < 100:
-                    # u.eprint(len(x[1]), word_count, x[0], x[1])
+                    logger.debug( 'len(x[1])=%d, word_cnt=%s, x[0]=%s, x[1]=%s', len(x[1]), word_count, x[0], x[1])
                     selected_content.append(x)
                     word_count += len(x[1])
                     added = True
@@ -162,6 +168,7 @@ def qr_sum(docset, config):
                 break
 
         # u.eprint(ranked[0][0], word_count)
+        logger.debug('ranked[0][0]=%s, word_count=%d', ranked[0][0], word_count )
 
         r_index = []
         for item in remove_words:
@@ -193,16 +200,16 @@ def qr_sum(docset, config):
     # id_part = docsetID.split("-")
     #full_file_name = id_part[0] + "-A.M.100." + id_part[1] + ".9"
     if len( docset.topic_id ) != 6:
-        u.eprint('WARNING: expected 6 char topic_id instead of {} chars, topic_id="{}" for docset={})'.format( len(docset.topic_id), docset.topic_id, docset))
+        logger.warning( 'expected 6 char topic_id instead of %d, docset=%s',  len(docset.topic_id), docset )
     part1 = docset.topic_id[0:-1] # up to but not including last char
     part2 = docset.topic_id[-1] # last char
     group_num = '9' # Because magic numbers are an anti-pattern.  jgreve
     # lets do some more sanity checks (because it would suck to try figuring out why this
     # doens't work two hours later at ROUGE eval  time (ask me how I know that)). jgreve
     if not re.search( r'[A-Z]\d\d\d\d$', part1 ):
-        u.eprint('WARNING: expected exactly a single letter A-Z and four digits for topic_id.part1 instead "{}" for docset={})'.format( part1, docset))
+        logger.warning('expected exactly a single letter A-Z and four digits for topic_id.part1 instead "%s" for docset=%',  part1, docset)
     if not re.search( r'^[A-Z]$', part2  ):
-        u.eprint('WARNING: expected exactly one uppercase letter A-Z for topic_id.part2 instead "{}" for docset={})'.format( part2, docset))
+        logger.warning('expected exactly one uppercase letter A-Z for topic_id.part2 instead "%s" for docset=%s'.format( part2, docset))
     full_file_name = part1 + "-A.M.100." + part2 + "." + group_num
 
     if not os.path.exists(directory):

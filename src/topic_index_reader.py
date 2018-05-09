@@ -1,14 +1,29 @@
+import local_util as u
+logger = u.get_logger( __name__ ) # will call setup_logging() if needed
+
 import xml.sax
 import argparse
 
 import article_content
 import article_reader
 
+
 class E2JKTopicContentHandler(xml.sax.ContentHandler):
     def __init__(self, topic_index):
         xml.sax.ContentHandler.__init__(self)
         self.topic_index = topic_index
         self.state = 'START'
+        self.docset_type = 'all'
+
+    def __str__( self ):
+        return 'E2JKTopicContentHandler( "%s" )' % self.topic_index
+
+    def __docset_we_care_about__(self, docset_name):
+        if self.docset_type in ['docseta', 'docsetb']:
+            return docset_name.lower() == self.docset_type
+        else:
+            return True
+
 
     def startElement(self, name, attrs):
         if name == 'TACtaskdata':
@@ -24,11 +39,12 @@ class E2JKTopicContentHandler(xml.sax.ContentHandler):
         elif name == 'title':
             self.state = 'TITLE'
         elif name == 'docsetA' or name == 'docsetB':
-            self.docset = article_content.DocSet(attrs.getValue('id'), name)
-            self.docset.topic_title = self.topic.title
-            self.docset.topic_id = self.topic.id
-            self.topic.addDocSet(self.docset)
-            self.state = 'DOCSET'
+            if self.__docset_we_care_about__(name):
+                self.docset = article_content.DocSet(attrs.getValue('id'), name)
+                self.docset.topic_title = self.topic.title
+                self.docset.topic_id = self.topic.id
+                self.topic.addDocSet(self.docset)
+                self.state = 'DOCSET'
         elif name == 'doc':
             self.docset.addDocument(attrs.getValue('id'))
 
@@ -52,13 +68,20 @@ class TopicIndexReader():
                  aquaint1 = '/opt/dropbox/17-18/573/AQUAINT',
                  aquaint2 = '/opt/dropbox/17-18/573/AQUAINT-2',
                  dbname = 'shelve_db'):
+        self.topic_filename = filename # jgreve: keep original name around for logging & __str__
         self.topic_file = open(filename, 'r')
         self.content_handler = E2JKTopicContentHandler(article_content.TopicIndex())
+        logger.info('TopicIndexReader().__init__: content_handler=%s', self.content_handler  )
         self.aquaint1 = aquaint1
         self.aquaint2 = aquaint2
         self.dbname = dbname
 
+    def __str__( self ):
+        return 'TopicIndexReader(dbname="{}", topic_file="{}")'.format(self.dbname, self.topic_filename)
+
     def read_topic_index_file(self, docset_type = 'all'):
+        logger.info('().__init__: content_handler=%s', self.content_handler  )
+        self.content_handler.docset_type = docset_type
         xml.sax.parse(self.topic_file, self.content_handler)
 
         if self.content_handler.state != 'END':
@@ -67,7 +90,7 @@ class TopicIndexReader():
         topic_index = self.content_handler.topic_index
 
         art_reader = article_reader.ArticleReader(self.dbname, self.aquaint1, self.aquaint2)
-        art_reader.load_database(topic_index.allDocuments(docset_type))
+        art_reader.load_database(topic_index.allDocuments())
         for topic in topic_index.topics:
             for docset in topic.docsets:
                 docset.articles = art_reader.get_articles(docset.documents)

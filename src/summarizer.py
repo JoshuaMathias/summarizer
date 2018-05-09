@@ -1,13 +1,20 @@
 #!/bin/python3
 # To run successfully, use the command below from the home directory of this project:
 # $ python3 src/summarizer.py -c config_un.yml
+
+import local_util as u
+logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
+
+## note: logger uses % style formatting.
+# --- end logging ---
+
+
 import argparse
 import topic_index_reader
 import sum_config
 import nltk
 import os
-import local_util as u
-# "local_util" mainly for u.eprint() which is like print but goes to stderr.
+
 
 # import fss
 import qrmatrix
@@ -66,26 +73,32 @@ if __name__ == "__main__":
     args = argparser.parse_args()
 
     u.eprint('Hello from "summarizer.py" version '+version+' (by team "#e2jkplusplus").')
-    u.eprint('parsed args={}'.format(args))
+    logger.info('parsed args=%s', args)
 
     config = sum_config.SummaryConfig(args.config)
 
     if config.AQUAINT:
-        u.eprint('config.AQUAINT1_DIRECTORY={}'.format(config.AQUAINT1_DIRECTORY))
-        u.eprint('config.AQUAINT2_DIRECTORY={}'.format(config.AQUAINT2_DIRECTORY))
+        logger.info('config.AQUAINT1_DIRECTORY=%s', config.AQUAINT1_DIRECTORY)
+        logger.info('config.AQUAINT2_DIRECTORY=%s', config.AQUAINT2_DIRECTORY)
         index_reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
                                                            aquaint1 = config.AQUAINT1_DIRECTORY,
                                                            aquaint2 = config.AQUAINT2_DIRECTORY,
                                                            dbname = 'shelve_db')
+        # todo: move shelve_db into config.yaml ? (jgreve)
+        #u.eprint('index_reader={}'.format(index_reader) )
+        logger.info('index_reader=%s', index_reader )
 
-        u.eprint('config.MAX_WORDS={}'.format(config.MAX_WORDS))
+        logger.info('config.MAX_WORDS=%s', config.MAX_WORDS)
         smry = Summarizer(config.MAX_WORDS)
 
-        u.eprint('config.topic_file_path()="{}"'.format(config.aquaint_topic_file_path()))
+        #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
         topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
+        logger.info( 'topic_index=%s', topic_index )
         for docset in topic_index.documentSets(docset_type='docseta'):
-            u.eprint('%s : %s' % (docset.id, docset.topic_title))
-            print('%s : %s' % (docset.id, docset.topic_title))
+            msg = 'processing %s' % docset
+            u.eprint( msg  ) # high level summary to stdout for our user.
+            logger.info( msg )
+            print('%s : %s' % (docset.id, docset.topic_title)) # requried in stdout
             smry.summary = ''
             smry.summary_size = 0
             print(qrmatrix.qr_sum(docset, config))
@@ -97,6 +110,7 @@ if __name__ == "__main__":
         articles = content_provider.ContentReader().read_raw_files(config.ARTICLE_FILE)
 
         for article in articles:
+            logger.info('article=%s', article )
             print(smry.summarize(article))
 
     print('Done.')
