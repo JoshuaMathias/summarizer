@@ -99,15 +99,11 @@ class SummaryConfig():
 
     def get( self, key_path, default_value=None ):
         """ answer the value found at key_path or a default if given, otherwise fail w/ValueError(unk key_path) """
-        u.eprint('------------------------')
-        u.eprint('key_path={}, default_value={}'.format( key_path, default_value) )
         keys = key_path.split('.')
         x = self.cfg # drill down from here (self.cfg, the original config object)
         path_stats = '' # track what we find in our path
         indent = ''
         for key in keys:
-            indent += '|   '
-            u.eprint('{}: key={}, x={}'.format( indent, key, x ) )
             if x is not None and key in x:
                 x = x[key]
                 path_stats += '<+{}>'.format(key) # + indicates key found.
