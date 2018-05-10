@@ -4,5 +4,5 @@ set -u
 # blow up on undefined env-vars
 source bin/summ.env
 
-source $BIN_DIR/clean_run
-$SRC_DIR/article_stats.py -c $CONF_DIR/config_patas.yml
+source $BIN_DIR/clean
+$SRC_DIR/article_stats.py -c $CONF_DIR/config_patas_D3.yml
