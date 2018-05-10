@@ -15,7 +15,13 @@ class ArticleReader():
         self.AQUAINT2_DIR = aquaint2
 
     def __aquaint_filename__(self, doc_id):
+        self.__file_extension__ = '<unk>'
         if doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 files
+            self.__file_extension__ = doc_id[0:7]
+            #  prefix smth like...
+            #  iafp_eng  apw_eng  cna_eng  ltw_eng  nyt_eng  xin_eng
+            # not exactly an extension but close enough.
+
             filename = '%s/data/%s/%s.xml' % (self.AQUAINT2_DIR,
                                               doc_id[0:7].lower(),
                                               doc_id[0:doc_id.find('.')-2].lower())
@@ -31,12 +37,18 @@ class ArticleReader():
                 file_extension = 'XIN'
             if file_extension != 'NYT':
                 file_extension += '_ENG'
+            self.__file_extension__ = file_extension # Let's keep this around,
             filename = '%s/%s/%s/%s_%s' % (self.AQUAINT_DIR,
                                          doc_id[0:3].lower(),
                                          doc_id[3:7],
                                          doc_id[3:doc_id.find('.')],
                                          file_extension)
+            # stash it in Article() objects eventually (may help with data analysis)
+            # jgreve (2018-05-09)
 
+        logger.debug('__aquaint_filename__(): self.__file_extension__="%s" type(self)=%s', self.__file_extension__, type(self) )
+
+            
         return filename
 
     def __extract_byline__(self, text):
@@ -82,6 +94,21 @@ class ArticleReader():
                 art = article_content.Article(doc_id)
                 art.headline = self.__extract_tag__(doc, 'headline')
                 art.datetime = self.__extract_tag__(doc, 'datetime')
+                art.agency = self.__file_extension__
+                logger.debug('__load_doc_ids_from_doc_tree__(): art.agency="%s"', art.agency)
+                # jgreve: sometimes also date_time ?  (see line 3 from 19990421_APW_ENG, below )
+                # and... are tags case sensive in BeautSoup?
+                #-----------------------------------------------------
+                #    1 <DOC>
+                #    2 <DOCNO> APW19990421.0001 </DOCNO>
+                #    3 <DATE_TIME> 1999-04-21 15:11:08 </DATE_TIME>
+                #    4 <BODY>
+                #    5 <CATEGORY> financial </CATEGORY>
+                #    6 <HEADLINE> Nabisco Earnings Drop 35 Percent </HEADLINE>
+                #    7 <TEXT>
+                #    8 <P>
+                #    9     PARSIPPANY, 
+                #-----------------------------------------------------
                 art.dateline = self.__extract_tag__(doc, 'dateline')
 
                 text_block = doc.find('text')

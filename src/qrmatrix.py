@@ -46,7 +46,17 @@ def qr_sum(docset, config):
     for line in stop_lines:
         line = line.lower()
         if line not in stop_words:
+            # why only assign the first time?
             stop_words[line] = 0
+
+#--------------------------------------------------------------
+#    # or.... this way? jgreve
+#    stop_words = {}
+#    with open( "src/stop_words") as f:
+#        for line in f:
+#            line = line.strip().lower()
+#            lstop_words[line] = 0
+#--------------------------------------------------------------
 
 
     logger.info('%s: docset=%s', fname, docset )
@@ -61,10 +71,13 @@ def qr_sum(docset, config):
             continue
 
         sentence_position = 0
+        #Consider changing to?
+        # for paragraph in article.scrubbed_paragraphs():
         for paragraph in article.paragraphs:
 
             # jgreve: should this logic logic go into the article_content.Article(),
-            # or whatever populates Articels ?
+            # or whatever populates Articles ?
+            # Copied cleanup logic logic to Article.clean_paragraphs(): Wed May  9 20:17:13 PDT 2018
             paragraph = re.sub("(\n|\t)", " ", paragraph)
             paragraph = re.sub("  +", " ", paragraph)
             paragraph = re.sub("^ ", "", paragraph)

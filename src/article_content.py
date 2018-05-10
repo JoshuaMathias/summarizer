@@ -1,3 +1,5 @@
+import re
+
 class Article():
     def __init__(self, id):
         self.id = id
@@ -5,16 +7,35 @@ class Article():
         self.datetime = ''
         self.dateline = ''
         self.paragraphs = list()
+        self.agency = ''
+        self._scrubbed = None # lazy init, dont bother unless somebody asks for it.
 
     def __str__(self):
         cutoff = self.headline if len(self.headline) <= 20 else self.headline[0:17]+'...'
         return 'Article( id:{} "{:.20s}" para={} )'.format(self.id, cutoff, len(self.paragraphs))
+
+    def scrubbed_paragraphs(self):
+        if self._scrubbed == None:
+            self._scrubbed = [ ]
+            for paragraph in self.paragraphs:
+                #paragraph = re.sub("(\n|\t)", " ", paragraph)
+                #paragraph = re.sub("  +", " ", paragraph)
+                #paragraph = re.sub("^ ", "", paragraph)
+
+                # should handle newlines (0x0a) tabs (0x09) linefeeds (0x0a) etc.
+                paragraph = re.sub( r"\\[nt]", r" ", paragraph ) # flag escape seqs like
+                paragraph = re.sub( r"\s+", r" ", paragraph ) # collapse all whitespace to single char.
+                paragraph = paragraph.strip() # Also drop leading and trailing whitespace.
+                self._scrubbed.append( paragraph )
+        return self._scrubbed
+
 
     def toDict(self):
         return {'id' : self.id,
                 'headline' : self.headline,
                 'datetime' : self.datetime,
                 'dateline' : self.dateline,
+                'agency'   : self.agency, # XIN, NYT, etc. (actually file extension)
                 'paragraphs' : self.paragraphs }
 
 def articleFromDict(dict_value):
@@ -23,6 +44,7 @@ def articleFromDict(dict_value):
     article.headline = dict_value['headline']
     article.datetime = dict_value['datetime']
     article.dateline = dict_value['dateline']
+    article.agency = dict_value['agency'] # XIN, NYT, etc. (actually file extension)
     article.paragraphs = dict_value['paragraphs']
 
     return article
