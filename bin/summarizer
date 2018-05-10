@@ -1,18 +1,21 @@
 #!/bin/sh
-# Absolute path to this script, e.g. /home/user/bin/foo.sh
-SCRIPT=$(readlink -f "$0")
-# Absolute path this script is in, thus /home/user/bin
-SCRIPTPATH=$(dirname "$SCRIPT")
 
+# Lets just asuume we always run this from the project directory.
+# otherwise the path complexity is a big headache for little benefit.
+# jgreve, 2018-05-10
+# ugly: # Absolute path to this script, e.g. /home/user/bin/foo.sh
+# ugly: SCRIPT=$(readlink -f "$0")
+# ugly: # Absolute path this script is in, thus /home/user/bin
+# ugly: SCRIPTPATH=$(dirname "$SCRIPT")
+
+# to do: hook this info from a config file, maybe ask python
+# to generate a *.env based on a config file (e.g. *.yml to shell env-var).
 # check our output directory
-OUT_DIR="$SCRIPTPATH/../outputs/D2"
-echo "summarizer: OUT_DIR=$OUT_DIR" >&2
-if [ -d "$OUT_DIR" ]; then
-    if [ -z "$(ls "$OUT_DIR")" ]; then
-        echo "summarizer: OUT_DIR empty, nothing to clean up" >&2
-    else
-        echo "summarizer: OUT_DIR is not empty, cleaning up...." >&2
-        rm -rf "$OUT_DIR"
-    fi
-fi
-$SCRIPTPATH/../src/summarizer.py $@
+
+set -u
+# blow up on undefined env-vars
+
+source bin/summ.env
+source $BIN_DIR/clean_run
+
+$SRC_DIR/summarizer.py $@

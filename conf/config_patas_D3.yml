@@ -1,0 +1,35 @@
+project:
+    team_id: 9
+    release_title: D3
+    # reader was looking for "project.max_words" we had it under"output".
+
+aquaint:
+    aquaint1_directory: /dropbox/17-18/573/AQUAINT
+    aquaint2_directory: /dropbox/17-18/573/AQUAINT-2
+
+    aquaint_doc_dir:     /dropbox/17-18/573/Data/Documents/devtest/
+    aquaint_topic_index: GuidedSumm10_test_topics.xml
+    # jgreve: the sum_config logic combines the doc_dir & topic_index,
+    # so I don't know why the following full path topic_index ever workd.
+    #aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
+
+output:
+    summary_dir: output/D3
+    results_dir: output/results
+    max_words: 100
+
+conf:
+    conf_dir: conf
+
+run:
+    # run/ a place to put things that matter during
+    # runtime but otherwise clutter up git or the 
+    # main directory - not intended for long term storage.
+    stats_dir:     run/stats
+    log_dir:       run/logs
+    shelve_dbname: run/shelve/shelve_db
+    # note: shelve not a directory, more of a filename prefix.
+
+# Test configuration to read one article file only
+# one_config:
+#    article_file: aquaint_test1/nyt/1999/19990330_NYT

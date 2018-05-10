@@ -1,6 +1,8 @@
 import re
 
 class Article():
+    UNK_AGENCY = '<unk>' # constant (a class var)
+
     def __init__(self, id):
         self.id = id
         self.headline = ''
@@ -44,7 +46,7 @@ def articleFromDict(dict_value):
     article.headline = dict_value['headline']
     article.datetime = dict_value['datetime']
     article.dateline = dict_value['dateline']
-    article.agency = dict_value['agency'] # XIN, NYT, etc. (actually file extension)
+    article.agency = dict_value.get('agency', 'unk') # XIN, NYT, etc. (actually file extension)
     article.paragraphs = dict_value['paragraphs']
 
     return article

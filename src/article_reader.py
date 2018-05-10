@@ -15,9 +15,9 @@ class ArticleReader():
         self.AQUAINT2_DIR = aquaint2
 
     def __aquaint_filename__(self, doc_id):
-        self.__file_extension__ = '<unk>'
+        self.agency = article_content.Article.UNK_AGENCY # 'unk' or smth.
         if doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 files
-            self.__file_extension__ = doc_id[0:7]
+            self.agency = doc_id[0:8] # remember where we are getting articls From.
             #  prefix smth like...
             #  iafp_eng  apw_eng  cna_eng  ltw_eng  nyt_eng  xin_eng
             # not exactly an extension but close enough.
@@ -37,7 +37,7 @@ class ArticleReader():
                 file_extension = 'XIN'
             if file_extension != 'NYT':
                 file_extension += '_ENG'
-            self.__file_extension__ = file_extension # Let's keep this around,
+            self.agency = file_extension # Let's keep this around,
             filename = '%s/%s/%s/%s_%s' % (self.AQUAINT_DIR,
                                          doc_id[0:3].lower(),
                                          doc_id[3:7],
@@ -46,7 +46,7 @@ class ArticleReader():
             # stash it in Article() objects eventually (may help with data analysis)
             # jgreve (2018-05-09)
 
-        logger.debug('__aquaint_filename__(): self.__file_extension__="%s" type(self)=%s', self.__file_extension__, type(self) )
+        logger.debug('__aquaint_filename__(): self.agency="%s" type(self)=%s', self.agency, type(self) )
 
             
         return filename
@@ -94,7 +94,7 @@ class ArticleReader():
                 art = article_content.Article(doc_id)
                 art.headline = self.__extract_tag__(doc, 'headline')
                 art.datetime = self.__extract_tag__(doc, 'datetime')
-                art.agency = self.__file_extension__
+                art.agency = self.agency
                 logger.debug('__load_doc_ids_from_doc_tree__(): art.agency="%s"', art.agency)
                 # jgreve: sometimes also date_time ?  (see line 3 from 19990421_APW_ENG, below )
                 # and... are tags case sensive in BeautSoup?

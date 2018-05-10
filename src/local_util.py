@@ -65,7 +65,7 @@ import yaml
 
 __LOGGING_SETUP_FLAG__ = False
 def setup_logging(
-    default_path='logging.yaml',
+    default_path='conf/logging.yml',
     default_level=logging.INFO,
     env_key='LOG_CFG'
 ):

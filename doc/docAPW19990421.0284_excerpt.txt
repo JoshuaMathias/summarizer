@@ -1,0 +1,39 @@
+
+excerpt (from /dropbox/17-18/573/AQUAINT/apw/1999/19990421_APW_ENG)
+28922 <DOC>
+28923 <DOCNO> APW19990421.0284 </DOCNO>
+28924 <DATE_TIME> 1999-04-21 16:33:18 </DATE_TIME>
+28925 <BODY>
+28926 <CATEGORY> usa </CATEGORY>
+28927 <HEADLINE> Explosive Devices Slow Body Count </HEADLINE>
+28928 <TEXT>
+28929 <P>
+28930     LITTLETON, Colo. (AP) -- The sheriff's initial estimate of as
+28931 many as 25 dead in the Columbine High massacre was off the mark
+28932 apparently because the six SWAT teams that swept the building
+28933 counted some victims more than once.
+28934 </P>
+28935 <P>
+28936     Sheriff John Stone said Tuesday afternoon that there could be as
+28937 many as 25 dead. By early Wednesday, his deputies said the death
+28938 toll was 15, including the two gunmen.
+28939 </P>
+28940 <P>
+28941     The discrepancy occurred because the SWAT teams that picked
+28942 their way past bombs and bodies in an effort to secure building
+28943 covered overlapping areas, said sheriff's spokesman Steve Davis.
+28944 </P>
+28945 <P>
+28946     ``There were so many different SWAT teams in there, we were
+28947 constantly getting different counts,'' Davis said.
+28948 </P>
+28949 <P>
+28950     As they gave periodic updates through the night, Davis and Stone
+28951 emphasized the death toll was unconfirmed. They said their priority
+28952 was making sure the school was safe.
+28953 </P>
+28954 </TEXT>
+28955 </BODY>
+28956 </DOC>
+
+

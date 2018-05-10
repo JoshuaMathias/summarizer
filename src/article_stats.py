@@ -186,8 +186,9 @@ if __name__ == "__main__":
     index_reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
                                                        aquaint1 = config.AQUAINT1_DIRECTORY,
                                                        aquaint2 = config.AQUAINT2_DIRECTORY,
-                                                       dbname = 'shelve_db')
-    # todo: move shelve_db into config.yaml ? (jgreve)
+                                                       dbname = config.SHELVE_DBNAME ) #'shelve_db')
+    # note: moved shelve_db into config.yml, see runtime:  shelve_dbname:
+    # in "conf/config_patas_D3.yml"
     #u.eprint('index_reader={}'.format(index_reader) )
     logger.info('index_reader=%s', index_reader )
 
