@@ -116,6 +116,7 @@ class ArticleReader():
 
                 if len(all_para_tags) > 0:
                     for para in all_para_tags:
+                        #logger.debug('  YAH
                         self.__add_paragraph__(art, str(para.contents[0].encode('utf-8')))
                 else:
                     blockText = str(text_block.contents[0].encode('utf-8'))
