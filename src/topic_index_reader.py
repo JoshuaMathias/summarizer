@@ -33,7 +33,10 @@ class E2JKTopicContentHandler(xml.sax.ContentHandler):
             self.topic_index.dataset = attrs.getValue('dataset')
             self.state = 'INDEX'
         elif name == 'topic':
-            self.topic = article_content.Topic(attrs.getValue('id'), attrs.getValue('category'))
+            if 'category' in attrs:
+                self.topic = article_content.Topic(attrs.getValue('id'), attrs.getValue('category'))
+            else:
+                self.topic = article_content.Topic(attrs.getValue('id'), '')
             self.topic_index.addTopic(self.topic)
             self.state = 'TOPIC'
         elif name == 'title':
