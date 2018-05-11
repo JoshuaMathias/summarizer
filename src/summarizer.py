@@ -42,7 +42,7 @@ class Summarizer():
     def summarize(self, article):
         self.__init_summary__()
         header = '--- begin summary: "{}" ---\n'.format(article.id)
-        for para in article.body:
+        for para in article.paragraphs:
             self.__add_summary_sentence__(para.strip())
 
         footer = '\n--- end summary: "{}" ---\n'.format(article.id)
@@ -51,7 +51,7 @@ class Summarizer():
     def summarize_docset(self, docset):
         self.__init_summary__()
         for article in docset.articles:
-            para1 = article.body[0]
+            para1 = article.paragraphs[0]
             sentences = nltk.sent_tokenize(para1)
             self.__add_summary_sentence__(sentences[0].replace('\n',' '))
         return self.summary
