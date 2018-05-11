@@ -1,6 +1,6 @@
 # This function taks a list of documents (from class) and writes a single file to summary
 import local_util as u
-logger = u.get_logger( __name__ ) #  https://docs.python.org/3/howto/logging.html 
+logger = u.get_logger( __name__ ) #  https://docs.python.org/3/howto/logging.html
 
 import os
 import sum_config
@@ -12,6 +12,8 @@ from nltk.tokenize import sent_tokenize, word_tokenize # for tokenizing sentence
 
 from scipy import spatial
 
+def get_tfidf(tally, ac, dc):
+    return tally * (math.log(ac / (1 + dc)))
 
 def qr_sum(docset, config):
 
@@ -31,6 +33,7 @@ def qr_sum(docset, config):
     words_dict = {} # {word, index}
     words_vec = [] # [word]
     words_tally = {}
+    words_docs = {} # key=word value=list of article names in which word appears
 
     article_length = [] # num_words
 
@@ -48,9 +51,10 @@ def qr_sum(docset, config):
         if line not in stop_words:
             stop_words[line] = 0
 
-
+    article_count = 0
     logger.info('%s: docset=%s', fname, docset )
     for idx, article in enumerate(docset.articles):
+        article_count += 1
 
         article_word_count = 0
         # TODO: GET ARTICLE ID INFORMATION AND STORE IT FOR LATER USE
@@ -109,8 +113,18 @@ def qr_sum(docset, config):
                         words_dict[word] = len(words_vec)
                         words_tally[word] = 1
                         words_vec.append(word)
+
+                        words_docs[word] = [article.id]
                     else:
                         words_tally[word] += 1
+
+                        temp_article_id = words_docs[word]
+
+                        if article.id not in temp_article_id:
+                            temp_article_id.append(article.id)
+
+                        words_docs[word] = temp_article_id
+
 
         article_length.append(article_word_count)
 
@@ -122,6 +136,8 @@ def qr_sum(docset, config):
 
         for word in sentence[1]:
             if word in words_dict:
+                # tfidf = get_tfidf(words_tally[word], article_count, len(words_docs[word]))
+                # feat_vec[words_dict[word]] = tfidf
                 feat_vec[words_dict[word]] = words_tally[word]
 
         # print(sum(feat_vec))
