@@ -25,9 +25,14 @@ class Article():
                 #paragraph = re.sub("^ ", "", paragraph)
 
                 # should handle newlines (0x0a) tabs (0x09) linefeeds (0x0a) etc.
-                paragraph = re.sub( r"\\[nt]", r" ", paragraph ) # flag escape seqs like
-                paragraph = re.sub( r"\s+", r" ", paragraph ) # collapse all whitespace to single char.
-                paragraph = paragraph.strip() # Also drop leading and trailing whitespace.
+                #paragraph = re.sub( r"\\[nt]", r" ", paragraph ) # flag escape seqs like
+                #paragraph = re.sub( r"\s+", r" ", paragraph ) # collapse all whitespace to single char.
+                #paragraph = paragraph.strip() # Also drop leading and trailing whitespace.
+                
+                # borrowed from https://github.com/JoshuaMathias/summarizer/blob/master/src/qrmatrix.py
+                paragraph = re.sub("(\n|\t)", " ", paragraph)
+                paragraph = re.sub("  +", " ", paragraph)
+                paragraph = re.sub("^ ", "", paragraph)
                 self._scrubbed.append( paragraph )
         return self._scrubbed
 

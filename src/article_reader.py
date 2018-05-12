@@ -86,6 +86,15 @@ class ArticleReader():
         else:
             return self.__extract_tag__(body, tag_id)
 
+    # jgreve: copied from master (2018-05-11)
+    # Need to convert BeautifulSoup NavigableString object (returned as content text)
+    # Unfortunately, the NavigableString class is not something that can be stored
+    # by pickle/shelve due to recursion issues. Need to convert to string. Previous
+    # attempt to utf-8 encode was creating bytestrings, despite the call to str()
+    def __convert_bs_string__(self, thestring):
+        return str(thestring)
+
+
     def __load_doc_ids_from_doc_tree__(self, doctree, doc_ids):
         return_articles = set()
         for doc in doctree.find_all('doc'):
@@ -116,10 +125,11 @@ class ArticleReader():
 
                 if len(all_para_tags) > 0:
                     for para in all_para_tags:
-                        #logger.debug('  YAH
-                        self.__add_paragraph__(art, str(para.contents[0].encode('utf-8')))
+                        #OLD: self.__add_paragraph__(art, str(para.contents[0].encode('utf-8')))
+                        self.__add_paragraph__(art, self.__convert_bs_string__(para.contents[0]))
                 else:
-                    blockText = str(text_block.contents[0].encode('utf-8'))
+                    #OLD: blockText = str(text_block.contents[0].encode('utf-8'))
+                    blockText = str(self.__convert_bs_string__(text_block.contents[0]))
                     if blockText:
                         paraBreaks = blockText.split('\n\t')
                         for para in paraBreaks:

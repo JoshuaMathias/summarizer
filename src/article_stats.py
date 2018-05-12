@@ -16,6 +16,7 @@ logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 # --- end logging ---
 
 
+from nltk.tokenize import sent_tokenize, word_tokenize # for tokenizing sentences and words
 import math
 import argparse
 import topic_index_reader
@@ -27,43 +28,6 @@ import re
 
 # import fss
 # import qrmatrix
-
-class Summarizer():
-    def __init__(self, nwords):
-        self.nwords = nwords
-
-    def __init_summary__(self):
-        self.summary = ''
-        self.summary_size = 0
-
-    def __add_summary_sentence__(self, sentence):
-        sentence_tokens = sentence.split()
-        if len(sentence_tokens) > self.nwords - self.summary_size:
-            for i in range(self.nwords - self.summary_size):
-                self.summary += ' ' + sentence_tokens[i]
-                self.summary_size += 1
-        else:
-            self.summary += sentence
-            self.summary_size += len(sentence_tokens)
-
-        self.summary += '\n'
-
-    def summarize(self, article):
-        self.__init_summary__()
-        header = '--- begin summary: "{}" ---\n'.format(article.id)
-        for para in article.body:
-            self.__add_summary_sentence__(para.strip())
-
-        footer = '\n--- end summary: "{}" ---\n'.format(article.id)
-        return header + self.summary + footer
-
-    def summarize_docset(self, docset):
-        self.__init_summary__()
-        for article in docset.articles:
-            para1 = article.body[0]
-            sentences = nltk.sent_tokenize(para1)
-            self.__add_summary_sentence__(sentences[0].replace('\n',' '))
-        return self.summary
 
 
 def read_config(cfg, label, default):
@@ -109,33 +73,36 @@ def write_char_freqs( indent, f, label, d ):
     f.write('{}\n'.format( msg ) )
     f.write('stats={}\n'.format( stats ) )
     f.write('\n')
-    f.write('| {:^{key_width}} | {:^{val_width}} | {:^7s} |\n'.format(
-        key_hdr, val_hdr, '%ge',
+    f.write('| {:^{key_width}} | {:^{val_width}} | {:^7s} | {:^7s} |\n'.format(
+        key_hdr, val_hdr, '%ge', 'cum%',
         key_width=stats['key_width'],
         val_width=stats['val_width'] ) )
     keys = sorted( d.keys() )
+    cum_percent = 0.0 # cummulative %
     for key in keys:
-        logger.debug( '%s: %s=%s', indent, key, d[key] )
+        #logger.debug( '%s: %s=%s', indent, key, d[key] )
         val = d[key]
         percent = (val / stats['total']) * 100
+        cum_percent += percent
         histo = '#'  * int(round(percent/2))
         if key >= ' ':
             display =  '<{}> : 0x{:02X}'.format( key, ord(key) )
         else:
-            display = '---: 0x{:02X}'.format( key, ord(key) )
-        f.write('| {:{key_width}} | {:{val_width}} | {:6.2f}% | {}\n'.format(
-            display, val, percent, histo,
+            display = '--- : 0x{:02X}'.format( ord(key) )
+        f.write('| {:{key_width}} | {:{val_width}} | {:6.2f}% | {:6.2f}% | {}\n'.format(
+            display, val, percent, cum_percent, histo,
             key_width=stats['key_width'],
             val_width=stats['val_width'] ) )
     logger.debug( '%s: key=%s ---end details---', indent, label )
-    f.write('\n\ntotal items: {:,d}'.format( stats['total'] ) )
-    f.write('distinct items: {:,d}'.format( stats['cnt'] ) )
+    f.write('\n\ntotal items:    {:10,d}\n'.format( stats['total'] ) )
+    f.write(    'distinct items: {:10,d}\n'.format( stats['cnt'] ) )
+    f.write(    'ratio: {:6.2f}\n'.format( stats['total']/stats['cnt'] ) )
 
 
 
 
 
-def write_values( indent, f, label, d ):
+def write_values( indent, f, label, d, descending_freq=False ):
     key_hdr = label.split('-')[-1]
     val_hdr = 'freq'
     msg='write_values(): label={} has #{} items, key_hdr={} val_hdr={}'.format( label, len(d), key_hdr, val_hdr )
@@ -144,33 +111,41 @@ def write_values( indent, f, label, d ):
         return write_char_freqs( indent, f, label, d ) # ends with char_freq
 
     stats = gather_stats( label, d, key_hdr=key_hdr, val_hdr=val_hdr )
-    
-    msg='write_values(): ---begin details---'.format( label, len(d) )
     stats['key_width'] = max( stats['key_width'], len(key_hdr) )
     stats['val_width'] = max( stats['val_width'], len(val_hdr) )
-    
+
+    msg='write_values(): ---begin details---'.format( label, len(d) )
     logger.debug( '%s: %s', indent, msg )
     f.write('{}\n'.format( msg ) )
     f.write('stats={}\n'.format( stats ) )
     f.write('\n')
-    f.write('| {:^{key_width}} | {:^{val_width}} | {:^7s} |\n'.format(
-        key_hdr, val_hdr, '%ge',
+    f.write('| {:^{key_width}} | {:^{val_width}} | {:^7s} | {:^7s} |\n'.format(
+        key_hdr, val_hdr, '%ge', 'cum%',
         key_width=stats['key_width'],
         val_width=stats['val_width'] ) )
-    keys = sorted( d.keys() )
-    for key in keys:
-        logger.debug( '%s: %s=%s', indent, key, d[key] )
-        val = d[key]
+    if descending_freq:
+        items = sorted( d.items(), key=lambda x: ( -x[1], x[0] ) ) # negate counts to effect largest value first.
+        # otherwise reverse=True will yield things like: (100, 'C' ), (100, 'B' ), (100, 'A')
+    else:
+        #keys = sorted( d.keys() )
+        items = sorted( d.items() )
+    cum_percent = 0.0 # cummulative %
+    for item in items:
+        #logger.debug( '%s: %s=%s', indent, key, d[key] )
+        #val = d[key]
+        key, val = item
+        #logger.debug( '%s: %s=%s', indent, key, val )
         percent = (val / stats['total']) * 100
+        cum_percent += percent
         histo = '#'  * int(round(percent/2))
-        f.write('| {:{key_width}} | {:{val_width}} | {:6.2f}% | {}\n'.format(
-            key, val, percent, histo,
+        f.write('| {:{key_width}} | {:{val_width}} | {:6.2f}% | {:6.2f}% | {}\n'.format(
+            key, val, percent, cum_percent, histo,
             key_width=stats['key_width'],
             val_width=stats['val_width'] ) )
     logger.debug( '%s: key=%s ---end details---', indent, label )
-    f.write('\n\ntotal items: {:,d}'.format( stats['total'] ) )
-    f.write('distinct items: {:,d}'.format( stats['cnt'] ) )
-
+    f.write('\n\ntotal items:    {:10,d}\n'.format( stats['total'] ) )
+    f.write(    'distinct items: {:10,d}\n'.format( stats['cnt'] ) )
+    f.write(    'ratio: {:10.4f}\n'.format( stats['total']/stats['cnt'] ) )
 
 def write_stats_details( label, dir, d, depth=0 ):
     indent = '|   '*depth
@@ -189,8 +164,15 @@ def write_stats_details( label, dir, d, depth=0 ):
     filename = '{}/{}.txt'.format( dir,  label )
     with open( filename, 'w' ) as f:
         write_values( indent, f, label, d )
-    
-
+    #----------------------------------------------
+    if re.search( r'(word)|(pattern)$', label ):
+        # need a cleaner way to control formatting, for now if ends with .*word or .*pattern
+        # we get both:
+        #    ascending:   Alpha:1 Beta:1  Gamma:3 Delta:5 Epsilon:1  (ordered by key)
+        #    descending:  Delta:5 Gamma:3 Alpha:1 Beta:1  Epsilon:1  (ordered by higher-freq(major), ascending key(minor))
+        filename = '{}/{}__rev.txt'.format( dir,  label )
+        with open( filename, 'w' ) as f:
+            write_values( indent, f, label, d, descending_freq=True )
 
 track_dict = dict( )
 def write_stats( label, dir ):
@@ -229,25 +211,34 @@ def log_ten( n ):
 
 
 pattern_examples = dict( ) # put a limit on how many "examples" of a given pattern we show.
-pattern_examples = dict( ) # put a limit on how many "examples" of a given pattern we show.
-def track_paragraph( p, label, bucket = None ):
+def track_word( label, word, bucket=None ):
     global pattern_examples
     if label not in pattern_examples:
         pattern_examples[label] = dict()
     pattern_limit = pattern_examples[label]
-    for word in p.lower().split():
-        # all words (lower-cased) in paragaph
-        track( label+"_word", word,  bucket=article.agency)
-        pattern = word
-        pattern = re.sub( r'[0-9]', r'9', pattern )
-        pattern = re.sub( r'[a-z]', r'A', pattern )
-        pattern = re.sub( r'AAA+', r'T', pattern )
-        pattern = re.sub( r'T T( T)+', r'T+', pattern )
-        track( label+"_pattern", pattern,  bucket=article.agency)
-        pattern_limit[pattern] = 1 + pattern_limit.get( pattern, 0 )
-        if pattern_limit[pattern] <= 50:
-            logger.debug('%-15s: pattern<%-20s> word=<%s>', label, pattern, word )
+    track( label+"_word", word,  bucket=article.agency)
+    pattern = word
+    pattern = re.sub( r'[0-9]', r'9', pattern )
+    pattern = re.sub( r'[a-z]', r'A', pattern )
+    pattern = re.sub( r'AAA+', r'T', pattern )
+    pattern = re.sub( r'T T( T)+', r'T+', pattern )
+    track( label+"_pattern", pattern,  bucket=article.agency)
+    pattern_limit[pattern] = 1 + pattern_limit.get( pattern, 0 )
+    if pattern_limit[pattern] <= 50:
+        logger.debug('%-15s: pattern<%-20s> word=<%s>', label, pattern, word )
             
+
+def track_sentence( s, label, bucket = None ):
+    for word in word_tokenize(s): # as used in qrmatrix.py, ln# 88
+        # all words (lower-cased) in paragaph
+        word = word.lower()
+        track_word( label, word, bucket )
+
+def track_paragraph( p, label, bucket = None ):
+    # all words (lower-cased) in paragaph
+    for word in p.lower().split():
+        track_word( label, word, bucket )
+
 
 def scan_article( article ):
     logger.debug( '\t-------+' )
@@ -265,7 +256,7 @@ def scan_article( article ):
     track( "article.para_cnt", len(article.paragraphs),  bucket=article.agency)
     text_size = 0
     for pidx, p in enumerate( article.paragraphs ):
-        logger.debug( '\t       : para[%03d]: <%s>', pidx, p )
+        logger.debug( '\t       : para[%03d]: len=%d: <%s>%s', pidx, len(p), p, (' *' if len(p) == 0 else '') )
         #ps = article.scrubbed_paragraphs()[pidx]
         #logger.debug( '\t       : scrb[%03d]: <%s>', pidx, ps )
         #max_idx = max( len(p), len(ps) )
@@ -286,7 +277,14 @@ def scan_article( article ):
         paragraph = re.sub("  +", " ", paragraph)
         paragraph = re.sub("^ ", "", paragraph)
         track_paragraph( paragraph, label="article_scrub", bucket=article.agency )
+
+        sentences = sent_tokenize(paragraph) # as used in qrmatrix.py, ln# 85
+        track( "nltk_sent-per-para", len(sentences), bucket=article.agency )
+        for sidx, s in enumerate(sentences):
+            logger.debug( '\t       :    : sent[%02d]: <%s>', sidx, s )
+            track_sentence( s, label="sent_nltk", bucket=article.agency )
     #--- end for...paragraphs ---
+    logger.debug( '\t       : text_size = %d%s', text_size, (' **' if text_size <= 5 else '') )
     track( "article.text_sizeLog10_total", log_ten(text_size),   bucket=article.agency )
 
 def dump_paragraphs( article ):
@@ -310,7 +308,7 @@ if __name__ == "__main__":
     # Command Line Argument Parsing. Provides argument interpretation and help text.
     version = "1.0"
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    argparser = argparse.ArgumentParser(description='summarizer.py v. '+version+' by team #e2jkplusplus')
+    argparser = argparse.ArgumentParser(description='article stats')
     argparser.add_argument('-c',
                            '--config',
                            metavar='CONFIG',
@@ -318,7 +316,6 @@ if __name__ == "__main__":
                            help='Config File(s)')
     args = argparser.parse_args()
 
-    #u.eprint('Hello from "{}" version '+version+' (by team "#e2jkplusplus").'.format(sys.argv[0]))
     logger.info('parsed args=%s', args)
     config = sum_config.SummaryConfig(args.config)
 
@@ -334,7 +331,6 @@ if __name__ == "__main__":
     logger.info('index_reader=%s', index_reader )
 
     logger.info('config.MAX_WORDS=%s', config.MAX_WORDS)
-    smry = Summarizer(config.MAX_WORDS)
     #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
 
     topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
