@@ -65,14 +65,15 @@ import yaml
 
 __LOGGING_SETUP_FLAG__ = False
 def setup_logging(
-    default_path='logging.yaml',
-    default_level=logging.INFO,
-    env_key='LOG_CFG'
-):
+        default_path='logging.yaml',
+        default_level=logging.INFO,
+        env_key='LOG_CFG'
+    ):
     """Setup logging configuration
        Attempts to read ENV-VAR "LOG_CFG", allows override of log.yaml
 
     """
+    global __LOGGING_SETUP_FLAG__
     __LOGGING_SETUP_FLAG__ = True
     path = default_path
     value = os.getenv(env_key, None)
@@ -92,6 +93,7 @@ def setup_logging(
 
 def get_logger( name ):
     """usage: logger = u.get_logger( __name__ ), will call u.setup_logging() if needed"""
+    global __LOGGING_SETUP_FLAG__
     if not __LOGGING_SETUP_FLAG__:
         setup_logging( ) # lazy init
     return logging.getLogger( name )
