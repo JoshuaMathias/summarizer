@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# clean: a script to delete nonessential files like logs and output
+# Intended to clean up before a run of the main program.
+#
+# Lets just asuume we always run this from the project directory.
+# otherwise the path complexity is a big headache for little benefit.
+# jgreve, 2018-05-10
+
+set -u
+# blow up on undefined env-vars
+
+source bin/summ.env
+# check our output directory
+
+
+echo "clean: RUN_SHELVE_DIR=$RUN_SHELVE_DIR" >&2
+if [ -d "$RUN_SHELVE_DIR" ]; then
+    if [ -z "$(ls "$RUN_SHELVE_DIR")" ]; then
+        echo "clean: RUN_SHELVE_DIR empty, nothing to clean up" >&2
+    else
+        echo "clean: RUN_SHELVE_DIR is not empty, cleaning up...." >&2
+        rm $RUN_SHELVE_DIR/*
+    fi
+else
+    mkdir -p "$RUN_SHELVE_DIR"
+fi
+# verify the directory still exists (mkdir may have failed?)
+if [ ! -d "$RUN_SHELVE_DIR" ]; then
+    echo "clean: ERROR! expected RUN_SHELVE_DIR to be a directory? RUN_SHELVE_DIR=$RUN_SHELVE_DIR" >&2
+    exit 1
+fi
+

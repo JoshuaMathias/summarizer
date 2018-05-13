@@ -7,6 +7,9 @@ import sys
 import bs4
 
 import article_content
+import collections
+
+TAG_STATS = collections.Counter( )
 
 class ArticleReader():
     def __init__(self, dbname, aquaint, aquaint2):
@@ -78,6 +81,7 @@ class ArticleReader():
         if tag:
             return tag.contents[0].strip()
         else:
+            # jgreve: worth printing a warning? fail silent is no fun...
             return ''
 
     def __extract_tag_or_attr(self, body, tag_id, attr_id):
@@ -96,13 +100,22 @@ class ArticleReader():
 
 
     def __load_doc_ids_from_doc_tree__(self, doctree, doc_ids):
+        global TAG_STATS
         return_articles = set()
         for doc in doctree.find_all('doc'):
             doc_id = self.__extract_tag_or_attr(doc, 'docno', 'id')
             if doc_id in doc_ids:
+                logger.debug('type(doc)=%s', str(type(doc)) )
+                #logger.debug('doc=%s', str(doc))
+                tags = doc.find_all()
+                TAG_STATS.update( tag.name for tag in tags )
+                #logger.debug('tags=%s', str(tags))
+                #for tag in TAG_STATS.most_common():
+                #    logger.debug( 'tag_freq: "%s"', tag )
                 art = article_content.Article(doc_id)
                 art.headline = self.__extract_tag__(doc, 'headline')
                 art.datetime = self.__extract_tag__(doc, 'datetime')
+                
                 art.agency = self.agency
                 logger.debug('__load_doc_ids_from_doc_tree__(): art.agency="%s"', art.agency)
                 # jgreve: sometimes also date_time ?  (see line 3 from 19990421_APW_ENG, below )
@@ -119,6 +132,9 @@ class ArticleReader():
                 #    9     PARSIPPANY, 
                 #-----------------------------------------------------
                 art.dateline = self.__extract_tag__(doc, 'dateline')
+                logger.debug('tag: doc_id=%s: dateline=%s', doc_id, art.dateline )
+                logger.debug('tag: doc_id=%s: datetime=%s', doc_id, art.datetime )
+                logger.debug('tag: doc_id=%s: date_time=%s', doc_id, doc.find('date_time') )
 
                 text_block = doc.find('text')
                 all_para_tags = text_block.find_all('p')
@@ -139,6 +155,8 @@ class ArticleReader():
 
                 return_articles.add(art)
 
+        for tag in TAG_STATS.most_common():
+            logger.debug( 'tag_freq: "%s"', tag )
         return return_articles
 
     def __load_doc_ids__(self, doc_id, doc_ids, db):
