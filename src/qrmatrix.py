@@ -231,7 +231,10 @@ def qr_sum(docset, config):
 
     if not os.path.exists(directory):
         os.makedirs(directory)
-    wout = open(directory + "/" + full_file_name, "w+")
-    wout.write(summary)
+        logger.info('%s: making directory "%s"', fname, directory )
+    filename = directory + "/" + full_file_name
+    logger.info('%s: writing summary for %s to file="%s"', fname, docset, filename )
+    with open(filename, "w+") as wout:
+        wout.write(summary)
 
     return summary

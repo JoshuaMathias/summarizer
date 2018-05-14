@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# jgreve: Time for SCRIPTPATH to die, to much of a headache to
+# jgreve: Time for SCRIPTPATH to die, too much of a headache to
 # try and keep everything aligned. (2018-05-13)
 # Instead we'll just run bin/scripts from the project folder.
 # (Which is is pretty much what we've always been doing)
