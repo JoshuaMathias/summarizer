@@ -1,18 +1,32 @@
 #!/bin/sh
-# Absolute path to this script, e.g. /home/user/bin/foo.sh
-SCRIPT=$(readlink -f "$0")
-# Absolute path this script is in, thus /home/user/bin
-SCRIPTPATH=$(dirname "$SCRIPT")
+
+# jgreve: Time for "dynamic" SCRIPTPATH to die, too much of
+# a headache to try and keep everything aligned. (2018-05-13)
+# Instead we'll just run bin/scripts from the project folder.
+# (Which is is pretty much what we've always been doing)
+# note: the following assumes our config path is in $2
+
+
+# environment setup thigns are (hopefully) all consolidated in bin/ej2k.env.
+source bin/e2jk.env
 
 # check our output directory
-OUT_DIR="$SCRIPTPATH/../outputs/D2"
-echo "summarizer: OUT_DIR=$OUT_DIR" >&2
-if [ -d "$OUT_DIR" ]; then
-    if [ -z "$(ls "$OUT_DIR")" ]; then
-        echo "summarizer: OUT_DIR empty, nothing to clean up" >&2
+echo "$0: checking E2JK_OUTPUT_RESULTS_DIR=\"$E2JK_OUTPUT_RESULTS_DIR\"" >&2
+if [ -d "$E2JK_OUTPUT_RESULTS_DIR" ]; then
+    if [ -z "$(ls "$E2JK_OUTPUT_RESULTS_DIR")" ]; then
+        echo "summarizer: E2JK_OUTPUT_RESULTS_DIR empty, nothing to clean up" >&2
     else
-        echo "summarizer: OUT_DIR is not empty, cleaning up...." >&2
-        rm -rf "$OUT_DIR"
+        echo "summarizer: E2JK_OUTPUT_RESULTS_DIR is not empty, cleaning up...." >&2
+        rm  "$E2JK_OUTPUT_RESULTS_DIR"/*
     fi
 fi
-$SCRIPTPATH/../src/summarizer.py $@
+
+# remove log files (if any)
+rm -f err.log info.log
+
+
+echo "$0: calling summarizer.py $@" >&2
+src/summarizer.py $@
+echo "$0: calling rouge.sh" >&2
+bin/rouge.sh
+echo "$0: Done." >&2

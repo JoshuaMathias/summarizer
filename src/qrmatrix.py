@@ -230,7 +230,8 @@ def qr_sum(docset, config):
 
 
 # WRITE SUMMARY TO FILE
-    directory = config.DEFAULT_SUMMARY_DIR
+    #directory = config.DEFAULT_SUMMARY_DIR
+    directory = config.OUTPUT_SUMMARY_DIRECTORY # jgreve: confg.yml files dont set the defaults. 
 
     # u.eprint('   docset.id      ="{}"'.format(docset.id)) # both appear to be the same
     # u.eprint('   docset.topic_id="{}"'.format(docset.topic_id))
@@ -257,7 +258,10 @@ def qr_sum(docset, config):
 
     if not os.path.exists(directory):
         os.makedirs(directory)
-    wout = open(directory + "/" + full_file_name, "w+")
-    wout.write(summary)
+        logger.info('%s: making directory "%s"', fname, directory )
+    filename = directory + "/" + full_file_name
+    logger.info('%s: writing summary for %s to file="%s"', fname, docset, filename )
+    with open(filename, "w+") as wout:
+        wout.write(summary)
 
     return summary
