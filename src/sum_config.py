@@ -17,6 +17,7 @@ class SummaryConfig():
         with open(config_file, 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
 
+        self.cfg = cfg # lets keep this around, will be useful. jgreve
         self.AQUAINT1_DIRECTORY = self.__read_config_val_2__(cfg,
                                                              'aquaint',
                                                              'aquaint1_directory',

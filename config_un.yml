@@ -10,8 +10,8 @@ aquaint:
     aquaint_topic_index: src/GuidedSumm10_test_topics.xml
 
 output:
-    summary_dir: output/D2
-    results_dir: output/results
+    summary_dir: outputs/D2
+    results_dir: results
     max_words: 100
 
 # Test configuration to read one article file only

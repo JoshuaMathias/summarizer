@@ -1,6 +1,6 @@
 project:
     team_id: 9
-    release_title: D2
+    release_title: D3
 aquaint:
     aquaint1_directory: /dropbox/17-18/573/AQUAINT
     aquaint2_directory: /dropbox/17-18/573/AQUAINT-2
@@ -9,12 +9,8 @@ aquaint:
     aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
 
 output:
-    #summary_dir: output/D2  # jgreve: output is supposed to be plural.
-    # jgreve: has been wrong for a while, but only worked because we were using
-    # src/sum_config.py's DEFAULT_SUMMARY_DIR = 'outputs/D2' values.
-    # Sort of "right for the wrong reasons."
-    summary_dir: outputs/D2
-    #results_dir: output/results   # jgreve: not supposed to be in ouput folder
+    summary_dir: outputs/D3
+    #results_dir: outputs/results   (jgreve: not supposed to be child of outputs)
     results_dir: results
     max_words: 100
 

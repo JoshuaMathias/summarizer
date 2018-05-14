@@ -73,13 +73,21 @@ if __name__ == "__main__":
     args = argparser.parse_args()
 
     u.eprint('Hello from "summarizer.py" version '+version+' (by team "#e2jkplusplus").')
-    logger.info('parsed args=%s', args)
+    logger.info('\n\n------------------------------\n')
+    logger.info('summarizer.py begin, parsed args=%s', args)
 
     config = sum_config.SummaryConfig(args.config)
+    logger.info('config.TEAM_ID                  ="%s"', config.TEAM_ID )
+    logger.info('config.RELEASE_TITLE            ="%s"', config.RELEASE_TITLE )
+    logger.info('config.MAX_WORDS                ="%s"', config.MAX_WORDS )
+    logger.info('config.OUTPUT_SUMMARY_DIRECTORY ="%s"', config.OUTPUT_SUMMARY_DIRECTORY )
+    logger.info('config.AQUAINT                  ="%s"', config.AQUAINT )
+    logger.info('config.AQUAINT1_DIRECTORY       ="%s"', config.AQUAINT1_DIRECTORY )
+    logger.info('config.AQUAINT2_DIRECTORY       ="%s"', config.AQUAINT2_DIRECTORY )
+    logger.info('config.ONE_FILE                 ="%s"', config.ONE_FILE )
+    logger.info('config.ARTICLE_FILE             ="%s"', config.ARTICLE_FILE )
 
     if config.AQUAINT:
-        logger.info('config.AQUAINT1_DIRECTORY=%s', config.AQUAINT1_DIRECTORY)
-        logger.info('config.AQUAINT2_DIRECTORY=%s', config.AQUAINT2_DIRECTORY)
         index_reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
                                                            aquaint1 = config.AQUAINT1_DIRECTORY,
                                                            aquaint2 = config.AQUAINT2_DIRECTORY,

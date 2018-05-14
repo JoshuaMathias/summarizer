@@ -10,18 +10,20 @@
 # ------------------------------------------------------------------------
 # jgreve  Mon Apr 23 18:47:31 PDT 2018
 # ------------------------------------------------------------------------
+# jgreve  Mon added logging.
+
+import local_util as u
+logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 
 import sys
 import re
 import collections
 import time
-import local_util as u
 
-DEBUG = False #True
 DELIM=',' # '\t' # something to make excel happy.
 
 def verify_prefix_value( prefix, raw ):
-    DEBUG and print('verify_prefix_value( prefix={}, raw={})'.format(prefix,raw))
+    logger.debug( 'verify_prefix_value( prefix=%s, raw=%s)', prefix, raw )
     if( not raw.startswith( prefix ) ):
         raise ValueError('Expected prefix="{}" not found at beginning of raw="{}"'.format(prefix,raw))
     # Given prefix='FOO:' and raw='FOO:3.14159' answer the float.
@@ -40,14 +42,14 @@ def add_table_cell( table,  row_label, col_label, value, pref_cols = None ):
     if pref_cols is not None:
         if col_label in pref_cols:
             pref_label = pref_cols.get( col_label )
-            DEBUG and print('row_label={} col_label={} value={}: preferred col label="{}"'.format( row_label, col_label, value, pref_label ) )
+            logger.debug('row_label=%s col_label=%s value=%s: preferred col label="%s"', row_label, col_label, value, pref_label  )
         else:
-            DEBUG and print('row_label={} col_label={} value={}: no preferred col label found'.format( row_label, col_label, value ) )
+            logger.debug('row_label=%s col_label=%s value=%s: no preferred col label found', row_label, col_label, value )
     if pref_label in row:
         desc = col_label
         if pref_label != col_label:
             col_desc += '(preferred="{}"'.format(pref_label)
-        u.eprint('Collision on row={} col={}, old_value={}, new_value={} ?  (Will use new value.)'.format( row_label, col_desc, row[pref_label], value ) )
+        logger.error('Collision on row=%s col=%s, old_value=%s, new_value=%s ?  (Will use new value.)', row_label, col_desc, row[pref_label], value )
     row[pref_label] = value
 
 def write_table( title, table ):
@@ -76,6 +78,7 @@ def write_table( title, table ):
     print('----------------')
 
 line_cnt = 0
+prog_name = sys.argv[0]
 in_filename = sys.argv[1]
 # key='*' is a hack for column name rewrites.
 # add_table_cell will check to see if it should use the
@@ -93,7 +96,9 @@ avg_col_prefs = { 'Average_R:' : 'a.ROUGE',
 avg_table = dict( )
 detail_tables = collections.defaultdict( dict ) # dictionary of table dicts, one for each rouge number.
 timestamp = time.strftime("%Y-%m-%d %0H:%0M:%0S", time.localtime())
+u.eprint('Hello from {}'.format(prog_name))
 print('Generating tablized rouge results from')
+logger.info('\n\n----- begin %s -----', prog_name )
 print('input file: "{}"'.format(in_filename) )
 print('local time: {} '.format(timestamp) )
 print()
@@ -105,18 +110,18 @@ with open( in_filename, 'r' ) as in_file:
         line = line.strip()
         fields = line.split()
         if len(fields) <= 1:
-            u.eprint('{:04d}: skipping line w/no fields = "{}"'.format(line_cnt, line) )
+            logger.error('%04d: skipping line w/no fields = "%s"', line_cnt, line)
             continue # skip empty lines
-        DEBUG and print('{:04d}: "{}"'.format(line_cnt, line))
+        logger.debug('%04d: "%s"', line_cnt, line)
         if re.search( r' ROUGE-\d Average_', line ):
             # example: "9 ROUGE-1 Average_R: 0.21842 (95%-conf.int. 0.19702 - 0.23755)"
             print('{:04d}: avg_line: "{}"'.format(line_cnt, line))
             group_id, rouge_n, label, value, _, low, _, high = fields
             add_table_cell( table=avg_table,  row_label=rouge_n, col_label=label, value=value, pref_cols=avg_col_prefs )
             continue
-        DEBUG and print('fields={}'.format(fields))
+        logger.debug('fields=%s', str(fields) )
         group_id, rouge_n, label, docset, rval, pval, fval = fields
-        DEBUG and print('   group_id={} rouge_n={} label={} docset={} (r,p,f)=( {}, {}, {} )' \
+        logger.debug('   group_id=%s rouge_n=%s label=%s docset=%s (r,p,f)=( %s, %s, %s )' \
             .format( group_id, rouge_n, label, docset, rval, pval, fval ) )
         rval = verify_prefix_value( 'R:', rval )
         pval = verify_prefix_value( 'P:', pval )
@@ -125,10 +130,10 @@ with open( in_filename, 'r' ) as in_file:
         add_table_cell( table=detail_tables[rouge_n], row_label=docset, col_label='b.PREC', value=pval )
         add_table_cell( table=detail_tables[rouge_n], row_label=docset, col_label='c.F-SCORE', value=fval )
 
-u.eprint('Loaded {} lines from file="{}"'.format( line_cnt, in_filename ) )
+u.eprint('{}: Loaded {} lines from file="{}"'.format( prog_name, line_cnt, in_filename ) )
 
 write_table( 'Averages', avg_table )
-DEBUG and print('avg_table={}'.format(avg_table) )
+logger.debug('avg_table=%s', avg_table )
 for key in sorted( detail_tables.keys() ):
     write_table( key, detail_tables[key] )
-u.eprint('Done.')
+u.eprint('{}: Done.'.format( prog_name ))
