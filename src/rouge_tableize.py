@@ -98,7 +98,7 @@ detail_tables = collections.defaultdict( dict ) # dictionary of table dicts, one
 timestamp = time.strftime("%Y-%m-%d %0H:%0M:%0S", time.localtime())
 u.eprint('Hello from {}'.format(prog_name))
 print('Generating tablized rouge results from')
-logger.info('\n\n----- begin $s -----', prog_name )
+logger.info('\n\n----- begin %s -----', prog_name )
 print('input file: "{}"'.format(in_filename) )
 print('local time: {} '.format(timestamp) )
 print()
