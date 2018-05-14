@@ -28,7 +28,7 @@ def qr_sum(docset, config):
     # 3 position in article
     # 4 article index in article_length
     # 5 sentence score
-    # 6 cosine sim score
+    # 6 int for chronological ordering yyyymmddppp
 
     words_dict = {} # {word, index}
     words_vec = [] # [word]
@@ -58,6 +58,20 @@ def qr_sum(docset, config):
 
         article_word_count = 0
         # TODO: GET ARTICLE ID INFORMATION AND STORE IT FOR LATER USE
+
+        # ORDERING
+        # -----------------------------------------
+        # Extract date from article id
+        title = article.id
+        date = "x"
+        # print(title)
+        if len(title) < 17:
+            date = title[3:11]
+        else:
+            date = title[8:16]
+        # -----------------------------------------
+
+        # print(date)
 
         # jgreve: who knew articles can be empty?
         if len(article.paragraphs) == 0:
@@ -91,20 +105,33 @@ def qr_sum(docset, config):
 
                 article_word_count += len(words)
 
+                # ORDERING
+                # -----------------------------------------
                 sentence_position += 1
                 # print(sentence_position)
+                position = str(sentence_position)
+                # Make sentence position a 3-digit number
+                if len(position) == 1:
+                    position = "0" + position
+                if len(position) == 2:
+                    position = "0" + position
+                # Combine date and position for super int yyyymmddppp
+                priority_str = date + position
+                priority = int(priority_str)
+                # -----------------------------------------
 
+                # Checks for first char cap and last char .
                 first_char = False
                 last_char = False
 
                 if sentence[0].lower() != sentence[0]:
                     first_char = True
 
-                if sentence[-1] == ".":
+                if sentence[-1] == "." or sentence[-1] == "?" or sentence[-1] == "!":
                     last_char = True
 
                 if len(words) > 6 and first_char == True and last_char == True: #arbitrary length of fragments
-                    all_sentences.append([sentence, norm_words, [None], sentence_position, len(article_length), 0])
+                    all_sentences.append([sentence, norm_words, [None], sentence_position, len(article_length), 0, priority])
                     if len(words) < short:
                         short = len(words)
 
@@ -195,7 +222,7 @@ def qr_sum(docset, config):
             for ind in r_index:
                 sentence[2][ind] = 0
 
-    ordered_sum = sorted(selected_content, key= itemgetter(3))
+    ordered_sum = sorted(selected_content, key= itemgetter(6)) # Sorts selected sentences by date/position
 
     summary = ""
     for s in ordered_sum:
