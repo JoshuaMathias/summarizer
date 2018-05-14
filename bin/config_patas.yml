@@ -9,8 +9,13 @@ aquaint:
     aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
 
 output:
-    summary_dir: output/D2
-    results_dir: output/results
+    #summary_dir: output/D2  # jgreve: output is supposed to be plural.
+    # jgreve: has been wrong for a while, but only worked because we were using
+    # src/sum_config.py's DEFAULT_SUMMARY_DIR = 'outputs/D2' values.
+    # Sort of "right for the wrong reasons."
+    summary_dir: outputs/D2
+    #results_dir: output/results   # jgreve: not supposed to be in ouput folder
+    results_dir: results
     max_words: 100
 
 # Test configuration to read one article file only

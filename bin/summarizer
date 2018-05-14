@@ -21,5 +21,8 @@ if [ -d "$E2JK_OUTPUT_RESULTS_DIR" ]; then
     fi
 fi
 
+# remove log files (if any)
+rm -f err.log info.log
+
 
 src/summarizer.py $@

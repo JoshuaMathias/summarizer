@@ -9,8 +9,9 @@ aquaint:
     aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
 
 output:
-    summary_dir: output/D3
-    results_dir: output/results
+    summary_dir: outputs/D3
+    #results_dir: outputs/results   (jgreve: not supposed to be child of outputs)
+    results_dir: results
     max_words: 100
 
 # Test configuration to read one article file only

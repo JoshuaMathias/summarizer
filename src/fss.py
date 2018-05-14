@@ -34,7 +34,8 @@ def first_sent_sum(docset, config):
             selected_content += first_sentence + "\n"
             word_count += len(words)
 
-    directory = config.DEFAULT_SUMMARY_DIR
+    #directory = config.DEFAULT_SUMMARY_DIR
+    directory = config.OUTPUT_SUMMARY_DIRECTORY # jgreve: confg.yml files dont set the defaults. 
 
     u.eprint('   docset.id      ="{}"'.format(docset.id)) # both appear to be the same
     u.eprint('   docset.topic_id="{}"'.format(docset.topic_id))

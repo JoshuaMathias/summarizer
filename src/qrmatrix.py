@@ -203,7 +203,8 @@ def qr_sum(docset, config):
 
 
 # WRITE SUMMARY TO FILE
-    directory = config.DEFAULT_SUMMARY_DIR
+    #directory = config.DEFAULT_SUMMARY_DIR
+    directory = config.OUTPUT_SUMMARY_DIRECTORY # jgreve: confg.yml files dont set the defaults. 
 
     # u.eprint('   docset.id      ="{}"'.format(docset.id)) # both appear to be the same
     # u.eprint('   docset.topic_id="{}"'.format(docset.topic_id))
