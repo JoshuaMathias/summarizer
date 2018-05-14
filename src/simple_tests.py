@@ -99,7 +99,6 @@ class TestSummarizer(unittest.TestCase):
         textBlock = doctree.find('text')
         testArticleReader = article_reader.ArticleReader('','','')
         paraTag = textBlock.find('p')
-        print('read from XML ||%s||' % paraTag.contents[0])
         modifiedText = testArticleReader.__convert_bs_string__(paraTag.contents[0])
 
         self.assertEqual(modifiedText, '\nThis is a test\nThis is still a test.\n')
