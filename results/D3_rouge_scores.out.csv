@@ -1,6 +1,6 @@
-Generating tablized rouge results from
+Generating tableized rouge results from
 input file: "results/D3_rouge_scores.out"
-local time: 2018-05-13 19:20:29 
+local time: 2018-05-14 15:26:06 
 
 note: printing 'average' lines for table validation
 
@@ -18,7 +18,7 @@ note: printing 'average' lines for table validation
 0157: avg_line: "9 ROUGE-4 Average_F: 0.00533 (95%-conf.int. 0.00289 - 0.00845)"
 
 --- Averages ---
-,Averages,a.ROUGE,b.PREC,c.F-SCORE
+,Averages,a.RECALL,b.PREC,c.F-SCORE
 ,ROUGE-1,0.22264,0.25731,0.23795
 ,ROUGE-2,0.05216,0.06041,0.05579
 ,ROUGE-3,0.01429,0.01670,0.01535

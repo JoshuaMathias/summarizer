@@ -85,7 +85,7 @@ in_filename = sys.argv[1]
 # more sort-friendly values, otherwise will col-label used as-is.
 # Typically you need to run it once and see what your col lables
 # turn out to be then come back and put these it.
-avg_col_prefs = { 'Average_R:' : 'a.ROUGE', 
+avg_col_prefs = { 'Average_R:' : 'a.RECALL', 
                   'Average_P:' : 'b.PREC', 
                   'Average_F:' : 'c.F-SCORE', 
 }
@@ -97,7 +97,7 @@ avg_table = dict( )
 detail_tables = collections.defaultdict( dict ) # dictionary of table dicts, one for each rouge number.
 timestamp = time.strftime("%Y-%m-%d %0H:%0M:%0S", time.localtime())
 u.eprint('Hello from {}'.format(prog_name))
-print('Generating tablized rouge results from')
+print('Generating tableized rouge results from')
 logger.info('\n\n----- begin %s -----', prog_name )
 print('input file: "{}"'.format(in_filename) )
 print('local time: {} '.format(timestamp) )
