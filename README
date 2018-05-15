@@ -150,4 +150,12 @@ sample config file (used for D3)
 | #    article_file: aquaint_test1/nyt/1999/19990330_NYT
 +--- end config_patas_D3.yml ---
 
+
+## Logging note
+Logging is configured with standard python logging and a .../logging.yaml file
+in the project folder.
+The default log level is INFO.
+Python logging messages will be written to "err.log" (levels >= WARNING)
+and "info.log" (all active levels).
+
 --- end README ---
