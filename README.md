@@ -1,114 +1,172 @@
-# summarizer  
-LING 573 Summarization Group Project  
-summarizer.py v. 2.0 by team #e2jkplusplus  
+<!--
+#D3 "README" file
 
-## How to run  
+##LING 573 Summarization Group Project  
+##summarizer.py v. 2.0 by team #e2jkplusplus  
 
-Our project can be run with condor using `condor_submit D2.cmd`.  
+updated for D3 (jgreve Mon May 14 15:27:25 PDT 2018)
+-----------------------------------------------------------
 
-On patas one can run `bin/summarizer_patas`, which will use a patas specific configuration file (bin/config_patas.yml).  
+note: the D3 requirements specify a "README" file, so here it is.
+We didn't want to assume "README.md" and miss the requirements.
+-->
 
-Configuration files specify file locations and max_words. See src/config.yml for an example.  
-A config file for use from the main project directory is config_un.yml.  
+# Summarization System: Deliverable 3
 
-To call directly using Python:  `python3 src/summarizer`
+John Greve, Eric Lindberg, Joshua Mathias, and Kekoa Riggin
 
-usage: summarizer.py [-h] [-c CONFIG]  
+## Overview
 
-
-optional arguments:  
-  -h, --help            show this help message and exit  
-  -c CONFIG, --config CONFIG   
-
-## Overview  
-
-Instructions for running the D2 summarizer code on pandas.
+Instructions for running the summarizer code on pandas.
 The two examples below show how to run via condor and the command line.
-See "Post-run" for how to run rouge scores.
 
-This is followed by an overview of the call sequence and a summary  
-of the configuration details in case you want to run the system on  
+### Change for D3
+
+The rouge score generation has been included with the summarizer
+logic so no extra rouge step is required.
+
+This is followed by an overview of the call sequence and a summary
+of the configuration details in case you want to run the system on
 a different topic set.
 
+## System Prereqs
 
-## Prereqs  
+To run the system your current working directory
+needs to be in the project root.
 
-To run the system your current working directory needs to be in the project root.
-Typically we extract into a summarizer folder.
+The project root will include directories of .../bin  .../src .../outputs.
+In our github source tree it is the summarizer folder.
+     https://github.com/JoshuaMathias/summarizer.git
 
+While we recommend invoking .../bin/summarizer_patas directly,
+you can invoke various standalone components directly as described
+in Optional below.  
 
-## Post-run  
+Most values are parameterized via config.yml.
+The summarizer .../bin/ commands pay attention to the
+current config&ast;.yml, which is set in "bin/summarizer_patas"
+on line 10:
+    export E2JK_CONFIG=bin/config_patas_D3.yml
 
-To get D2 rouge scores you need to run  
-`+---------------------
-|    $ bin/rouge.sh  
-+---------------------  `
+## Optional Run Methods
 
-This will write the rouge scores to .../results/D2_rouge_scores.out  
+This only matters if you want to run the .../bin/summarizer
+or .../bin/rouge.sh scripts directly.
 
+For example, to run stand alone rouge scores you will need
+to set E2JK_CONFIG to a suitable config&ast;.yml.
 
-## Run the D2 Summarizer  
+For example:
+
+```
+$ export E2JK_CONFIG=bin/config_patas_D3.yml
+$ bin/summarizer
+$ bin/rouge.sh
+```
+
+Actually it will base the file name on the $E2JK_CONFIG
+release_title, which is just "D3" in .../config_patas_D3.yml
+which would write the rouge scores to .../results/D3_rouge_scores.out
+
+The summarizer script uses a legacy -c option from D2 because of
+a dependency in its underlying python program.
+
+```
+$ export E2JK_CONFIG=bin/config_patas_D3.yml
+$ bin/summarizer -c $E2JK_CONFIG
+```
+
+## Implementation Details
+
+The .../scripts use e2jk.env to establish the environment variables.
+e2jk.env uses the config.yml file specified in the env-var E2JK_CONFIG
+to define a family of E2JK_ variables.
+
+e2jk.env uses bin/fyml.sh uses (src/fyml.py) for details.
+
+## Run the D2 Summarizer:
 
 To run via condor:
-`+---------------------
-|  $ cd summarizer  
-|  $ condor_submit D2.cmd  
-|  $ bin/condor_status.sh  
-+---------------------`
-The last step is optional (but convenient), hit ^C to exit the status loop.
 
+```
+$ cd summarizer
+$ condor_submit D3.cmd
+$ bin/condor_status.sh
+```
+
+The last step is optional (but convenient), hit `^C` to exit the status loop.
 
 Recommended way to run via command line (on patas or dryas):
-`+---------------------
-|  $ cd summarizer  
-|  $ bin/summarizer_patas > run.dat`
-+---------------------
+
+```
+$ cd summarizer
+$ bin/summarizer_patas > run.dat
+```
+
 Despite the name of the script it will work on patas or dryas.
 Status messages are written to STDERR.
-The actually summaries are written to STDOUT as well as the  
-individual docset outputs/D2 files.  "run.dat" is just a  
+
+The actually summaries are written to STDOUT as well as the
+individual docset outputs/D2 files.  "run.dat" is just a
 convenience to gather operational data.
 
-## Additional Information  
+## Additional Information
 
-    Call Sequence  
+### Call Sequence
+
+```
 -------------------------------------
-  (i)   bin/summarizer_patas  
- (ii)   bin/summarizer bin/config_patas.yaml  
-(iii)   src/summarizer.py -c bin/config_patas.yaml  
+  (i)   bin/summarizer_patas
+ (ii)   bin/summarizer bin/config_patas_d3.yml
+(iii)   src/summarizer.py -c bin/config_patas.yml
 
-(i) is just a stub shell that has a suitable D2 config file hardwired into it.
+(i) is just a stub shell that has a suitable D3 config file hardwired into it.
 (ii) passes the config file from (i) into (iii).
-     NOTE: (ii) will also clear the outputs/D2 directory.
+     NOTE: (ii) will also clear the outputs/D3 directory.
+```
 
+## Configuration Information
 
-## Configuration Information  
+We're using &ast;.yml (yml) files to say which paths to use.
 
-We're using \*.yml (yaml) files to say which paths to use.
-If you want to point at a different topic index you can change  
+If you want to point at a different topic index you can change
 the value on the aquaint_topic_index property.
-So far we have only tested with "devtest/GuidedSumm10_test_topics.xml"
+
+So far we have only tested with `devtest/GuidedSumm10_test_topics.xml`
 so we don't know if other topic.xml files will cause issues.
 
+### sample config file (used for D3)
 
-sample config file (used for D2)
-`+--- begin config_patas.yml ---
+```
++--- begin config_patas_D3.yml ---
 | project:
-|     team_id: 9  
-|     release_title: D2  
+|     team_id: 9
+|     release_title: D3
 | aquaint:
-|     aquaint1_directory: /dropbox/17-18/573/AQUAINT  
-|     aquaint2_directory: /dropbox/17-18/573/AQUAINT-2  
+|     aquaint1_directory: /dropbox/17-18/573/AQUAINT
+|     aquaint2_directory: /dropbox/17-18/573/AQUAINT-2
 | 
 |     aquaint_doc_dir: 
-|     aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml  
+|     aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
 | 
 | output:
-|     summary_dir: output/D2  
-|     results_dir: output/results  
-|     max_words: 100  
+|     summary_dir: outputs/D3
+|     #results_dir: outputs/results   (jgreve: not supposed to be child of outputs)
+|     results_dir: results
+|     max_words: 100
 | 
-| # Test configuration to read one article file only  
+| # Test configuration to read one article file only
 | # one_config:
-| #    article_file: aquaint_test1/nyt/1999/19990330_NYT  
-+--- end config_patas.yml ---`
+| #    article_file: aquaint_test1/nyt/1999/19990330_NYT
++--- end config_patas_D3.yml ---
+```
+
+## Logging note
+
+Logging is configured with standard python logging and a .../logging.yaml file
+in the project folder.
+
+The default log level is INFO.
+
+Python logging messages will be written to "err.log" (levels >= WARNING)
+and "info.log" (all active levels).

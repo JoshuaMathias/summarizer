@@ -1,6 +1,5 @@
 import sys  # stderr
-import scipy.sparse
-
+#import scipy.sparse  # jgreve: seems we're not using this, re-enable if dumpArray() helpful.
 
 #-----------------------------------------
 # utility functions
@@ -11,13 +10,13 @@ def eprint(*args, **kwargs):
 def makeIndent( depth ):
    return '|   ' * depth
 
-def dumpArray( a, label ):
-   print('\n--- {} :: shape={} type={} ---'.format( label, a.shape, type(a) ))
-   if isinstance( a, scipy.sparse.csr_matrix ) \
-   or isinstance( a, scipy.sparse.csc_matrix ) :
-      print( a.A )  # show in normal form, vs. serialized list of number
-   else:
-      print(a)
+#def dumpArray( a, label ):
+#   print('\n--- {} :: shape={} type={} ---'.format( label, a.shape, type(a) ))
+#   if isinstance( a, scipy.sparse.csr_matrix ) \
+#   or isinstance( a, scipy.sparse.csc_matrix ) :
+#      print( a.A )  # show in normal form, vs. serialized list of number
+#   else:
+#      print(a)
 
 def writeConfusionMatrix( title, actual, bestGuess ):
    print('Confusion matrix for the {} data:'.format(title) )
@@ -55,3 +54,46 @@ def writeConfusionMatrix( title, actual, bestGuess ):
    accuracy = diagSum / total
    print('\n {} accuracy={:.10f}'.format(title.capitalize(), accuracy) )
 
+
+# --- begin logging ---
+# logging example from here (see: yaml recipe)
+#      https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/
+import logging
+import os
+import logging.config
+import yaml
+
+__LOGGING_SETUP_FLAG__ = False
+def setup_logging(
+        default_path='logging.yaml',
+        default_level=logging.INFO,
+        env_key='LOG_CFG'
+    ):
+    """Setup logging configuration
+       Attempts to read ENV-VAR "LOG_CFG", allows override of log.yaml
+
+    """
+    global __LOGGING_SETUP_FLAG__
+    __LOGGING_SETUP_FLAG__ = True
+    path = default_path
+    value = os.getenv(env_key, None)
+    if value:
+        path = value
+        eprint('setup_logging(): env_key={}, value="{}"'.format(env_key, value))
+    else:
+        eprint('setup_logging(): env_key={} undefined, using path="{}"'.format(env_key, path))
+    if os.path.exists(path):
+        eprint('setup_logging(): loading path="{}"...')
+        with open(path, 'rt') as f:
+            config = yaml.safe_load(f.read())
+        logging.config.dictConfig(config)
+    else:
+        eprint('setup_logging(): WARNING! path="{}" does not exist? using default_level...')
+        logging.basicConfig(level=default_level)
+
+def get_logger( name ):
+    """usage: logger = u.get_logger( __name__ ), will call u.setup_logging() if needed"""
+    global __LOGGING_SETUP_FLAG__
+    if not __LOGGING_SETUP_FLAG__:
+        setup_logging( ) # lazy init
+    return logging.getLogger( name )

@@ -1,8 +1,11 @@
 import unittest
 import summarizer
-import content_provider
+import article_reader
+import topic_index_reader
+import article_content
 import rougescore
 import sum_config
+import bs4
 from unittest.mock import patch
 import io
 
@@ -35,39 +38,44 @@ class TestSummarizer(unittest.TestCase):
 
         self.configText = 'project:\n    team_id: test\n    release_title: also test\n'
 
+        self.sampleXML = '<DOC>\n<BODY>\n<TEXT>\n<P>\nThis is a test\nThis is still a test.\n</P>\n</TEXT>\n</BODY>\n</DOC>'
+
     # Not a great test, but mostly a template for mocking file reading in Python
     # (Seems readline iteration is broken in unittest mock, hence the weird StringIO invocation)
     def test_SummaryReturnsMinSizeWhenStoryIsLarger(self):
         smrzr = summarizer.Summarizer(25)
-        article = content_provider.ArticleContent(id='test.dat', body=[self.storyBody])
+        article = article_content.Article('test.dat')
+        article.paragraphs.append(self.storyBody)
         summary = smrzr.summarize(article)
         self.assertEqual(summary, self.summary)
 
-    def test_ContentReaderDefaultsAquaintAndAquaint2(self):
-        cr = content_provider.ContentReader()
-        self.assertEqual(cr.AQUAINT_DIR, '/opt/dropbox/17-18/573/AQUAINT')
-        self.assertEqual(cr.AQUAINT2_DIR, '/opt/dropbox/17-18/573/AQUAINT-2')
+    def test_IndexReaderDefaultsAquaintAndAquaint2(self):
+        mock_file = io.StringIO('')
+        with patch('topic_index_reader.open', return_value = mock_file, create=True):
+            tir = topic_index_reader.TopicIndexReader('')
+            self.assertEqual(tir.aquaint1, '/opt/dropbox/17-18/573/AQUAINT')
+            self.assertEqual(tir.aquaint2, '/opt/dropbox/17-18/573/AQUAINT-2')
 
-    def test_ContentReaderReassignsAquaintAndAquaint2(self):
-        cr = content_provider.ContentReader(aquaint2 = 'MyAquaint2Path', aquaint = 'MyAquaintPath')
-        self.assertEqual(cr.AQUAINT_DIR, 'MyAquaintPath')
-        self.assertEqual(cr.AQUAINT2_DIR, 'MyAquaint2Path')
-
-    def test_ContentReadRawFile(self):
-        cr = content_provider.ContentReader()
-        mock_file = io.StringIO(''.join(self.storyText))
-        with patch('content_provider.open', return_value=mock_file, create=True):
-            articles = cr.read_raw_files('test.dat')
-            self.assertEqual(articles[0].body[0], self.storyBody)
-            self.assertEquals(len(articles[0].body), 1)
-            self.assertEquals(len(articles), 1)
-
-    def test_ContentReadSGML(self):
-        cr = content_provider.ContentReader()
-        mock_file = io.StringIO(''.join(self.storySGML))
-        with patch('content_provider.open', reeturn_value=mock_file, create=True):
-            articles = cr.read_raw_files('test.dat')
-            self.assertEqual(len(articles[0].body), 1)
+    # def test_ContentReaderReassignsAquaintAndAquaint2(self):
+    #     cr = content_provider.ContentReader(aquaint2 = 'MyAquaint2Path', aquaint = 'MyAquaintPath')
+    #     self.assertEqual(cr.AQUAINT_DIR, 'MyAquaintPath')
+    #     self.assertEqual(cr.AQUAINT2_DIR, 'MyAquaint2Path')
+    #
+    # def test_ContentReadRawFile(self):
+    #     cr = content_provider.ContentReader()
+    #     mock_file = io.StringIO(''.join(self.storyText))
+    #     with patch('content_provider.open', return_value=mock_file, create=True):
+    #         articles = cr.read_raw_files('test.dat')
+    #         self.assertEqual(articles[0].body[0], self.storyBody)
+    #         self.assertEquals(len(articles[0].body), 1)
+    #         self.assertEquals(len(articles), 1)
+    #
+    # def test_ContentReadSGML(self):
+    #     cr = content_provider.ContentReader()
+    #     mock_file = io.StringIO(''.join(self.storySGML))
+    #     with patch('content_provider.open', reeturn_value=mock_file, create=True):
+    #         articles = cr.read_raw_files('test.dat')
+    #         self.assertEqual(len(articles[0].body), 1)
 
     def test_RougeScore(self):
         counter = rougescore.RougeCounter(0.5)
@@ -85,6 +93,16 @@ class TestSummarizer(unittest.TestCase):
             self.assertEqual(config.RELEASE_TITLE, 'also test')
             self.assertFalse(config.AQUAINT)
             self.assertFalse(config.ONE_FILE)
+
+    def test_ParagraphReader(self):
+        doctree = bs4.BeautifulSoup(self.sampleXML, 'html.parser')
+        textBlock = doctree.find('text')
+        testArticleReader = article_reader.ArticleReader('','','')
+        paraTag = textBlock.find('p')
+        print('read from XML ||%s||' % paraTag.contents[0])
+        modifiedText = testArticleReader.__convert_bs_string__(paraTag.contents[0])
+
+        self.assertEqual(modifiedText, '\nThis is a test\nThis is still a test.\n')
 
 if __name__ == '__main__':
     unittest.main()
