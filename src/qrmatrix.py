@@ -2,6 +2,7 @@
 import local_util as u
 logger = u.get_logger( __name__ ) #  https://docs.python.org/3/howto/logging.html
 
+import sys # jgreve: want sys.stdout for writting stopword activity.
 import os
 import sum_config
 import re # for removing multiple \s characters and source formatting
@@ -46,10 +47,21 @@ def qr_sum(docset, config):
 
     stop_words = {}
 
+    STOP_TOKENIZE = False
+    logger.debug('loading stop_words, STOP_TOKENIZE=%s', str(STOP_TOKENIZE) )
+    stop_line_cnt = 0
     for line in stop_lines:
-        line = line.lower()
-        if line not in stop_words:
-            stop_words[line] = 0
+        stop_line_cnt += 1
+        line = line.lower().strip()
+        if STOP_TOKENIZE:
+            words = word_tokenize( line )
+            logger.debug('stop_words[{:03d}]: line="{}" --> words={}'.format(stop_line_cnt, line, words ))
+            for word in words:
+                stop_words[word] = 0
+        else:
+            # original D3 code.
+            if line not in stop_words:
+                stop_words[line] = 0
 
     article_count = 0
     logger.info('%s: docset=%s', fname, docset )
@@ -96,12 +108,24 @@ def qr_sum(docset, config):
 
                 for w in raw_words:
                     if re.search("[a-zA-Z]", w) != None:
-                        norm_words.append(w.lower())
+                        if STOP_TOKENIZE:
+                            # we'll check stopwords in the next loop
+                            # (since the stop words are tokenized).
+                            norm_words.append(w.lower())
+                        else:
+                            # let's check stopwords now.
+                            w = w.lower()
+                            if w not in stop_words:
+                                norm_words.append(w) # keep it
+                            else:
+                                stop_words[w] += 1 # track how much our stopwords actually stop.
                     # words.append(w)
 
                 for w in norm_words:
                     if w not in stop_words:
                         words.append(w)
+                    else:
+                        stop_words[w] += 1 # track how much our stopwords actually stop.
 
                 article_word_count += len(words)
 
@@ -283,5 +307,9 @@ def qr_sum(docset, config):
     logger.info('%s: writing summary for %s to file="%s"', fname, docset, filename )
     with open(filename, "w+") as wout:
         wout.write(summary)
+
+    sys.stdout.write('\n--- stop_words freq. for {}---'.format(docset))
+    u.write_values( sys.stdout, "stop_words", stop_words )
+    u.write_values( sys.stdout, "stop_words_rev", stop_words, descending_freq=True)
 
     return summary
