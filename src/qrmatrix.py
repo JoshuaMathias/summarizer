@@ -175,7 +175,11 @@ def qr_sum(docset, config):
     selected_content = [] # list of sentences selected for
 
     # while 100 words not used up and shortest sentence isn't too long
+    ranking_iteration = 0
+    logger.debug( '*** new ranking_iteration *** docset=%s', docset )
     while word_count < 100 and word_count + short < 100:
+        ranking_iteration += 1
+        #logger.debug( '*** ranking_iteration=%d ***', ranking_iteration  )
         for sentence in all_sentences:
 
             # TODO: implement computation for t and g values from CLASSY [2001]
@@ -198,14 +202,30 @@ def qr_sum(docset, config):
         remove_words = []
         added = False
         while added == False:
-            for x in ranked:
+            for rank_idx, x in enumerate( ranked ):
                 if len(x[1]) + word_count < 100:
-                    logger.debug( 'len(x[1])=%d, word_cnt=%s, x[0]=%s, x[1]=%s', len(x[1]), word_count, x[0], x[1])
+                    logger.debug('[%02d:%03d]<KEEP> ap.ai:%02d.%02d, sc:%12.4f words[%3d/%3d] <%s>',
+                        ranking_iteration, rank_idx,
+                        x[3], x[4], # api=3 position in article, ai=4 article index in article_length
+                        x[5], # sc=5 sentence score
+                        word_count, len(x[1]), # total/cur_sent
+                        x[0]  # 0 sentence
+                        #x[6], # ch=crhrono = 6 int for chronological ordering yyyymmddppp
+                    )
                     selected_content.append(x)
                     word_count += len(x[1])
                     added = True
                     remove_words = x[1]
                     break
+                else:
+                    logger.debug('[%02d:%03d] skip  ap.ai:%02d.%02d, sc:%12.4f words[%3d/%3d] <%s>',
+                        ranking_iteration, rank_idx,
+                        x[3], x[4], # api=3 position in article, ai=4 article index in article_length
+                        x[5], # sc=5 sentence score
+                        word_count, len(x[1]), # total/cur_sent
+                        x[0]  # 0 sentence
+                        #ignore: x[6], # ch=crhrono = 6 int for chronological ordering yyyymmddppp
+                    )
             if added == False:
                 word_count = 101
                 break
