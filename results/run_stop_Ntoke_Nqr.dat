@@ -1,0 +1,339 @@
+bin/summarizer_patas: E2JK_CONFIG=bin/config_patas_D3.yml
+bin/summarizer: (in e2jk.env): calling flatten yaml on E2JK_CONFIG="bin/config_patas_D3.yml"
+setup_logging(): env_key=LOG_CFG undefined, using path="logging.yaml"
+setup_logging(): loading path="{}"...
+Hello from "fyml.py" version 1.0 (by team "#e2jkplusplus").
+config=<sum_config.SummaryConfig object at 0x7f2fd5d3d828>
+config.cfg={'output': {'max_words': 100, 'results_dir': 'results', 'summary_dir': 'outputs/D3'}, 'project': {'release_title': 'D3', 'team_id': 9}, 'aquaint': {'aquaint2_directory': '/dropbox/17-18/573/AQUAINT-2', 'aquaint1_directory': '/dropbox/17-18/573/AQUAINT', 'aquaint_doc_dir': None, 'aquaint_topic_index': '/dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml'}}
+Done.
+bin/fyml.sh: fyml returning env.tmp
+bin/summarizer: (in e2jk.env): TMP_ENV=env.tmp
+/home2/jgreve/lin573/summarizer
+bin/		d3.err	    logging.yaml		run_stop_Ntoke_Nqr.dat
+conf/		d3.out	    old/			run_stop_Ytoke_Yqr.dat
+config_un.yml	d3.tmp	    outputs/			shelve_db.bak
+cosine_results	doc/	    qrmatrix.py@		shelve_db.dat
+D1.cmd		env.tmp     README			shelve_db.dir
+D2.cmd		err.log     README.md			src/
+d2.err		info.log    results/			temp2.dat
+d2.out		info.log.1  results_stop_Ytoke_Yqr.dat	temp.dat
+d2.tmp		info.sav    run/
+D3.cmd		junk/	    run.dat
+bin/summarizer: checking E2JK_OUTPUT_RESULTS_DIR="results"
+summarizer: E2JK_OUTPUT_RESULTS_DIR is not empty, cleaning up....
+bin/summarizer: calling summarizer.py -c bin/config_patas_D3.yml
+setup_logging(): env_key=LOG_CFG undefined, using path="logging.yaml"
+setup_logging(): loading path="{}"...
+Hello from "summarizer.py" version 1.0 (by team "#e2jkplusplus").
+processing DocSet( id:D1001A-A "Columbine Massacre" 20)
+get_stop_words(): loaded #stop_words=581, #lines=581, STOP_TOKENIZE=False STOP_QRFLAG=False
+processing DocSet( id:D1002A-A "Diallo Trial" 20)
+processing DocSet( id:D1003A-A "Giant Panda" 20)
+processing DocSet( id:D1004A-A "Papua Tsunami" 20)
+processing DocSet( id:D1005A-A "Parkinson Disease" 20)
+processing DocSet( id:D1006A-A "Vioxx" 20)
+processing DocSet( id:D1007B-A "Bird Flu" 20)
+processing DocSet( id:D1008B-A "Chesapeake Bay" 20)
+processing DocSet( id:D1009B-A "Jon Benet Ramsey" 20)
+processing DocSet( id:D1010B-A "Mad Cow Disease" 20)
+processing DocSet( id:D1011C-A "Eating Disorders" 20)
+processing DocSet( id:D1012C-A "Helios Crash" 20)
+processing DocSet( id:D1013C-A "Identity Theft" 20)
+processing DocSet( id:D1014C-A "Obesity" 20)
+processing DocSet( id:D1015C-A "Rain Forest Destruction" 20)
+processing DocSet( id:D1016C-A "Soeharto Investigation" 20)
+processing DocSet( id:D1017D-A "Hurricane Floyd" 20)
+processing DocSet( id:D1018D-A "Joran Van Der Sloot" 20)
+processing DocSet( id:D1019D-A "Malaysia Resort Abduction" 20)
+processing DocSet( id:D1020D-A "Recall Food United States" 20)
+processing DocSet( id:D1021D-A "Debra La Fave" 20)
+processing DocSet( id:D1022D-A "Whale Conservation Japan" 20)
+processing DocSet( id:D1023E-A "Austrian Avalanches" 20)
+processing DocSet( id:D1024E-A "Bomb Khartoum" 20)
+processing DocSet( id:D1025E-A "Grizzly Bears" 20)
+processing DocSet( id:D1026E-A "Head Injuries" 20)
+processing DocSet( id:D1027E-A "Shepard Beating Death Trial" 20)
+processing DocSet( id:D1028E-A "Unabomber Trial" 20)
+processing DocSet( id:D1029F-A "Baluchistan Uprising" 20)
+processing DocSet( id:D1030F-A "Ephedra" 20)
+processing DocSet( id:D1031F-A "Mangrove Forests" 20)
+processing DocSet( id:D1032F-A "Offshore Gas Leak" 20)
+processing DocSet( id:D1033F-A "South Korean Wire Tapping" 20)
+processing DocSet( id:D1034F-A "Threat To Frogs" 20)
+processing DocSet( id:D1035G-A "Agent Orange" 20)
+processing DocSet( id:D1036G-A "Dioxin Poisoning Yuschenko" 20)
+processing DocSet( id:D1037G-A "Maryland Oysters" 20)
+processing DocSet( id:D1038G-A "Mt St Helens" 20)
+processing DocSet( id:D1039G-A "Murder Van Gogh" 20)
+processing DocSet( id:D1040G-A "Robert Blake Murder Trial" 20)
+processing DocSet( id:D1041H-A "Coral Reefs" 20)
+processing DocSet( id:D1042H-A "Lynndie England" 20)
+processing DocSet( id:D1043H-A "Rafik Hariri" 20)
+processing DocSet( id:D1044H-A "Red Food Dye" 20)
+processing DocSet( id:D1045H-A "Songhua River" 20)
+processing DocSet( id:D1046H-A "Tsunami Indonesia" 20)
+2018-05-17 22:24:30,590:ERR:qrmatrix: write_stop_word_stats(): writing stop_words frequency to STDOUT (search on "stop_wrods_FREQ")
+2018-05-17 22:24:30,590:ERR:qrmatrix:    note: STOP_QRFLAG=False, so no stop-word activity to report
+D1001A-A : Columbine Massacre
+So many forms of community, rippling outward from Columbine High and across the planet, have come together since last week's violence that it was difficult to tell.
+The day that Columbine High School students are to return to class has been delayed because so many have been attending funerals for students killed in the April 20 massacre, an administrator said Tuesday.
+They came to Chatfield, nestled in the foothills of the Rocky Mountains and just four miles from Columbine, because their school remains a cordoned-off crime scene with bullet-pocked walls, broken windows, and the ghosts of their innocence.
+
+D1002A-A : Diallo Trial
+Diallo's father, Saikou Amad Diallo, arrived here Wednesday from the West African nation of Guinea and said he was anxious to see the officers not only charged, but brought to trial.
+Now that the four police officers charged with killing Amadou Diallo have been arraigned, the next step in the legal process will come at the end of the month, when their lawyers and Bronx prosecutors are to appear before a judge to set a schedule for the pretrial proceedings.
+Albany's neighborhood leaders and minority politicians had gotten the attention they wanted on police conduct.
+
+D1003A-A : Giant Panda
+The two giant pandas at the city's zoo retired to their favorite spot under a few bushes and mated over the past two days _ the only successful natural insemination of a panda this year in the United States, officials said.
+Doctors at a leading hospital in northwest China say Thursday's operation on a paralyzed giant panda has been a success but they cannot tell at the moment when it will be on its feet again, or whether it ever will.
+The birth was seen as a hopeful sign for efforts to revive the endangered species.
+
+D1004A-A : Papua Tsunami
+The Papua New Guinea (PNG) Defense Force, the police and health services are on standby to help the victims of a tsunami that wiped out several villages, killing scores of people, on PNG's remote north-west coast Friday night.
+Tsunami researchers at the National Tidal Facility (NTF) in Adelaide said Monday the northwest coastline had been identified as the most vulnerable area in Australia because of its proximity to the undersea earthquake-prone Java Trench, according to reports by the Australian Associated Press.
+The official death toll from Friday's disaster was at least 700, mostly children and the elderly.
+
+D1005A-A : Parkinson Disease
+Fox is returning to TV _ in a commercial praising Democratic presidential candidate John Kerry for his stance on stem cell research.
+Like many degenerative brain diseases, including Parkinson's and Alzheimer's, proteins targeted in the disease process begin misfolding and clumping in or around brain cells, which are called neurons.
+A small group of people with Parkinson's disease had been pleading for months with the biotechnology company Amgen: Let them resume taking an experimental drug that the patients said had helped them but which the company said was ineffective and possibly dangerous.
+
+D1006A-A : Vioxx
+Momentum was growing for a fresh look at the safety of Celebrex and other pain relievers as key researchers, a congressman and European regulators said they feared such drugs might raise the risk of heart problems like those blamed on the arthritis medicine Vioxx.
+When Merck withdrew Vioxx, S&P lowered its outlook to negative from stable.
+The e-mail and meeting notes also show that Dr. David Graham, an official in the FDA's Office of Drug Safety, is seeking to begin a study of the safety of Bextra and Mobic, two arthritis pills that are similar to Vioxx.
+
+D1007B-A : Bird Flu
+No bird flu case has been found in Macao and people should stay calm, experts from the Macao Nurses' Association and the Public Health Department said.
+HONG KONG, December 27 (Xinhua) -- Test results related to the first bird flu case detected in a human suggested that the main mode of influenza A H5N1 virus transmission was bird-to-human, it was known here Saturday.
+The doctor was quoted by the Tai Chung Po newspaper on Sunday that his hospital is fully prepared to cope with the treatment and testing of the bird flu disease which had killed four people in Hong Kong.
+
+D1008B-A : Chesapeake Bay
+Authorities first offered rewards to trappers who caught nutria: $1.50 apiece.
+A Maryland environmentalist alarmed by the decline of the Chesapeake Bay's native oyster population is trying to get it on the federal Endangered Species list -- sparking an uproar of opposition in the oyster industry from Maine to Louisiana.
+A Government Accountability Office review found that the Chesapeake Bay Program Office -- an arm of the Environmental Protection Agency -- has no coordinated, comprehensive plan for cutting pollution in the bay, even after nearly $6 billion in state and federal money has been devoted to the effort in the past decade.
+
+D1009B-A : Jon Benet Ramsey
+Although the Ramsey's have long declined to be interviewed by police, whom they characterized as biased in the case, their attorney said recently the couple would cooperate with the grand jury.
+JonBenet was found beaten and strangled Dec. 26, 1996 in her home in Boulder, Colorado.
+Hunter ``has provided evidence to Ramsey defense attorneys at their request'' but denied requests by other witnesses for transcripts of their own statements to the police, wrote Fleet and Priscilla White, a couple who had the Ramsey family to their home for dinner on Dec. 25, 1996, a few hours before JonBenet was found dead.
+
+D1010B-A : Mad Cow Disease
+A 48-month-old cow that died recently has been confirmed as having had mad cow disease, making it the 14th case in Japan, the country's Agriculture, Forestry and Fisheries Ministry said Thursday.
+Since 1996, public health authorities have warned that people may catch vCJD from eating meat infected with mad cow disease, also known as bovine spongiform encephalopathy (BSE), or from infected blood transfusions.
+Brain tissue samples from a suspected US beef cow began its trip to England on Thursday for final tests to confirm if it is the second case of mad cow disease in the United States.
+
+D1011C-A : Eating Disorders
+Years of claiming she wasn't hungry, eating small meals such as an apple and a salad, running errands or taking a walk while her co-workers went to lunch or purging when she ate more than made her comfortable were all part of Hecht's routine.
+Women who suffer from anorexia have increased chemical activity in a part of the brain that controls reward and reinforcement, something that may explain why they are driven to lose weight but don't get any pleasure from it, according to a new study.
+
+D1012C-A : Helios Crash
+Greek Defense Ministry and fire department said that the plane crashed to a mountain at about 12:20 p.m. (0920 GMT) near the coastal town of Grammatikos, about 40 kilometers north of Athens, just a few minutes before its scheduled landing time on a flight from Larnaca International Airport of Cyprus to Prague via Athens.
+One month after Greece's worst air accident, a conclusive explanation of what caused a Cypriot Helios Airways airliner to crash killing all 121 people on board still eludes investigators, but recent reports suggest pilots may have failed to respond to a cabin pressure warning.
+
+D1013C-A : Identity Theft
+Then last fall, she said, she watched an NBC News report on how thieves needed only a name and address to steal a person's identity, using that information to set up fraudulent credit accounts.
+So did Bronti Kelly, a retail salesman and former military reservist from Temecula, Calif., who couldn't figure out why he was repeatedly turned down in the early 1990s for dozens of sales positions at department stores _ or dismissed within a week if he did manage to secure a job.
+The reason is simple: It's so easy to obtain personal information.
+
+D1014C-A : Obesity
+The findings ``suggest that diabetes and obesity are likely to emerge as the preeminent public health problems in the near future,'' said Dr. Michael Stern, professor of medicine at the University of Texas Health Science Center.
+UNDATED - Health specialists are calling it a ``fat epidemic,'' and no wonder with the latest numbers showing that more than half of Americans are overweight and one out of three adults is obese.
+A Gila River Pima man has an 80 percent chance of becoming diabetic before he's 55, according to Dr. David Harrowe, a public health officer for the tribe.
+
+D1015C-A : Rain Forest Destruction
+In the two decades since saving the world's rain forests became an environmental cause celebre, there has been plenty of consciousness raising, some successful corporate boycotting, and a new flavor of ice cream _ Rainforest Crunch.
+The tropical rain forest accounts for eight percent of the total area of the Xishuangbanna Nature Reserve.
+I toured the Una area forest with Conservation International, which, using grants from Budweiser and Ford, is trying to help save what's left of one of the great ecosystems on the planet by creating a tourist industry here that will pay better than logging.
+
+D1016C-A : Soeharto Investigation
+Leading opposition figure Amien Rais called on Soeharto over the weekend to donate 95 percent of his wealth to the state in return for complete forgiveness from the people so that the government should not have to beg for aid from international agencies and institutions.
+JAKARTA, September 22 (Xinhua) -- Indonesian Attorney General Andi M. Ghalib Monday said he would ask former President Soeharto to sign a letter of authorization that would enable the investigation team to probe Soeharto's overseas wealth.
+The Indonesian government has set up two teams to investigate alleged corruption by Soeharto as well as his wealth.
+
+D1017D-A : Hurricane Floyd
+The National Hurricane Center in Miami reported that Floyd was expected to intensify today, becoming a Category 3 hurricane, and it could become a Category 4 with sustained winds of at least 131 mph by Tuesday afternoon, when it's expected to reach the northern Bahamas.
+A hurricane that meteorologists said was four times the size of the infamous Andrew and potentially even more destructive pounded toward Florida Monday, forcing hundreds of thousands from their homes and leaving countless residents to hope that the massive storm would somehow miss their cities.
+President Clinton issued pre-emptive disaster declarations for Florida and Georgia.
+
+D1018D-A : Joran Van Der Sloot
+Also Thursday, a judge postponed to Friday a ruling on a petition from the justice official, Paul van der Sloot, to see his jailed 17-year-old son, Joran, said Attorney General Caren Janssen.
+Despite intensive searches by hundreds of volunteers, no trace of Holloway has been found.
+Also Saturday, the lawyer for one of two Surinamese brothers being held in connection with Holloway's disappearance confirmed that Satish Kalpoe admitted lying to police when he told them that he and his brother and their Dutch friend dropped Holloway off alone at her hotel, the Holiday Inn, the night she disappeared.
+
+D1019D-A : Malaysia Resort Abduction
+KUALA LUMPUR, April 24 (Xinhua) -- A total of 20 people were taken hostage by six heavily armed men Sunday night from Sipadan island off Sabah, East Malaysia, but their motives behind the abduction are yet to be confirmed, Malaysian Police said Monday.
+The hostages include two French nationals, three Germans, two South Africans, two Finns and one Lebanese, all tourists, he told a news conference here.
+The Philippine Muslim extremist group Abu Sayyaf has threatened to behead some of the 21 hostages they abducted last Sunday in Malaysia because they do not want to talk with a government negotiator.
+
+D1020D-A : Recall Food United States
+At a daylong public meeting on Wednesday, officials said they had more questions than answers about a spike in outbreaks of listeriosis like the one traced to hot dogs and cold cuts at Michigan's Bil Mar Foods plant in December that has killed 16 people and sickened more than 70 in 14 states.
+A New Jersey company known for its high quality foods is voluntarily recalling 26 of it prepared products, including foie gras pates, mousses and terrines, and has forced the closing of the Huntington, N.Y., plant that produced them because of possible contamination with the sometimes deady bacterium, listeria monocytogenes.
+
+D1021D-A : Debra La Fave
+Lafave was sentenced in Hillsborough County, where Tampa is located, to three years of house arrest and seven years probation after pleading guilty Nov. 22 to two counts of lewd and lascivious battery for having sex with the boy in a classroom and her home.
+After the victim's family voiced concerns that forcing him to testify against the teacher amid intense media attention would be traumatizing, LaFave's lawyers and prosecutors reached a deal in which she would avoid prison while accepting a sentence of three years of partial house arrest and seven years of conditional release.
+
+D1022D-A : Whale Conservation Japan
+Japan, where whale meat is part of culinary culture, reluctantly halted commercial whaling in line with a 1986 IWC moratorium.
+The United States again is urging Japan to end its program of killing whales, which the Japanese say is for scientific research, and told Japan any expansion of the program would be unacceptable, the National Oceanic and Atmospheric Administration said.
+Australia condemned Japan's plan to more than double the number of whales it kills in the name of scientific research, pushing for a vote on the issue Wednesday at the annual meeting of the commision that regulates global whaling.
+
+D1023E-A : Austrian Avalanches
+At least eight people have been confirmed killed and 30 others injured as two avalanches roared through a ski resort in Austria's western state of Triol on Tuesday evening, the Austrian news media reported.
+LANDECK, Austria (AP) -- Another killer avalanche brought new heartache to Western Austria today, striking just miles from where rescuers were digging for victims of Europe's worst snowslide this winter.
+Justice Theodor Orr, writing for the majority, said the law contradicts extradition treaties Israel has signed -- but that as long as the law was on the books, he had to uphold it.
+
+D1024E-A : Bomb Khartoum
+CAIRO, Egypt (AP) _ In mosques and in McDonald's, Arabs on Friday criticized U.S. missile strikes in Sudan and Afghanistan as driven more by President Bill Clinton's need to escape scandal than by a battle against terrorism.
+He said Sudan could ``prove that the factory is specifically for pharmaceutical production'' and not the chemical weapons facility described by U.S. officials.
+KHARTOUM, Sudan (AP) _ With protests and marches, Sudan's beleaguered government has sought to rally a people weary of war and economic hardship against an American attack that destroyed a factory in the Sudanese capital.
+
+D1025E-A : Grizzly Bears
+If the administration goes ahead with dropping the bears' current ``threatened'' status -- a move that would not take place until the end of 2006 at the earliest -- officials in Idaho, Montana and Wyoming would be free to allow limited hunting of grizzlies and would not have to maintain the same level of protection on the grizzlies' habitat.
+Federal officials have begun the process of removing grizzly bears around Yellowstone National Park from the Endangered Species List, ending 30 years of protection and shifting responsibility for their management to state officials who may allow hunting.
+
+D1026E-A : Head Injuries
+One of the study's authors, Dr. Hal Hoffman of the University of California at San Diego, estimates that about 300 people, most in the United States, suffer from the disorder, familial cold autoinflammatory syndrome, or FCAS, which is caused by a single genetic mutation.
+Health and emergency officials say the pre-holiday rush is the perfect time for each of us to take a deep breath and review some basic survival skills so that we can focus on our "To Do" list without a tragedy that easily could have been prevented.
+Nationally, about 30 million kids under 15 play youth league baseball.
+
+D1027E-A : Shepard Beating Death Trial
+But they can reduce them,'' Mrs. Shepard said haltingly, her statement punctuated by sobs.
+In Laramie, where Russell Henderson is on trial for the beating death of gay college student Matthew Shepard, social service agencies could lose more than $100,000 unless the county can come up with a way to pay for prosecuting and defending Henderson and co-defendant Aaron McKinney.
+In December, when Cal Rerucha, the Albany County attorney, announced that he would seek the death penalty in both cases, Skaggs called the choice ``politically motivated,'' noting that this would be Wyoming's first capital murder trial in 20 years.
+
+D1028E-A : Unabomber Trial
+David and Wanda turned in Theodore Kaczynski last year after authorities had mounted an unsuccessful 18-year search for the Unabomber.
+WASHINGTON, January 5 (Xinhua) -- The trial of Unabomber suspect Theodore Kaczynski in Sacramento, California, is on hold following a surprise meeting with the judge and his lawyers, reportedly to air complaints about his defense, media reports said.
+Ever since his brother's arrest in April 1996, David Kaczynski has said that he did not go to the FBI out of interest in the reward, which was offered in October 1993, but out of concern that more people could be hurt.
+
+D1029F-A : Baluchistan Uprising
+Abdul Samad Lasi, a senior official at Dera Bugti, said they had received reports from intelligence and security officials that more than 1,500 armed men from the dominant local Bugti tribe had taken up positions in mountains outside the town and were waiting for an order to attack government installations.
+Salim Nawaz, said on Tuesday that thousands of Bugti tribesmen armed with rocket-propelled grenades and automatic weapons have surrounded a military base near Dera Bugti, in Pakistan's southwestern Baluchistan province, with some setting up roadblocks and digging trenches.
+Bugti accused security forces of provoking last week's fighting.
+
+D1030F-A : Ephedra
+The danger, he said, is that some people with potentially life-threatening illnesses will use the products in place of standard medical treatments.
+At the same time, two major new publications _ a 1,244-page Physicians' Desk Reference for Herbal Medicines, produced by the same company that publishes the Physicians' Desk Reference, and an English-language edition of Germany's therapeutic guide to herbal medicines, The Complete German Commission E Monographs _ have been issued to help educate physicians, pharmacists and interested consumers about the known uses, proper dosages and safety concerns of more than 600 botanicals now sold in this country.
+
+D1031F-A : Mangrove Forests
+While attention is clearly focused on the rising human toll of the tragedy, some dive operators and marine biologists are reporting that from Sri Lanka to Thailand corals are suffocating under layers of mud, heaps of rotten fish, are clogging beachfronts, and rare turtle nesting sites have been washed out to sea.
+There remains 14 mangrove forests for Vietnam to be protected in the 2005-2010 period, according to a recent survey jointly conducted by Vietnam's Ministry of Agriculture and Rural Development and the United Nations Environment Program, Vietnam News Agency reported on Tuesday.
+Jules' Undersea Lodge, 51 Shoreland Dr., Key Largo.
+
+D1032F-A : Offshore Gas Leak
+Norwegian oil group Statoil said on Monday that it was trying to seal off a gas leak on a platform in the North Sea where production had been suspended and most employees evacuated owing to the risk of an explosion.
+Norway, the world's third-largest oil exporter after Saudi Arabia and Russia and which normally has an average daily production of three million barrels, has seen its production reduced by 345,000 barrels per day (bpd) since it shut down three offshore platforms.
+No one was injured, but the leak forced the evacuation of 180 crew from Snorre A platform.
+
+D1033F-A : South Korean Wire Tapping
+President Roh Moo-hyun on Tuesday said he will accept the resignation of South Korea's ambassador to the United States, who is stepping down over a burgeoning scandal surrounding the East Asian country's 1997 presidential election.
+South Korean prosecutors said Thurday they have secured an arrest warrant for a former intelligence official accused of leaking a taped conversation detailing a slush fund payment by the Samsung Group.
+South Korea's spy agency apologized Friday for illegally recording phone conversations involving influential figures and admitted that wiretapping continued long after former President Kim Dae-jung ordered an end to it in 1998.
+
+D1034F-A : Threat To Frogs
+Isolated reports of silent forests and empty streams began to circulate about three decades ago, but the latest assessment is the first to provide a complete snapshot of a global decline in the diversity of frogs, salamanders, newts, and worm-like caecilians, and to show that they are at greater risk than both birds and mammals.
+In a decade-long study, a Wildlife Heritage Trust team found evidence of 35 new frog species, confirming the Indian Ocean island as the world's number one spot for frogs, with more than 200 known species, ahead even of rainforest-rich, biodiverse Costa Rica, Pethiyagoda told AFP.
+
+D1035G-A : Agent Orange
+Thursday's independent report by the Institute of Medicine appears to offer no new evidence that would affect benefits for Vietnam War veterans or their offspring, although the Department of Veterans Affairs said the study will be valuable for further research.
+The rates of illness among the 1,000 veterans were compared to those of 1,300 other Air Force veterans who also served in the war but had no involvement in the spraying of agent orange, a herbicide that was used to defoliate trees and remove cover for North Vietnamese soldiers and Communist guerrillas in the south.
+
+D1036G-A : Dioxin Poisoning Yuschenko
+He continued: "As I've said to the family, If this is a poisoning, it's going to be very tricky and tough to discover.
+The illness that disfigured the face of opposition presidential candidate Viktor Yushchenko resulted from poisoning by the toxic substance dioxin, which might have been placed deliberately in his food, Austrian doctors who treated him told reporters in Vienna on Saturday.
+Returning to Kiev after checking out of a clinic in Vienna, Austria, Yushchenko said he was sure that authorities were responsible for the dioxin poisoning that had disfigured his face and caused other symptoms.
+
+D1037G-A : Maryland Oysters
+A Maryland environmentalist alarmed by the decline of the Chesapeake Bay's native oyster population is trying to get it on the federal Endangered Species list -- sparking an uproar of opposition in the oyster industry from Maine to Louisiana.
+If it were revived to 25 times its current size -- about the level found between 1920 and 1970 -- excessive nitrogen levels in the bay would fall by 11 million pounds each year, and underwater grasses would increase by more than 20 percent, said the researchers, who are studying the oyster restoration methods for the state Department of Natural Resources.
+
+D1038G-A : Mt St Helens
+After a week of steadily increasing seismic rumbling, Mount St. Helens on Friday burped a tall column of steam and ash that officials said was probably not a precursor to a large sustained eruption from the most active volcano on the West Coast.
+Like so many others up here who seem content to pass entire days staring at the mostly quiet mountain -- as active as it looks on television, it really only erupts once in a while, and then for at most an hour at a time -- the pair said they had come in search of a feeling.
+
+D1039G-A : Murder Van Gogh
+A Dutch filmmaker who outraged members of the Muslim community with his works' attacks on the treatment of women in Islamic society was gunned down and stabbed to death on an Amsterdam street Tuesday morning.
+The suspect in the murder of film maker Theo van Gogh, known for his controversial views on Islam, had ties with a group of extremist Muslims monitored by the intelligence services, the Dutch government said here late Tuesday.
+Many here fear the fact that Van Gogh's alleged killer is of Moroccan descent could lead to ethnic tensions in Dutch society.
+
+D1040G-A : Robert Blake Murder Trial
+Robert Blake's defense rested its case without calling him to the stand, but he was able to tell jurors his story in a videotape of a TV interview that was played in court.
+Blake ambushed his wife, Bonny Lee Bakley, killing her after several other people refused to do the job for him, prosecutor Shellie Samuels argued.
+Each acknowledges he failed to tell police about Blake's alleged solicitations to kill his wife until Bonny Lee Bakley was fatally shot on May 4, 2001, near a restaurant where she and Blake had dinner, the lawyer said.
+
+D1041H-A : Coral Reefs
+Wreckage of the Amorgos, a Greek freighter that ran aground and sank off the coast of Kenting at the southernmost tip of Taiwan Jan. 14, 2001, is now "a slaughter hell" for coral in an area of Lungkeng off Kenting, said Cheng Ming-hsiu, Society chairman and a researcher with Academia Sinica's Institute of Zoology.
+Dozens of scuba divers are removing furniture and other debris swept into the ocean by the Dec. 26 tsunami, hoping to rescue fragile coral reefs and marine life that have long made Thailand's southern coast a top tourist destination.
+
+D1042H-A : Lynndie England
+Lynndie England on Monday pled guilty to charges of abusing Iraqi prisoners at the Abu Ghraib prison but told a court martial she did not believe she was doing wrong when photographed holding a leash on a naked inmate.
+Colonel James Pohl halted court-martial proceedings Wednesday after Charles Graner, the alleged ringleader in the abuse scandal, testified that he had ordered Private Lynndie England to hold the leash.
+He said that testimony directly contradicted England's guilty plea of Monday, in which she accepted some responsibility for how Iraqi detainees were abused and sexually humiliated in late 2003.
+
+D1043H-A : Rafik Hariri
+Saudi Arabia on Tuesday rejected a French demand for an international investigation into the assassination of former Lebanese Prime Minister Rafik Hariri, saying Lebanon is an independent country.
+Wailing and shouting, hundreds of thousands of mourners made their way in a somber but angry procession Wednesday from the home of former Prime Minister Rafik Hariri to his burial place in the grounds of an unfinished mosque that was one of his favorite reconstruction projects.
+Meanwhile, opposition groups, which accuse Syria of being behind Hariri's death, called for popular protests to continue until Syria withdraws its troops from Lebanon.
+
+D1044H-A : Red Food Dye
+The Food Standards Agency said it was working with the food industry and local authorities to make sure that all the affected products are removed from the shelves and urged members of the public who have them in their cupboards to contact the store where they were bought for a refund.
+The red dye Sudan I has been found in a pepper sauce made by the Heinz Meiweiyuan Food Co. based in Guangzhou, capital of southern China's Guangdong province, Xinhua news agency said.
+Sudan-I is traditionally used for coloring solvents, oils, waxes, petrol and shoe and floor polishes.
+
+D1045H-A : Songhua River
+China's State Environmental Protection Administration (SEPA) said here on Wednesday that the Songhua River in northeast China suffered a major water pollution incident owing to the explosion of a petrochemical plant at the upper reaches.
+Since the river was contaminated in a chemical plant explosion in the neighboring Jilin Province on November 13, the benzene and nitrobenzene density in the water is declining gradually after days of sedimentation and adsorption, and the Harbin city government has added a large amount of active carbon powders into the river to help clean up the water.
+
+D1046H-A : Tsunami Indonesia
+The Japanese government is committed to increase its aid for tsunami-hit Aceh and North Sumatra provinces to 146 million US dollars, Japanese Ambassador to Indonesia Yutaka Iimura said on Monday.
+Sweden is prepared to freeze the 7.6 million-US dollar debt over the next two years owed by Indonesia, which was hard hit by last month's tsunami disaster, the Swedish finance minister announced on Wednesday.
+Indonesia hopes to dispel concerns about official corruption in relief operations by announcing each month the amount of money it receives in foreign donations and where the funds are being spent, the government said Tuesday.
+
+Done.
+bin/summarizer: calling rouge.sh
+bin/rouge.sh: (in e2jk.env): calling flatten yaml on E2JK_CONFIG="bin/config_patas_D3.yml"
+setup_logging(): env_key=LOG_CFG undefined, using path="logging.yaml"
+setup_logging(): loading path="{}"...
+Hello from "fyml.py" version 1.0 (by team "#e2jkplusplus").
+config=<sum_config.SummaryConfig object at 0x7f59b61ad908>
+config.cfg={'project': {'release_title': 'D3', 'team_id': 9}, 'aquaint': {'aquaint1_directory': '/dropbox/17-18/573/AQUAINT', 'aquaint_topic_index': '/dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml', 'aquaint2_directory': '/dropbox/17-18/573/AQUAINT-2', 'aquaint_doc_dir': None}, 'output': {'summary_dir': 'outputs/D3', 'results_dir': 'results', 'max_words': 100}}
+Done.
+bin/fyml.sh: fyml returning env.tmp
+bin/rouge.sh: (in e2jk.env): TMP_ENV=env.tmp
+/home2/jgreve/lin573/summarizer
+bin/		d3.err	    logging.yaml		run_stop_Ntoke_Nqr.dat
+conf/		d3.out	    old/			run_stop_Ytoke_Yqr.dat
+config_un.yml	d3.tmp	    outputs/			shelve_db.bak
+cosine_results	doc/	    qrmatrix.py@		shelve_db.dat
+D1.cmd		env.tmp     README			shelve_db.dir
+D2.cmd		err.log     README.md			src/
+d2.err		info.log    results/			temp2.dat
+d2.out		info.log.1  results_stop_Ytoke_Yqr.dat	temp.dat
+d2.tmp		info.sav    run/
+D3.cmd		junk/	    run.dat
+found 46 docsets out of 368 total files in dir="/dropbox/17-18/573/Data/models/devtest")
+found 46 docsets out of 46 total files in dir="outputs/D3")
+Scanning for model files...
+find_filenames(): dir="/dropbox/17-18/573/Data/models/devtest"
+Scanning for system output files...
+find_filenames(): dir="outputs/D3"
+Opening "results/D3_rouge.xml" for writing...
+Success.
+setup_logging(): env_key=LOG_CFG undefined, using path="logging.yaml"
+setup_logging(): loading path="{}"...
+Hello from src/rouge_tableize.py
+2018-05-17 22:24:33,533:ERR:__main__: 0001: skipping line w/no fields = "---------------------------------------------"
+2018-05-17 22:24:33,534:ERR:__main__: 0005: skipping line w/no fields = "............................................."
+2018-05-17 22:24:33,578:ERR:__main__: 0052: skipping line w/no fields = "---------------------------------------------"
+2018-05-17 22:24:33,580:ERR:__main__: 0056: skipping line w/no fields = "............................................."
+2018-05-17 22:24:33,612:ERR:__main__: 0103: skipping line w/no fields = "---------------------------------------------"
+2018-05-17 22:24:33,613:ERR:__main__: 0107: skipping line w/no fields = "............................................."
+2018-05-17 22:24:33,646:ERR:__main__: 0154: skipping line w/no fields = "---------------------------------------------"
+2018-05-17 22:24:33,647:ERR:__main__: 0158: skipping line w/no fields = "............................................."
+src/rouge_tableize.py: Loaded 204 lines from file="results/D3_rouge_scores.out"
+src/rouge_tableize.py: Done.
+bin/rouge.sh: wrote results to results/D3_rouge_scores.out, see results/D3_rouge_scores.out.csv for an excel-friendlier format.
+bin/summarizer: Done.

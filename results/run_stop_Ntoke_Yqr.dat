@@ -1,0 +1,1611 @@
+bin/summarizer_patas: E2JK_CONFIG=bin/config_patas_D3.yml
+bin/summarizer: (in e2jk.env): calling flatten yaml on E2JK_CONFIG="bin/config_patas_D3.yml"
+setup_logging(): env_key=LOG_CFG undefined, using path="logging.yaml"
+setup_logging(): loading path="{}"...
+Hello from "fyml.py" version 1.0 (by team "#e2jkplusplus").
+config=<sum_config.SummaryConfig object at 0x7fbe67861780>
+config.cfg={'output': {'summary_dir': 'outputs/D3', 'results_dir': 'results', 'max_words': 100}, 'aquaint': {'aquaint_topic_index': '/dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml', 'aquaint2_directory': '/dropbox/17-18/573/AQUAINT-2', 'aquaint1_directory': '/dropbox/17-18/573/AQUAINT', 'aquaint_doc_dir': None}, 'project': {'team_id': 9, 'release_title': 'D3'}}
+Done.
+bin/fyml.sh: fyml returning env.tmp
+bin/summarizer: (in e2jk.env): TMP_ENV=env.tmp
+/home2/jgreve/lin573/summarizer
+bin/		d3.err	    logging.yaml		run.dat
+conf/		d3.out	    old/			run_stop_Ntoke_Nqr.dat
+config_un.yml	d3.tmp	    outputs/			run_stop_Ytoke_Yqr.dat
+cosine_results	doc/	    qrmatrix.py@		shelve_db.bak
+D1.cmd		env.tmp     README			shelve_db.dat
+D2.cmd		err.log     README.md			shelve_db.dir
+d2.err		info.log    results/			src/
+d2.out		info.log.1  results_stop_Ntoke_Nqr.dat	temp2.dat
+d2.tmp		info.sav    results_stop_Ytoke_Yqr.dat	temp.dat
+D3.cmd		junk/	    run/
+bin/summarizer: checking E2JK_OUTPUT_RESULTS_DIR="results"
+summarizer: E2JK_OUTPUT_RESULTS_DIR is not empty, cleaning up....
+bin/summarizer: calling summarizer.py -c bin/config_patas_D3.yml
+setup_logging(): env_key=LOG_CFG undefined, using path="logging.yaml"
+setup_logging(): loading path="{}"...
+Hello from "summarizer.py" version 1.0 (by team "#e2jkplusplus").
+processing DocSet( id:D1001A-A "Columbine Massacre" 20)
+get_stop_words(): loaded #stop_words=581, #lines=581, STOP_TOKENIZE=False STOP_QRFLAG=True
+processing DocSet( id:D1002A-A "Diallo Trial" 20)
+processing DocSet( id:D1003A-A "Giant Panda" 20)
+processing DocSet( id:D1004A-A "Papua Tsunami" 20)
+processing DocSet( id:D1005A-A "Parkinson Disease" 20)
+processing DocSet( id:D1006A-A "Vioxx" 20)
+processing DocSet( id:D1007B-A "Bird Flu" 20)
+processing DocSet( id:D1008B-A "Chesapeake Bay" 20)
+processing DocSet( id:D1009B-A "Jon Benet Ramsey" 20)
+processing DocSet( id:D1010B-A "Mad Cow Disease" 20)
+processing DocSet( id:D1011C-A "Eating Disorders" 20)
+processing DocSet( id:D1012C-A "Helios Crash" 20)
+processing DocSet( id:D1013C-A "Identity Theft" 20)
+processing DocSet( id:D1014C-A "Obesity" 20)
+processing DocSet( id:D1015C-A "Rain Forest Destruction" 20)
+processing DocSet( id:D1016C-A "Soeharto Investigation" 20)
+processing DocSet( id:D1017D-A "Hurricane Floyd" 20)
+processing DocSet( id:D1018D-A "Joran Van Der Sloot" 20)
+processing DocSet( id:D1019D-A "Malaysia Resort Abduction" 20)
+processing DocSet( id:D1020D-A "Recall Food United States" 20)
+processing DocSet( id:D1021D-A "Debra La Fave" 20)
+processing DocSet( id:D1022D-A "Whale Conservation Japan" 20)
+processing DocSet( id:D1023E-A "Austrian Avalanches" 20)
+processing DocSet( id:D1024E-A "Bomb Khartoum" 20)
+processing DocSet( id:D1025E-A "Grizzly Bears" 20)
+processing DocSet( id:D1026E-A "Head Injuries" 20)
+processing DocSet( id:D1027E-A "Shepard Beating Death Trial" 20)
+processing DocSet( id:D1028E-A "Unabomber Trial" 20)
+processing DocSet( id:D1029F-A "Baluchistan Uprising" 20)
+processing DocSet( id:D1030F-A "Ephedra" 20)
+processing DocSet( id:D1031F-A "Mangrove Forests" 20)
+processing DocSet( id:D1032F-A "Offshore Gas Leak" 20)
+processing DocSet( id:D1033F-A "South Korean Wire Tapping" 20)
+processing DocSet( id:D1034F-A "Threat To Frogs" 20)
+processing DocSet( id:D1035G-A "Agent Orange" 20)
+processing DocSet( id:D1036G-A "Dioxin Poisoning Yuschenko" 20)
+processing DocSet( id:D1037G-A "Maryland Oysters" 20)
+processing DocSet( id:D1038G-A "Mt St Helens" 20)
+processing DocSet( id:D1039G-A "Murder Van Gogh" 20)
+processing DocSet( id:D1040G-A "Robert Blake Murder Trial" 20)
+processing DocSet( id:D1041H-A "Coral Reefs" 20)
+processing DocSet( id:D1042H-A "Lynndie England" 20)
+processing DocSet( id:D1043H-A "Rafik Hariri" 20)
+processing DocSet( id:D1044H-A "Red Food Dye" 20)
+processing DocSet( id:D1045H-A "Songhua River" 20)
+processing DocSet( id:D1046H-A "Tsunami Indonesia" 20)
+2018-05-17 22:26:17,308:ERR:qrmatrix: write_stop_word_stats(): writing stop_words frequency to STDOUT (search on "stop_wrods_FREQ")
+D1001A-A : Columbine Massacre
+Vice President Al Gore on Sunday bid farewell to Columbine High School's dead, issuing a ringing challenge to parents and schools before a crowd of 70,000.
+Investigators, spending the day at the memorial service, were to resume their work this morning, conducting more interviews and eyeing the possibility of additional suspects in Tuesday's massacre.
+Welcoming signs and banners decorated Chatfield High School today as students arrived from former rival Columbine, who hadn't been to class since the devastating shooting attack nearly two weeks ago.
+The witness list was still in its infancy late Monday, but several people close to the committee said it could include individuals involved in the Columbine tragedy, survivors of other school shootings, entertainment industry executives and interest groups on both sides of the gun control debate.
+The yearbook shows the senior pictures of Eric Harris and Dylan Klebold, who killed 12 classmates and a teacher inside the school April 20 before taking their own lives.
+
+D1002A-A : Diallo Trial
+Diallo, an unarmed man with no criminal history, was killed on Feb. 4 when the four officers fired 41 shots at him, 19 of which hit him.
+Black bystanders fell in behind the couple Wednesday as they marched two blocks to a courthouse where four white police officers pleaded innocent to murder charges in the shooting death of the Diallos' son, a 22-year-old street vendor from Guinea with no criminal record.
+Marvyn M. Kornberg, the lawyer representing Officer Sean Carroll, said Thursday that in addition to standard motions like those for discovery _ in which lawyers ask prosecutors to hand over the information they have collected _ he expected defense lawyers to ask the judge to review the grand jury minutes to decide if the indictments were supported by the evidence.
+The Bronx district attorney's office has also had little to say about the case since the officers were indicted on second-degree murder charges in March.
+The decision by a state appellate court to move the criminal trial of four New York City police officers charged with the killing of Amadou Diallo to Albany County seems unjustified.
+
+D1003A-A : Giant Panda
+By the end of 2004, arrow bamboo, the favorite food of giants, had blossomed on 7,420 hectares at the Baishuijiang State Nature Reserve in southern Gansu Province, a major habitat of pandas in China, according to a recent survey conducted by the nature reserve administration.
+Experts with the Shaanxi Provincial Wildlife Management Station confirmed that the dung was left by an adult giant panda.
+China has applied to the United Nations to make giant pandas' natural habitat in southwestern Sichuan province a world heritage area to help protect the endangered species, state press reported Tuesday.
+The two giant pandas at the city's zoo retired to their favorite spot under a few bushes and mated over the past two days _ the only successful natural insemination of a panda this year in the United States, officials said.
+The National Zoo's female panda, Mei Xiang, gave birth early Saturday morning to a squealing cub the size of a stick of butter, and keepers say she is caring for it tenderly.
+
+D1004A-A : Papua Tsunami
+PORT MORESBY, Papua New Guinea (AP) _ Huge sea waves set off by an earthquake crashed against Papua New Guinea's north coast, killing at least 70 people and crushing villages, the country's National Disaster Center said.
+Disaster authorities said the area, about 600 kilometers (370 miles) northwest of the capital of Port Moresby, is spotted with villages consisting of homes made of jungle materials and built on beaches.
+Authorities at Aitape in the West Sepik province, on PNG's north-west coast, said the tsunami, that hit the coast west of Aitape on Friday night had wiped out three villages and had almost completely destroyed another, according to an Australian Associated Press report sent Sunday from Aitape.
+As Australian aid workers opened a field hospital on high ground and relief supplies began trickling in, Papua New Guinea's prime minister, Bill Skate, toured the worst-hit villages and the Sissano lagoon, choked with dead fish and hundreds of rotting human bodies.
+
+D1005A-A : Parkinson Disease
+Like many degenerative brain diseases, including Parkinson's and Alzheimer's, proteins targeted in the disease process begin misfolding and clumping in or around brain cells, which are called neurons.
+Californians voted overwhelmingly Tuesday to become the first US state to fund controversial embryonic stem cell research that was effectively banned by President George W. Bush, US media reported.
+A new medical study helps explain the puzzling effect of the hormone dopamine on patients suffering from the degenerative nerve disorder Parkinson's disease, said a report out Thursday.
+Scientists believe they have pinpointed a tiny genetic flaw that is to blame for around four percent of all cases of Parkinson's, a discovery that could eventually open the way, albeit controversially, to genetic testing for the disease.
+A small group of people with Parkinson's disease had been pleading for months with the biotechnology company Amgen: Let them resume taking an experimental drug that the patients said had helped them but which the company said was ineffective and possibly dangerous.
+
+D1006A-A : Vioxx
+On Wednesday, the European Medicines Agency in London announced it would review all drugs of this type.
+Studies done five years ago when Celebrex and Merck & Co.'s Vioxx were approved suggest that the same mechanism that inhibits inflammation and makes the drugs easier on the stomach than traditional painkillers also blocks a substance that prevents heart problems, according to Dr. Garret FitzGerald, a University of Pennsylvania cardiologist.
+The announcement comes just two weeks after Merck pulled its painkiller, Vioxx, which is in the same class of drugs as Bextra, from the market because a study showed that the risk of heart attacks doubled for patients who had taken Vioxx for 18 months or longer.
+The trial results released Tuesday found that there was no statistical difference in adverse cardiovascular events between Arcoxia and diclofenac, the older pain reliever against which it was being compared.
+The e-mail and meeting notes also show that Dr. David Graham, an official in the FDA's Office of Drug Safety, is seeking to begin a study of the safety of Bextra and Mobic, two arthritis pills that are similar to Vioxx.
+
+D1007B-A : Bird Flu
+HONG KONG, December 15 (Xinhua) -- The government of the Hong Kong Special Administrative Region (SAR) set up an inter-department working group today to coordinate efforts towards the prevention and control of the spread of a mysterious "bird flu" that has killed two people.
+The Public Health Department of Macao has called on residents to avoid contacting birds, and take proper protective measures if they have to.
+HONG KONG, December 24 (Xinhua) -- Hong Kong's Department of Health (DH) announced Wednesday three more new Influenza A H5N1 cases, which brings the total number of cases to nine confirmed and six suspected.
+HONG KONG, December 27 (Xinhua) -- Test results related to the first bird flu case detected in a human suggested that the main mode of influenza A H5N1 virus transmission was bird-to-human, it was known here Saturday.
+The move is being taken following the discovery of the H5N1 virus in samples taken from a local chicken farm and the sudden death of chickens at a wholesale poultry market.
+
+D1008B-A : Chesapeake Bay
+For weeks this fall, even as St. Mary's County celebrated the beginning of oyster season with festivals and contests, Tucker and Agnes Brown couldn't find oysters.
+Just a few years ago, there were thousands of people oystering in Maryland; this year, they expect fewer than 150.
+A Maryland environmentalist alarmed by the decline of the Chesapeake Bay's native oyster population is trying to get it on the federal Endangered Species list -- sparking an uproar of opposition in the oyster industry from Maine to Louisiana.
+Millions of young oysters are being planted on oyster bars in the river as part of the project, grasses that provide oxygen and habitat for marine life are being restored, and monitoring for water quality will be stepped up, officials said.
+A Government Accountability Office review found that the Chesapeake Bay Program Office -- an arm of the Environmental Protection Agency -- has no coordinated, comprehensive plan for cutting pollution in the bay, even after nearly $6 billion in state and federal money has been devoted to the effort in the past decade.
+
+D1009B-A : Jon Benet Ramsey
+The Ramseys and their two children were the only people known to be living at the Ramsey house on the night of the murder, 18 months ago.
+Three former friends of the parents of JonBenet Ramsey have asked for a special prosecutor to take over the stalled 20-month-old investigation into the slaying of JonBenet, the 6-year-old Colorado beauty princess.
+In two separate letters, they accuse Boulder District Attorney Alex Hunter of unwarranted delays in prosecuting the case and of being overly accommodating to the Ramseys.
+Hunter ``has provided evidence to Ramsey defense attorneys at their request'' but denied requests by other witnesses for transcripts of their own statements to the police, wrote Fleet and Priscilla White, a couple who had the Ramsey family to their home for dinner on Dec. 25, 1996, a few hours before JonBenet was found dead.
+Linda Arndt, who was the only detective in John and Patsy Ramsey's home when their daughter's body was found, has resigned from the Boulder Police Department after 11 years.
+As a grand jury wraps up its investigation, prosecutors have identified only two people as being under suspicion: JonBenet's parents, John and Patsy Ramsey.
+
+D1010B-A : Mad Cow Disease
+The European Union head office said Friday it was allocating euro98.1 million (US$122 million) on testing cattle across the 25-nation bloc to prevent the spread of mad cow disease next year.
+Since 1996, public health authorities have warned that people may catch vCJD from eating meat infected with mad cow disease, also known as bovine spongiform encephalopathy (BSE), or from infected blood transfusions.
+In a statement late Tuesday afternoon, John Clifford, Deputy Administrator at USDA's Animal & Plant Health Inspection Service, said the negative result first became known on Monday.
+The Japanese government announced Friday mad cow disease was behind the death of man in December, the first confirmed human death case in Japan as a result of the deadly infection.
+Brain tissue samples from a suspected US beef cow began its trip to England on Thursday for final tests to confirm if it is the second case of mad cow disease in the United States.
+
+D1011C-A : Eating Disorders
+A very small study, led by researchers at the Beth Israel Deaconess Medical Center and at Massachusetts General Hospital and published recently in the New England Journal of Medicine, found that leptin restored menstrual periods in a few female athletes who hadn't had periods for an average of 5 1/2 years.
+Italy's TV channels broadcast twice as many commercials featuring food as their US counterparts, threatening children who watch them with serious eating disorders such as bulimia and anorexia, according to a study published here Tuesday.
+For panic disorder, phobias and other severe anxiety disorders, psychiatrists often rely on a specific type of treatment called exposure therapy, in which patients gradually learn to feel comfortable in situations they dread.
+Dr. James Hudson, director of the biological psychiatry laboratory at McLean and an associate professor of psychiatry at Harvard Medical School, recruited 300 people, half with a history of binge eating, and then set out to interview their parents, children and siblings.
+
+D1012C-A : Helios Crash
+Greek Defense Ministry and fire department said that the plane crashed to a mountain at about 12:20 p.m. (0920 GMT) near the coastal town of Grammatikos, about 40 kilometers north of Athens, just a few minutes before its scheduled landing time on a flight from Larnaca International Airport of Cyprus to Prague via Athens.
+Oxygen masks were seen hanging in the cabin, a Greek government spokesman said.
+But Fillipos Koutsaftis could not rule out that the six people were unconscious when the Helios Airways Boeing 737-300, with six crew and 115 passengers, plunged 10,400 meters (34,000 feet) Sunday into a mountainous area near the village of Grammatiko, 25 miles (40 kilometers) north of Athens.
+The Greek government said the crews of two F-16 fighter jets that flew beside the jetliner before it went down Sunday saw its co-pilot slumped over the controls and its pilot missing from the cockpit.
+One month after Greece's worst air accident, a conclusive explanation of what caused a Cypriot Helios Airways airliner to crash killing all 121 people on board still eludes investigators, but recent reports suggest pilots may have failed to respond to a cabin pressure warning.
+
+D1013C-A : Identity Theft
+Calling privacy in the age of electronic commerce ``a basic American value'' that ``must be protected,'' Vice President Al Gore made public a list of a dozen or so new initiatives that seek to tighten the security of financial and medical records and to protect the privacy of children who use the Internet.
+The police said Santner had masterminded the biggest identity theft scam ever seen in San Francisco, with a ring of thieves who took names and Social Security numbers of other people and then created fraudulent paper trails.
+So did Bronti Kelly, a retail salesman and former military reservist from Temecula, Calif., who couldn't figure out why he was repeatedly turned down in the early 1990s for dozens of sales positions at department stores _ or dismissed within a week if he did manage to secure a job.
+Since many employers do not disclose what sort of background checks they use, it is hard to know exactly how they conduct them.
+Identity theft occurs when someone hijacks a consumer's personal identifying information such as a name, address, credit card or Social Security number and uses the information to open new charge accounts or purchase merchandise.
+
+D1014C-A : Obesity
+SHANGHAI, September 10 (Xinhua) -- A survey in Shanghai has revealed that one in eight people in the city suffer from overweight.
+About 11 percent of national men and 14 percent of women had diabetes and the rate is expected to rise in the following years, according to the study released by UAE's medical center today.
+More than half of American citizens are overweight and one out of four is obese, according to the latest issue of Science.
+The fat and fatter trend has initiated more research into obesity than ever, especially in light of another group of findings linking extra weight to myriad serious health problems, including heart disease, respiratory disease, diabetes and even some forms of cancer.
+Hill, director of the Colorado Clinical Nutrition Research Unit at the University of Colorado, puts a preponderance of blame for fat Americans on our culture: Americans have too much food available; social and work situations encourage overeating; restaurants compete by offering bigger and bigger servings; 64-ounce Big Gulps and Thirst Busters have replaced 12-ounce bottled soda; and technology has made it possible to avoid exercise.
+
+D1015C-A : Rain Forest Destruction
+China's largest tropical rain forest, in the Xishuangbanna nature reserve in Yunnan Province, will get further protection when the reserve is enlarged from 247,000 ha to 533,000 ha, according to Zhuang Yan, head of the Xishuangbanna Dai Autonomous Prefecture.
+A team of U.S. forest experts arrived in southern Mexico last month to help Mexican firefighters gain control of the blazes, which have endangered rare plant and animal species and spewed a thick haze of smoke across Mexico and the United States.
+The world's forests have been under siege since the turn of the century, but this year has been calamitous.
+In Canada, Brazil, Mexico, Central America, Africa, and Indonesia, fires have destroyed nearly 40 million forested acres, an area as large as New York state.
+Tensions are rising in Venezuela's Amazon rain forests, where Indians and environmentalists are clashing with mining companies and government officials who want to exploit some of the richest gold deposits in Latin America and build towns and tourist hotels in the wilderness.
+
+D1016C-A : Soeharto Investigation
+JAKARTA (JP): The government has launched an investigation into corruption under former president Soeharto but has no plans to specifically target the former Indonesian leader, Attorney General Soedjono C. Atmonegoro told a packed news conference here yesterday.
+Article four of the decree states that efforts to eradicate corruption, collusion and nepotism must be made indiscriminately upon any state officials, former state officials, their families and cronies as well as private businessmen, business tycoons and former president Soeharto.
+The project had caused the country losses of 1.55 billion U.S. dollars.
+Habibie Monday instructed Attorney General Andi M. Ghalib to study intensively all the data provided by the U.S. Time magazine on the alleged wealth of former President Soeharto and his family abroad.
+Indonesian former president Soeharto will not come to the Attorney General Office on Monday to undergo an investigation on corruption cases due to health reasons, chief of Soeharto's legal defender team Juan Felix Tampubolon said here on Friday.
+
+D1017D-A : Hurricane Floyd
+The National Hurricane Center in Miami reported that Floyd was expected to intensify today, becoming a Category 3 hurricane, and it could become a Category 4 with sustained winds of at least 131 mph by Tuesday afternoon, when it's expected to reach the northern Bahamas.
+From as far south as Miami to as far north as Cape Canaveral, hundreds of thousands of people evacuated the densely populated Florida coast as the storm, with winds of more than 155 mph, crept westward across the Atlantic and forecasters' radar screens.
+All day Monday, state meteorologists offered hope that Hurricane Floyd would be nudged from its westerly course by a trough of low pressure air moving to the east and southeast, and, instead of making landfall in South Florida, travel up the coast, its dangerous eye offshore.
+In Nassau, the capital, authorities lost telephone links throughout the vulnerable, low-lying archipelago -- including Eleuthera, San Salvador and Cat Island -- where winds reached 110 mph and damage was feared to be extensive.
+Hurricane-force wind of at least 75 mph extended 125 miles from Floyd's center.
+
+D1018D-A : Joran Van Der Sloot
+Police launched a new search for a missing Alabama teenager Tuesday after a man detained earlier in the investigation said another suspect told him in jail the girl was not taken back to her hotel.
+He declined to say where the helicopter searched or whether authorities believed there was a body to find.
+Also Saturday, the lawyer for one of two Surinamese brothers being held in connection with Holloway's disappearance confirmed that Satish Kalpoe admitted lying to police when he told them that he and his brother and their Dutch friend dropped Holloway off alone at her hotel, the Holiday Inn, the night she disappeared.
+The father of a Dutch teenager arrested in the disappearance of a young U.S. woman told his son and his two friends that "when there is no body you don't have a case," Aruba's attorney general said Wednesday.
+Paul van der Sloot, a judge in training in Aruba, gave his 17-year-old son Joran van der Sloot and two Surinamese brothers legal advice the day after 18-year-old Natalee Holloway disappeared, District Attorney Caren Janssen told MSNBC in an interview.
+
+D1019D-A : Malaysia Resort Abduction
+KUALA LUMPUR, April 24 (Xinhua) -- A total of 20 people were taken hostage by six heavily armed men Sunday night from Sipadan island off Sabah, East Malaysia, but their motives behind the abduction are yet to be confirmed, Malaysian Police said Monday.
+Muslim rebels in the Philippines who are seeking the release of militants jailed in the World Trade Center bombing case claimed responsibility Tuesday for the Malaysian kidnapping.
+The 20 hostages, including foreign tourists and local resort workers, were abducted late Sunday from Malaysia's Sipadan Island by six heavily armed men and taken on two fishing boats toward the Philippines, officials said.
+The Philippine Muslim extremist group Abu Sayyaf has threatened to behead some of the 21 hostages they abducted last Sunday in Malaysia because they do not want to talk with a government negotiator.
+According to reports from Zamboanga City, the southern Philippines,an Abu Sayyaf spokesman told Radio Mindanao Network Friday night that Nur Misuari, governor of the Autonomous Region of Muslim Mindanao, is unacceptable as negotiator.
+
+D1020D-A : Recall Food United States
+The products, which were distributed nationwide and to foreign countries including Russia and South Korea by Thorn Apple Valley's Forrest City plant, may be contaminated with Listeria monocytogenes, according to the U.S. Agriculture Department's Food Safety and Inspection Service announced.
+At a daylong public meeting on Wednesday, officials said they had more questions than answers about a spike in outbreaks of listeriosis like the one traced to hot dogs and cold cuts at Michigan's Bil Mar Foods plant in December that has killed 16 people and sickened more than 70 in 14 states.
+An E. coli outbreak that sickened at least 6 people visiting a Maine ski resort has been traced to contaminated ground beef produced at a Minnesota meat processing plant, authorities said Monday.
+The plant on Dec. 22 recalled 15 million pounds of hot dogs and lunch meats sold under a variety of names -- the largest meat recall ever -- because of suspected contamination with a rare strain of the bacteria Listeria monocytogenes.
+
+D1021D-A : Debra La Fave
+The mother of a 14-year-old middle school student says she believes the case of a former teacher accused of having sex with her son should not go to trial.
+The victim, who had sex with Tampa teacher Debra Lafave, has suffered extreme anxiety from the intense media coverage surrounding the case, a psychiatrist who examined the boy told Circuit Court Judge Hale Stancil at the hearing Wednesday.
+Lafave was sentenced in Hillsborough County, where Tampa is located, to three years of house arrest and seven years probation after pleading guilty Nov. 22 to two counts of lewd and lascivious battery for having sex with the boy in a classroom and her home.
+A Florida teacher who admitted having sex several times with her 14-year-old student was freed Tuesday after prosecutors dropped sexual abuse charges to avoid calling the boy to the witness stand.
+First came a Marion County judge's rejection Tuesday morning of a plea deal, a rare and controversial move that meant Lafave could face a sensational trial and as many as four decades in prison.
+
+D1022D-A : Whale Conservation Japan
+Humane Society International was denied permission by Australia's Federal Court to sue Japanese whaling company Kyodo Senpaku for allegedly killing around 400 minke whales in Antarctic waters the Australian government has declared a whale sanctuary.
+Recovery of already depleted stocks could be endangered by the Japanese whalers, the release said.
+But after lobbying tiny South Pacific island nations this week, Environment Minister Ian Campbell said the Solomon Islands had vowed to abstain from voting on an expected Japanese motion to end the commercial whaling ban.
+Australia condemned Japan's plan to more than double the number of whales it kills in the name of scientific research, pushing for a vote on the issue Wednesday at the annual meeting of the commision that regulates global whaling.
+The International Whaling Commission (IWC) on Wednesday defeated a Japanese proposal to expand its scientific whaling program by nearly doubling its annual catch of mink whales, which critics say is a commercial hunt in the guise of science.
+
+D1023E-A : Austrian Avalanches
+Driving snow and deadly winds prevented emergency helicopters from flying into the ski village of Galtuer, near the Swiss border, where local rescue workers spent the night digging through walls of snow and rubble for survivors.
+At least eight people have been confirmed killed and 30 others injured as two avalanches roared through a ski resort in Austria's western state of Triol on Tuesday evening, the Austrian news media reported.
+Here are today's top news stories from The New York Times News Service for AMs of Thursday, Feb. 25.
+LANDECK, Austria (AP) -- Another killer avalanche brought new heartache to Western Austria today, striking just miles from where rescuers were digging for victims of Europe's worst snowslide this winter.
+WASHINGTON (AP) -- Congress should just let the independent counsel law expire since almost any effort to revise it so soon after President Clinton's impeachment acquittal ``is likely to be a mistake,'' former White House chief of staff Howard Baker told a Senate committee today.
+
+D1024E-A : Bomb Khartoum
+KHARTOUM, Sudan (AP) _ President Omar el-Bashir on Friday recalled Sudan's diplomats from Washington to protest the U.S. missile strike on a factory in the Sudanese capital a day earlier.
+The United States said the plant produced the ingredients of chemical weapons.
+Clinton said the missiles hit terrorist camps in Afghanistan run by Osama bin Laden, the Saudi millionaire blamed by Washington for the Aug. 7 bombings of U.S. embassies in Kenya and Tanzania, and a factory linked to bin Laden in Sudan.
+KHARTOUM, Sudan (AP) _ America's missile barrage on a pharmaceutical plant in the outskirts of Sudan's capital was called a strike against outlaw states that support terrorism.
+After a cabinet meeting chaired by Sudanese President Omar Hassan al-Bashir, Minister of Culture and Information Ghazi Saleh el-Din said the government has also decided to file compliants with the United Nations, the Arab League and other international organizations over the U.S. attack.
+
+D1025E-A : Grizzly Bears
+Despite the record number of dead bears last year, the Fish and Wildlife Service believes the grizzlies, whose population has more than doubled in the three decades it has been on the list, no longer need the special protection afforded by the law.
+If the administration goes ahead with dropping the bears' current ``threatened'' status -- a move that would not take place until the end of 2006 at the earliest -- officials in Idaho, Montana and Wyoming would be free to allow limited hunting of grizzlies and would not have to maintain the same level of protection on the grizzlies' habitat.
+Federal officials have begun the process of removing grizzly bears around Yellowstone National Park from the Endangered Species List, ending 30 years of protection and shifting responsibility for their management to state officials who may allow hunting.
+On Tuesday, an improbable assemblage of officials from the provincial government, coastal Native Canadian nations, logging companies, and environmental groups will announce an agreement that they say will accomplish that mission in the home of the spirit bear, an area that is also the world's largest remaining intact temperate coastal rain forest.
+
+D1026E-A : Head Injuries
+Without such measures, childhood sports can lead to disillusionment, injuries and even paralysis or death.
+Most soccer players on the Santa Clara University women's team will enter the NCAA quarterfinals on Saturday wearing protective equipment -- headgear -- that is as controversial as it is lightweight.
+Myanmar is seeking to bring down the car accident death rate under a drafted national road safety strategy action plan which is part of a Southeast Asian regional one, Myanmar Times reported Tuesday.
+The number of motorcyclists dying on Arizona roads has dramatically increased in the past five years in part because new riders and veterans who haven't ridden for years are hitting the streets without proper training, experts say.
+The peak year for Arizona motorcycle fatalities was 1979 with 134 fatalities, three years after the state's short-lived helmet law was repealed.
+More than 3,900 people died on motorcycles in the United States in 2004, up 7.3 percent from the year before, according to preliminary highway safety numbers released Thursday by the National Highway Traffic Safety Administration.
+
+D1027E-A : Shepard Beating Death Trial
+Fourteen people were dismissed Thursday as jury selection continued in the trial of a man accused of beating gay college student Matthew Shepard to death.
+In December, when Cal Rerucha, the Albany County attorney, announced that he would seek the death penalty in both cases, Skaggs called the choice ``politically motivated,'' noting that this would be Wyoming's first capital murder trial in 20 years.
+President Clinton plans to endorse a bill Tuesday that would expand federal hate crime laws to include offenses based on sexual orientation, White House officials said.
+Skaggs is the defense attorney and Rerucha the prosecutor in the trial of Russell Henderson, who is charged with first-degree murder, kidnapping and aggravated robbery in the fatal beating Oct. 6 of gay university student Matthew Shepard.
+Authorities said Henderson and Aaron McKinney, 21, posed as homosexuals and lured the 5-foot-2, 105-pound Shepard out of a bar last October, kidnapped and pistol-whipped him and left him tied to a fence in the cold.
+
+D1028E-A : Unabomber Trial
+In a statement, Washington, D.C. attorney Anthony Bisceglie said he had informed Kaczynski's brother David and his mother Wanda of Reno's decision to authorize prosecutors to seek the death penalty in the case.
+Kaczynski, the 55-year-old former university math instructor is suspected of being the UNABOMber, the mailbomb terrorist who killed three people and injured 23 others in 17 years before his arrest last year.
+In an order filed late Friday afternoon and distributed by a court document service today, U.S. District Judge Garland Burrell Jr. in Sacramento, California, said defense lawyers Quin Denvir and Judy Clarke had failed to prove the necessity of expanding the jury pool beyond the list of registered voters, media reports said.
+WASHINGTON, January 5 (Xinhua) -- The trial of Unabomber suspect Theodore Kaczynski in Sacramento, California, is on hold following a surprise meeting with the judge and his lawyers, reportedly to air complaints about his defense, media reports said.
+
+D1029F-A : Baluchistan Uprising
+Fighting lasted all day Thursday after the heavily-armed clansmen, who want more autonomy and increased benefits from the area's natural resources, ambushed a convoy of paramilitary Frontier Corps soldiers, officials said.
+Separately, a bomb exploded in the toilet of a train elsewhere in restive Baluchistan province on Friday, killing one person and wounding five others, two critically, police said.
+The province has been gripped by a sporadic tribal revolt for more than a year but the violence surged after the January rape of a 32 year-old doctor at Pakistan's largest gas field at Sui in Baluchistan.
+Tensions in the region escalated Thursday when tribesmen ambushed a convoy of troops and fired rockets at a military base on the outskirts of Dera Bugti, 300 kilometers (185 miles) southeast of Baluchistan province's capital, Quetta.
+Thousands of government workers and their families have evacuated a remote town in southwestern Pakistan, a senior official said, amid fears of renewed fighting between renegade tribesmen and security forces after clashes left at least 30 people dead.
+
+D1030F-A : Ephedra
+Alarmed by what they see as the potential for mishaps with patients taking herbal remedies for everything from depression to memory loss, anesthesiologists have begun urging people to stop taking the herbs and supplements before having surgery.
+Doctors say there is growing evidence that substances like St. John's wort and ginkgo biloba may have dangerous interactions with the variety of drugs used to anesthetize patients during surgery.
+While the FDA can alert consumers to products that could be dangerous, the Dietary Supplement Health and Education Act of 1994 limits the agency's latitude in regulating supplements.
+Two years ago, in response to reports of adverse reactions, the Food and Drug Administration proposed restricting doses of ephedra to 8 milligrams at a time and 24 milligrams a day, and prohibiting the addition of caffeine to ephedrine products.
+Gyllenhaal said the study, published in the June issue of Sleep Medicine Reviews, found reason for doctors to be concerned about ephedra because of the disorders that it could make worse, including high blood pressure and diabetes, besides possibly unintended effects on sleep.
+
+D1031F-A : Mangrove Forests
+The United Nations Thursday set aside $1 million to assess environmental damage caused by this week's devastating tsunami, as reports of destroyed coral reefs and uprooted mangrove forests began trickling in.
+While attention is clearly focused on the rising human toll of the tragedy, some dive operators and marine biologists are reporting that from Sri Lanka to Thailand corals are suffocating under layers of mud, heaps of rotten fish, are clogging beachfronts, and rare turtle nesting sites have been washed out to sea.
+Coral reefs, mangroves, fish and other marine life had been damaged by the tsunamis which rose out of the Indian Ocean on Sunday, triggered by a massive earthquake near the Indonesian island of Sumatra.
+But outside the gates of the theme park is a natural world of flesh-and-blood wildlife.
+As the people of Indonesia's Aceh province try to rebuild lives shattered by the tsunami disaster, officials are also assessing the environmental damage to the coast which bore the brunt of the giant waves.
+
+D1032F-A : Offshore Gas Leak
+More than 160 of 216 people working on a Norwegian oil platform in the North Sea were evacuated Sunday after one of the rigs became "unstable", causing a loss of output of 130,000 barrels per day, a company spokesman and rescue services said.
+Norwegian oil group Statoil said on Tuesday that it had yet to resume production on two of its platforms after a gas leak forced it to shut down operations earlier this week, cutting Norway's total oil output by 200,000 barrels per day.
+The leak at the Snorre A platform forced the evacuation of 180 crew, and shut down that field and the adjacent Vigdis fields, with a combined daily capacity of 205,000 barrels of oil.
+The shutdown resulted in a roughly 6.4 percent reduction in the 3.2 million barrel per day production capacity that makes Norway the world's third-largest oil exporter, after Saudi Arabia and Russia.
+The Norwegian Petroleum Safety Authority rejected Statoil ASA's plan to resume full production from its Snorre A field in the North Sea, nearly two months after a gas leak shut it down.
+
+D1033F-A : South Korean Wire Tapping
+Ambassador Hong Seok-Hyun called the office of President Roh Moo-Hyun late Monday and offered to resign, presidential spokesman Kim Man-Soo said, indicating Hong's resignation would be accepted.
+South Korea's spy agency publicly apologized Friday for illegally wiretapping telephone calls years ago, revealed by the leakage of a taped 1997 conversation of an alleged payment by the Samsung Group to presidential candidates.
+Lim Dong-won and Shin Gunn, who headed the National Intelligence Service successively between December 1999 and April 2003, are suspected of overseeing the agency's monitoring of mobile phone conversations of about 1,800 of South Korea's political, corporate and media elite, the Seoul District Prosecutors' Office said.
+Cleared were Lee Kun-hee, the head of Samsung Group, Lee Hak-soo, a top Samsung executive, and Hong Seok-hyun, the former publisher of the mass-circulation JoongAng Ilbo newspaper, the Seoul District Prosecutors' Office said in a statement.
+
+D1034F-A : Threat To Frogs
+Amphibians' permeable skin and dual existence on land and in water make them "canaries in the coal mine," early indicators that pollution, climate change, and overall degradation of the environment may eventually threaten human life, according to zoologists.
+The survey, published online by the journal Science, studied the 5,743 known amphibian species and found that at least 1,856 of them face extinction, more than 100 species may already be extinct, and 43 percent are in a population decline -- many for unknown reasons.
+Researchers confirmed 35 new species of frog in Sri Lanka's dwindling rain forest over the past decade but also found that 17 frog species have disappeared and 11 others face imminent extinction unless their habitat is protected.
+J. Alan Pounds -- resident scientist at the Tropical Science Center's Monteverde Cloud Forest Preserve in Costa Rica and the study's lead author -- worked with 13 other researchers to pin down the link between rising temperatures in the tropics and the spread of the deadly chytrid fungus that has wiped out dozens of species of harlequin frogs in recent years.
+
+D1035G-A : Agent Orange
+Despite continuing investigation into possible links to birth defects, diabetes and a list of other illnesses, no scientific studies over the last two years has provided enough information to draw significant new conclusions about whether herbicides are linked to any condition, study director Dr. David Tollerud said.
+All 10 diseases remain on the list of those for which all veterans who served in Vietnam may receive benefits from the Veterans Affairs Department.
+Elmo R. Zumwalt Jr., the retired Navy admiral who commanded American naval forces in the Vietnam War and later became the Navy's top officer, was in critical condition Friday at Duke University Medical Center in Durham, N.C., after undergoing cancer surgery, a friend said.
+Vietnam has an estimated 1 million victims of Agent Orange, the toxic defoliant widely used by U.S. forces during the Vietnam War, according to the Vietnamese vice president.
+An Air Force study of veterans who sprayed Agent Orange during the Vietnam War found the strongest evidence to date that exposure to the herbicide is associated with diabetes, officials said today.
+
+D1036G-A : Dioxin Poisoning Yuschenko
+New tests conducted Friday night at a hospital in Vienna, Austria, confirmed that Viktor A. Yushchenko, the Ukrainian opposition candidate for president, had been poisoned with dioxin, providing an explanation for a broad array of painful and disfiguring conditions that plagued him during the past three months of the campaign.
+Michael Zimpfer, director of the private Rudolfinerhaus clinic that has been treating Yushchenko, said tests concluded in the last 24 hours prove that dioxin caused the illness that has disfigured the Ukrainian candidate's face.
+The Ukrainian prosecutor-general's office announced Sunday it had reopened an investigation into allegations that presidential candidate Viktor Yushchenko was poisoned, after doctors in Austria confirmed he had ingested dioxin.
+Ukraine's parliament decided Tuesday to investigate the recent sacking of the deputy chief of the country's SBU security service amid persisting questions on the poisoning of opposition leader Viktor Yushchenko who has accused authorities of trying to kill him.
+
+D1037G-A : Maryland Oysters
+Teeming with raw sewage, animal waste and fertilizer runoff, yet responsible for half the Chesapeake Bay's fresh water, the Susquehanna River is the most endangered river in the United States, according to a report released this week by American Rivers, a national conservation group.
+Even in the middle of the worst red tide outbreak in New England in three decades, Walt Averill doesn't worry about ordering oysters and clams - at least not from the sleek little B&G Oysters in Boston's South End.
+A Maryland environmentalist alarmed by the decline of the Chesapeake Bay's native oyster population is trying to get it on the federal Endangered Species list -- sparking an uproar of opposition in the oyster industry from Maine to Louisiana.
+If it were revived to 25 times its current size -- about the level found between 1920 and 1970 -- excessive nitrogen levels in the bay would fall by 11 million pounds each year, and underwater grasses would increase by more than 20 percent, said the researchers, who are studying the oyster restoration methods for the state Department of Natural Resources.
+
+D1038G-A : Mt St Helens
+After a week of steadily increasing seismic rumbling, Mount St. Helens on Friday burped a tall column of steam and ash that officials said was probably not a precursor to a large sustained eruption from the most active volcano on the West Coast.
+The government scientists had earlier said they expected to see more small to moderate explosions after a series of earthquakes culminated in a plume of steam and ash on Friday, rising 10,000 feet into the air but posing no threat to health or safety.
+But scientists said they did not expect an eruption on the magnitude of the May 1980 explosion that killed 57 people and caused widespread destruction.
+Interior Secretary Gale Norton, who flew over the mountain Saturday, said the seismic activity has weakened the 1,000-foot (300-meter) lava dome that began forming in the volcano's crater after the 1980 eruption.
+The latest seismic activity "probably just reflects the fact that more rock needs to be broken for magma to reach the surface," said geologist Dan Dzurisin at the U.S. Geological Survey's Cascades Volcanic Observatory in Vancouver, Washington, about 50 miles (80 kilometers) south.
+
+D1039G-A : Murder Van Gogh
+Dutch filmmaker Theo van Gogh, who had received threats over a controversial film he made about Islam, was shot and stabbed to death Tuesday while cycling on an Amsterdam street, officials said.
+The alleged assailant, identified as having dual Dutch and Moroccan nationality, was arrested and two people were injured in a shootout with police after the attack in broad daylight early Tuesday, police said.
+The prosecutor charged seven suspects with ties to Islamic groups in the Netherlands, including the alleged murderer, with involvement in a conspiracy over the killing of Van Gogh and with plotting to kill Dutch liberal politician Ayaan Hirsi Ali, but late Friday a judge ruled that two of the suspects should be released.
+One of them was immediately re-arrested by the Dutch immigration services because he was residing illegally in the country, a court official told ANP.
+The 23-year-old arrested in connection with Van Gogh's death is the eighth suspect in what Dutch prosecutors say was a gang of young Muslim radicals who conspired to murder the filmmaker over a movie critical of Islam.
+
+D1040G-A : Robert Blake Murder Trial
+M. Gerald Schwartzbach called 38 witnesses to emphasize the lack of evidence directly linking his client to the 2001 murder of Bonny Lee Bakley, and to attack the competence of the Los Angeles Police Department investigation, which focused early on the accused.
+Prosecutors have built their case on the testimony of stuntmen Gary McLarty and Ronald ``Duffy'' Hambleton, who each testified Blake asked them to ``pop'' or ``snuff'' his wife, laying out multiple scenarios to kill her including one involving the restaurant near where she was killed May 4, 2001.
+Robert Blake starred in such films as "In Cold Blood" and in TV shows like "Baretta," but he couldn't pull off the role of a distraught husband, a prosecutor told jurors during closing arguments in the actor's murder trial.
+A jury of seven men and five women deliberated for nine days in a Van Nuys courthouse before acquitting Blake, accused of having killed Bonny Lee Bakley, 44, in a car parked on a quiet Studio City street nearly four years ago.
+
+D1041H-A : Coral Reefs
+More than 58 percent of the world's coral reefs are endangered because of pollution, the over-harvesting of reef fish and other human factors, the World Conservation Union (IUCN) said Friday.
+The tsunami that took a heavy toll in human life also battered Indian Ocean coral reefs that already were in distress from pollution and global warming, possibly causing damage that will require decades to recover, experts say.
+Experts say the extent of devastation caused by the giant waves has laid bare some stark realities: the plight of poor fishing-folk forced to live on the fringe to earn a living, man's folly at clearing natural coastal habitats to chase the tourism dollar, and a modern ignorance of the power of the sea.
+Dozens of scuba divers are removing furniture and other debris swept into the ocean by the Dec. 26 tsunami, hoping to rescue fragile coral reefs and marine life that have long made Thailand's southern coast a top tourist destination.
+
+D1042H-A : Lynndie England
+Private Lynndie England, perhaps the most well-known in the abuse scandal that occurred in the fall of 2003, pleaded guilty to seven charges, including two counts of conspiracy to maltreat prisoners, four counts of maltreating prisoners and one count of committing an indecent act.
+Lynndie R. England, the young Army reservist whose grinning, thumbs-up image came to symbolize the worst of the Abu Ghraib prison scandal, told a military judge Monday that she knew the detainee abuses were wrong but went along because of peer pressure.
+Lynndie R. England, accused of abusing naked Iraqi detainees in Abu Ghraib prison, collapsed abruptly on Wednesday when a military judge threw out her guilty plea over testimony by the convicted ringleader of the scandal and father of her baby.
+At England's sentencing hearing, Graner testified that pictures he took of her holding a naked prisoner on a leash at Abu Ghraib near Baghdad were meant to be used as a legitimate training aid for other guards, and argued that was a legitimate prison procedure.
+
+D1043H-A : Rafik Hariri
+Saudi Arabia on Tuesday rejected a French demand for an international investigation into the assassination of former Lebanese Prime Minister Rafik Hariri, saying Lebanon is an independent country.
+The crowd began massing quietly in front of Rafik Hariri's mansion in the early dawn hours Wednesday as Lebanon prepared to bury him and the six bodyguards who were killed with him in a bomb blast on Monday.
+Hundreds of thousands of Lebanese mourners gathered at the Mohamed Al Amin Mosque in the capital Beirut on Wednesday to pay last tribute to former Prime Minister Rafik al-Hariri killed in a suicide car bombing on Monday.
+Hariri, a popular figure to many in Lebanon and a central figure in reconstructing the country after a devastating 15-year civil war, was assassinated on Monday in an explosion that many here believe was the work of Syria, whose forces have played a dominant role in Lebanon since the 1970s.
+Qordahi hoped that the Lebanese people will join hands and agree on the formation of a new government as quickly as possible in order to hold the parliamentary elections on time.
+
+D1044H-A : Red Food Dye
+The red-coloured dye, which is used for colouring non-edible items such as petrol and shoe polish, was found in a batch of chilli powder used by the British company Premium Foods to make Worcester Sauce, which was then used as an ingredient in a wide range of products, the FSA said.
+Britain's food watchdog said Thursday three companies were under investigation for their alleged role in a cancer scare that has triggered the country's largest food recall.
+The red dye Sudan I has been found in a pepper sauce made by the Heinz Meiweiyuan Food Co. based in Guangzhou, capital of southern China's Guangdong province, Xinhua news agency said.
+Following the discovery, the State Administration for Quality Supervision and Inspection and Quarantine ordered the company to immediately recall all of its products and ban its sale.
+Fast food giant KFC's Chinese subsidiary will invest in a food safety centre to prevent health scares like the one this month over a cancer-causing dye found in its products, state press said Tuesday.
+
+D1045H-A : Songhua River
+China's State Environmental Protection Administration (SEPA) said here on Wednesday that the Songhua River in northeast China suffered a major water pollution incident owing to the explosion of a petrochemical plant at the upper reaches.
+Heilongjiang Provincial Bureau of Environmental Protection said in a press release that by 6 a.m. on Saturday, concentration of nitrobenzene monitored at Sujiatun upstream Sifangtai, one major water intake spot of Harbin, capital of northeast China's Heilongjiang Province, fell to 0.0793 mg per liter, but still above the state safety standard of 0.017 mg per liter, but the density of benzene stood at 0.0011 mg per liter, which is within the state safety benchmark.
+A top official with the government's environmental safety agency visited Russia's far eastern regions Saturday to deal with the threat from tons of chemical pollutants flowing down a river from China, while Russia's ambassador to Beijing demanded information about the accident.
+
+D1046H-A : Tsunami Indonesia
+Australian Prime Minister John Howard said Wednesday that his country would provide 1 billion Australian dollars (about 764 million US dollars) in loans and grants to assist Indonesia in its rebuilding after the Dec. 26 earthquake-tsunami disaster.
+Uzbekistan on Monday sent a plane with 35 metric tons (39 short tons) of humanitarian aid to tsunami-hit Indonesia, the Foreign Ministry said.
+The official news agency BSS Monday quoted the sources at the Department of Relief and Rehabilitation as saying that the United Nations World Food Program (WFP) would airlift a part of the food to Sumatra immediately after availability of aircraft and that the rest would be shipped for Sri Lanka in the next couple of days.
+The earthquake and tsunami that shattered Indonesia's Aceh province caused damage and losses worth US$4.5 billion (euro3.45 billion), the government said Wednesday.
+A powerful earthquake off the Indonesian island of Sumatra on Dec. 26, 2004 triggered a devastating tsunami that swept across the coastal countries of the Indian Ocean, wiping off villages and killing nearly 280,000 people.
+
+#stop_words=581, STOP_TOKENIZE=False STOP_QRFLAG=True
+--- stop_words_FREQ for TopicIndex( #topics=46 ) ---write_values(): label=stop_words has #581 items, key_hdr=stop_words val_hdr=freq
+stats={'cnt': 581, 'total': 220286, 'max': 29218, 'val_width': 5, 'types': {<class 'int'>}, 'key_width': 13, 'type': 'd', 'type_flag': 's', 'min': 0}
+
+|  stop_words   | freq  |   %ge   |  cum%   |
+|               |     0 |   0.00% |   0.00% | 
+| a             | 10667 |   4.84% |   4.84% | ##
+| a's           |     0 |   0.00% |   4.84% | 
+| able          |    85 |   0.04% |   4.88% | 
+| about         |  1124 |   0.51% |   5.39% | 
+| above         |    36 |   0.02% |   5.41% | 
+| according     |   334 |   0.15% |   5.56% | 
+| accordingly   |     2 |   0.00% |   5.56% | 
+| across        |   116 |   0.05% |   5.61% | 
+| actually      |    46 |   0.02% |   5.63% | 
+| after         |  1009 |   0.46% |   6.09% | 
+| afterwards    |     4 |   0.00% |   6.09% | 
+| again         |    95 |   0.04% |   6.14% | 
+| against       |   272 |   0.12% |   6.26% | 
+| ain't         |     0 |   0.00% |   6.26% | 
+| all           |   687 |   0.31% |   6.57% | 
+| allow         |    73 |   0.03% |   6.61% | 
+| allows        |    20 |   0.01% |   6.61% | 
+| almost        |   101 |   0.05% |   6.66% | 
+| alone         |    56 |   0.03% |   6.69% | 
+| along         |   170 |   0.08% |   6.76% | 
+| already       |   138 |   0.06% |   6.83% | 
+| also          |   836 |   0.38% |   7.20% | 
+| although      |   118 |   0.05% |   7.26% | 
+| always        |    80 |   0.04% |   7.29% | 
+| am            |    50 |   0.02% |   7.32% | 
+| among         |   216 |   0.10% |   7.42% | 
+| amongst       |     0 |   0.00% |   7.42% | 
+| an            |  1826 |   0.83% |   8.24% | 
+| and           | 10955 |   4.97% |  13.22% | ##
+| another       |   268 |   0.12% |  13.34% | 
+| any           |   378 |   0.17% |  13.51% | 
+| anybody       |    18 |   0.01% |  13.52% | 
+| anyhow        |     1 |   0.00% |  13.52% | 
+| anyone        |    38 |   0.02% |  13.54% | 
+| anything      |    80 |   0.04% |  13.57% | 
+| anyway        |     8 |   0.00% |  13.58% | 
+| anyways       |     0 |   0.00% |  13.58% | 
+| anywhere      |    13 |   0.01% |  13.58% | 
+| apart         |    15 |   0.01% |  13.59% | 
+| appear        |    33 |   0.01% |  13.60% | 
+| appreciate    |     1 |   0.00% |  13.60% | 
+| appropriate   |    16 |   0.01% |  13.61% | 
+| are           |  2108 |   0.96% |  14.57% | 
+| aren't        |     0 |   0.00% |  14.57% | 
+| around        |   248 |   0.11% |  14.68% | 
+| as            |  2384 |   1.08% |  15.76% | #
+| aside         |    22 |   0.01% |  15.77% | 
+| ask           |    48 |   0.02% |  15.80% | 
+| asking        |    33 |   0.01% |  15.81% | 
+| associated    |   115 |   0.05% |  15.86% | 
+| at            |  2254 |   1.02% |  16.89% | #
+| available     |    66 |   0.03% |  16.92% | 
+| away          |   158 |   0.07% |  16.99% | 
+| awfully       |     0 |   0.00% |  16.99% | 
+| b             |    16 |   0.01% |  16.99% | 
+| be            |  2001 |   0.91% |  17.90% | 
+| became        |    92 |   0.04% |  17.94% | 
+| because       |   584 |   0.27% |  18.21% | 
+| become        |   115 |   0.05% |  18.26% | 
+| becomes       |    19 |   0.01% |  18.27% | 
+| becoming      |    37 |   0.02% |  18.29% | 
+| been          |  1370 |   0.62% |  18.91% | 
+| before        |   437 |   0.20% |  19.11% | 
+| beforehand    |     4 |   0.00% |  19.11% | 
+| behind        |    79 |   0.04% |  19.15% | 
+| being         |   335 |   0.15% |  19.30% | 
+| believe       |   135 |   0.06% |  19.36% | 
+| below         |    23 |   0.01% |  19.37% | 
+| beside        |    14 |   0.01% |  19.38% | 
+| besides       |     9 |   0.00% |  19.38% | 
+| best          |    89 |   0.04% |  19.42% | 
+| better        |   100 |   0.05% |  19.47% | 
+| between       |   267 |   0.12% |  19.59% | 
+| beyond        |    36 |   0.02% |  19.60% | 
+| both          |   239 |   0.11% |  19.71% | 
+| brief         |    14 |   0.01% |  19.72% | 
+| but           |  1707 |   0.77% |  20.49% | 
+| by            |  2408 |   1.09% |  21.59% | #
+| c             |     9 |   0.00% |  21.59% | 
+| c'mon         |     0 |   0.00% |  21.59% | 
+| c's           |     0 |   0.00% |  21.59% | 
+| came          |   143 |   0.06% |  21.66% | 
+| can           |   801 |   0.36% |  22.02% | 
+| can't         |     0 |   0.00% |  22.02% | 
+| cannot        |     0 |   0.00% |  22.02% | 
+| cant          |     0 |   0.00% |  22.02% | 
+| cause         |   149 |   0.07% |  22.09% | 
+| causes        |    57 |   0.03% |  22.11% | 
+| certain       |    44 |   0.02% |  22.13% | 
+| certainly     |    27 |   0.01% |  22.14% | 
+| changes       |    56 |   0.03% |  22.17% | 
+| clearly       |    26 |   0.01% |  22.18% | 
+| co            |     5 |   0.00% |  22.18% | 
+| com           |     0 |   0.00% |  22.18% | 
+| come          |   182 |   0.08% |  22.27% | 
+| comes         |    44 |   0.02% |  22.29% | 
+| concerning    |     5 |   0.00% |  22.29% | 
+| consequently  |     2 |   0.00% |  22.29% | 
+| consider      |    42 |   0.02% |  22.31% | 
+| considering   |    31 |   0.01% |  22.32% | 
+| contain       |    41 |   0.02% |  22.34% | 
+| containing    |    50 |   0.02% |  22.36% | 
+| contains      |    22 |   0.01% |  22.37% | 
+| corresponding |     2 |   0.00% |  22.38% | 
+| could         |   752 |   0.34% |  22.72% | 
+| couldn't      |     0 |   0.00% |  22.72% | 
+| course        |    45 |   0.02% |  22.74% | 
+| currently     |    24 |   0.01% |  22.75% | 
+| d             |    16 |   0.01% |  22.75% | 
+| definitely    |    18 |   0.01% |  22.76% | 
+| described     |    60 |   0.03% |  22.79% | 
+| despite       |    75 |   0.03% |  22.82% | 
+| did           |   419 |   0.19% |  23.01% | 
+| didn't        |     0 |   0.00% |  23.01% | 
+| different     |    89 |   0.04% |  23.06% | 
+| do            |   627 |   0.28% |  23.34% | 
+| does          |   216 |   0.10% |  23.44% | 
+| doesn't       |     0 |   0.00% |  23.44% | 
+| doing         |    66 |   0.03% |  23.47% | 
+| don't         |     0 |   0.00% |  23.47% | 
+| done          |    77 |   0.03% |  23.50% | 
+| down          |   345 |   0.16% |  23.66% | 
+| downwards     |     0 |   0.00% |  23.66% | 
+| during        |   299 |   0.14% |  23.79% | 
+| e             |     9 |   0.00% |  23.80% | 
+| each          |   147 |   0.07% |  23.87% | 
+| edu           |     0 |   0.00% |  23.87% | 
+| eg            |     0 |   0.00% |  23.87% | 
+| eight         |   101 |   0.05% |  23.91% | 
+| either        |    49 |   0.02% |  23.93% | 
+| else          |    50 |   0.02% |  23.96% | 
+| elsewhere     |    30 |   0.01% |  23.97% | 
+| enough        |   127 |   0.06% |  24.03% | 
+| entirely      |     9 |   0.00% |  24.03% | 
+| especially    |    68 |   0.03% |  24.06% | 
+| et            |     1 |   0.00% |  24.06% | 
+| etc           |     0 |   0.00% |  24.06% | 
+| even          |   290 |   0.13% |  24.19% | 
+| ever          |    76 |   0.03% |  24.23% | 
+| every         |   124 |   0.06% |  24.29% | 
+| everybody     |    19 |   0.01% |  24.29% | 
+| everyone      |    50 |   0.02% |  24.32% | 
+| everything    |    45 |   0.02% |  24.34% | 
+| everywhere    |     6 |   0.00% |  24.34% | 
+| ex            |     0 |   0.00% |  24.34% | 
+| exactly       |    23 |   0.01% |  24.35% | 
+| example       |    60 |   0.03% |  24.38% | 
+| except        |    17 |   0.01% |  24.39% | 
+| f             |     1 |   0.00% |  24.39% | 
+| far           |   167 |   0.08% |  24.46% | 
+| few           |   195 |   0.09% |  24.55% | 
+| fifth         |    15 |   0.01% |  24.56% | 
+| first         |   408 |   0.19% |  24.74% | 
+| five          |   203 |   0.09% |  24.83% | 
+| followed      |    47 |   0.02% |  24.86% | 
+| following     |    88 |   0.04% |  24.90% | 
+| follows       |    19 |   0.01% |  24.90% | 
+| for           |  3931 |   1.78% |  26.69% | #
+| former        |   298 |   0.14% |  26.82% | 
+| formerly      |     6 |   0.00% |  26.83% | 
+| forth         |     2 |   0.00% |  26.83% | 
+| four          |   281 |   0.13% |  26.96% | 
+| from          |  2327 |   1.06% |  28.01% | #
+| further       |   105 |   0.05% |  28.06% | 
+| furthermore   |     2 |   0.00% |  28.06% | 
+| g             |     2 |   0.00% |  28.06% | 
+| get           |   325 |   0.15% |  28.21% | 
+| gets          |    29 |   0.01% |  28.22% | 
+| getting       |    91 |   0.04% |  28.26% | 
+| given         |    93 |   0.04% |  28.31% | 
+| gives         |    18 |   0.01% |  28.31% | 
+| go            |   192 |   0.09% |  28.40% | 
+| goes          |    48 |   0.02% |  28.42% | 
+| going         |   251 |   0.11% |  28.54% | 
+| gone          |    45 |   0.02% |  28.56% | 
+| got           |   122 |   0.06% |  28.61% | 
+| gotten        |    17 |   0.01% |  28.62% | 
+| greetings     |     0 |   0.00% |  28.62% | 
+| h             |     0 |   0.00% |  28.62% | 
+| had           |  1545 |   0.70% |  29.32% | 
+| hadn't        |     0 |   0.00% |  29.32% | 
+| happens       |    21 |   0.01% |  29.33% | 
+| hardly        |    11 |   0.00% |  29.34% | 
+| has           |  1799 |   0.82% |  30.15% | 
+| hasn't        |     0 |   0.00% |  30.15% | 
+| have          |  2340 |   1.06% |  31.21% | #
+| haven't       |     0 |   0.00% |  31.21% | 
+| having        |    99 |   0.04% |  31.26% | 
+| he            |  2524 |   1.15% |  32.41% | #
+| he'd          |     0 |   0.00% |  32.41% | 
+| he'll         |     0 |   0.00% |  32.41% | 
+| he's          |     0 |   0.00% |  32.41% | 
+| hello         |     0 |   0.00% |  32.41% | 
+| help          |   229 |   0.10% |  32.51% | 
+| hence         |     1 |   0.00% |  32.51% | 
+| her           |   954 |   0.43% |  32.94% | 
+| here          |   246 |   0.11% |  33.05% | 
+| here's        |     0 |   0.00% |  33.05% | 
+| hereafter     |     0 |   0.00% |  33.05% | 
+| hereby        |     0 |   0.00% |  33.05% | 
+| herein        |     2 |   0.00% |  33.06% | 
+| hereupon      |     0 |   0.00% |  33.06% | 
+| hers          |     1 |   0.00% |  33.06% | 
+| herself       |    18 |   0.01% |  33.06% | 
+| hi            |     1 |   0.00% |  33.06% | 
+| him           |   375 |   0.17% |  33.23% | 
+| himself       |    45 |   0.02% |  33.26% | 
+| his           |  1409 |   0.64% |  33.90% | 
+| hither        |     0 |   0.00% |  33.90% | 
+| hopefully     |     3 |   0.00% |  33.90% | 
+| how           |   283 |   0.13% |  34.02% | 
+| how's         |     0 |   0.00% |  34.02% | 
+| howbeit       |     0 |   0.00% |  34.02% | 
+| however       |   154 |   0.07% |  34.09% | 
+| i             |  1005 |   0.46% |  34.55% | 
+| i'd           |     0 |   0.00% |  34.55% | 
+| i'll          |     0 |   0.00% |  34.55% | 
+| i'm           |     0 |   0.00% |  34.55% | 
+| i've          |     0 |   0.00% |  34.55% | 
+| ie            |     0 |   0.00% |  34.55% | 
+| if            |   720 |   0.33% |  34.88% | 
+| ignored       |     7 |   0.00% |  34.88% | 
+| immediate     |    34 |   0.02% |  34.90% | 
+| in            |  9528 |   4.33% |  39.22% | ##
+| inasmuch      |     1 |   0.00% |  39.22% | 
+| inc           |     5 |   0.00% |  39.22% | 
+| indeed        |    26 |   0.01% |  39.24% | 
+| indicate      |    22 |   0.01% |  39.25% | 
+| indicated     |    41 |   0.02% |  39.26% | 
+| indicates     |     9 |   0.00% |  39.27% | 
+| inner         |     6 |   0.00% |  39.27% | 
+| insofar       |     0 |   0.00% |  39.27% | 
+| instead       |    73 |   0.03% |  39.30% | 
+| into          |   651 |   0.30% |  39.60% | 
+| inward        |     0 |   0.00% |  39.60% | 
+| is            |  3443 |   1.56% |  41.16% | #
+| isn't         |     0 |   0.00% |  41.16% | 
+| it            |  2853 |   1.30% |  42.46% | #
+| it'd          |     0 |   0.00% |  42.46% | 
+| it'll         |     0 |   0.00% |  42.46% | 
+| it's          |     0 |   0.00% |  42.46% | 
+| its           |   776 |   0.35% |  42.81% | 
+| itself        |    51 |   0.02% |  42.83% | 
+| j             |     6 |   0.00% |  42.84% | 
+| just          |   317 |   0.14% |  42.98% | 
+| k             |     2 |   0.00% |  42.98% | 
+| keep          |    94 |   0.04% |  43.02% | 
+| keeps         |    11 |   0.00% |  43.03% | 
+| kept          |    44 |   0.02% |  43.05% | 
+| know          |   230 |   0.10% |  43.15% | 
+| known         |   169 |   0.08% |  43.23% | 
+| knows         |    27 |   0.01% |  43.24% | 
+| l             |     0 |   0.00% |  43.24% | 
+| last          |   583 |   0.26% |  43.51% | 
+| lately        |     2 |   0.00% |  43.51% | 
+| later         |   177 |   0.08% |  43.59% | 
+| latter        |     2 |   0.00% |  43.59% | 
+| latterly      |     0 |   0.00% |  43.59% | 
+| least         |   180 |   0.08% |  43.67% | 
+| less          |   136 |   0.06% |  43.73% | 
+| lest          |     0 |   0.00% |  43.73% | 
+| let           |    52 |   0.02% |  43.76% | 
+| let's         |     0 |   0.00% |  43.76% | 
+| like          |   401 |   0.18% |  43.94% | 
+| liked         |     6 |   0.00% |  43.94% | 
+| likely        |   131 |   0.06% |  44.00% | 
+| little        |   135 |   0.06% |  44.06% | 
+| look          |    95 |   0.04% |  44.10% | 
+| looking       |    81 |   0.04% |  44.14% | 
+| looks         |    13 |   0.01% |  44.15% | 
+| ltd           |     7 |   0.00% |  44.15% | 
+| m             |     1 |   0.00% |  44.15% | 
+| mainly        |    19 |   0.01% |  44.16% | 
+| many          |   535 |   0.24% |  44.40% | 
+| may           |   494 |   0.22% |  44.63% | 
+| maybe         |    28 |   0.01% |  44.64% | 
+| me            |   120 |   0.05% |  44.69% | 
+| mean          |    33 |   0.01% |  44.71% | 
+| meanwhile     |    80 |   0.04% |  44.75% | 
+| merely        |     7 |   0.00% |  44.75% | 
+| might         |   184 |   0.08% |  44.83% | 
+| more          |  1121 |   0.51% |  45.34% | 
+| moreover      |     7 |   0.00% |  45.34% | 
+| most          |   414 |   0.19% |  45.53% | 
+| mostly        |    51 |   0.02% |  45.56% | 
+| much          |   227 |   0.10% |  45.66% | 
+| must          |   140 |   0.06% |  45.72% | 
+| mustn't       |     0 |   0.00% |  45.72% | 
+| my            |   207 |   0.09% |  45.82% | 
+| myself        |    10 |   0.00% |  45.82% | 
+| n             |     2 |   0.00% |  45.82% | 
+| name          |   131 |   0.06% |  45.88% | 
+| namely        |     2 |   0.00% |  45.88% | 
+| nd            |     0 |   0.00% |  45.88% | 
+| near          |   209 |   0.09% |  45.98% | 
+| nearly        |   157 |   0.07% |  46.05% | 
+| necessary     |    36 |   0.02% |  46.06% | 
+| need          |   179 |   0.08% |  46.15% | 
+| needs         |    45 |   0.02% |  46.17% | 
+| neither       |    28 |   0.01% |  46.18% | 
+| never         |   150 |   0.07% |  46.25% | 
+| nevertheless  |     7 |   0.00% |  46.25% | 
+| new           |   815 |   0.37% |  46.62% | 
+| next          |   214 |   0.10% |  46.72% | 
+| nine          |    65 |   0.03% |  46.75% | 
+| no            |   715 |   0.32% |  47.07% | 
+| nobody        |    25 |   0.01% |  47.08% | 
+| non           |     0 |   0.00% |  47.08% | 
+| none          |    31 |   0.01% |  47.10% | 
+| noone         |     0 |   0.00% |  47.10% | 
+| nor           |    28 |   0.01% |  47.11% | 
+| normally      |    20 |   0.01% |  47.12% | 
+| not           |  1740 |   0.79% |  47.91% | 
+| nothing       |    86 |   0.04% |  47.95% | 
+| novel         |     3 |   0.00% |  47.95% | 
+| now           |   401 |   0.18% |  48.13% | 
+| nowhere       |    10 |   0.00% |  48.14% | 
+| o             |     2 |   0.00% |  48.14% | 
+| obviously     |     9 |   0.00% |  48.14% | 
+| of            | 13069 |   5.93% |  54.07% | ###
+| off           |   341 |   0.15% |  54.23% | 
+| often         |   113 |   0.05% |  54.28% | 
+| oh            |     8 |   0.00% |  54.28% | 
+| ok            |    15 |   0.01% |  54.29% | 
+| okay          |     6 |   0.00% |  54.29% | 
+| old           |    72 |   0.03% |  54.32% | 
+| on            |  3621 |   1.64% |  55.97% | #
+| once          |   144 |   0.07% |  56.03% | 
+| one           |   945 |   0.43% |  56.46% | 
+| ones          |    34 |   0.02% |  56.48% | 
+| only          |   466 |   0.21% |  56.69% | 
+| onto          |    23 |   0.01% |  56.70% | 
+| or            |  1220 |   0.55% |  57.25% | 
+| other         |   728 |   0.33% |  57.58% | 
+| others        |   169 |   0.08% |  57.66% | 
+| otherwise     |    28 |   0.01% |  57.67% | 
+| ought         |     4 |   0.00% |  57.68% | 
+| our           |   217 |   0.10% |  57.77% | 
+| ours          |     1 |   0.00% |  57.77% | 
+| ourselves     |     7 |   0.00% |  57.78% | 
+| out           |   742 |   0.34% |  58.11% | 
+| outside       |   129 |   0.06% |  58.17% | 
+| over          |   567 |   0.26% |  58.43% | 
+| overall       |    20 |   0.01% |  58.44% | 
+| own           |   132 |   0.06% |  58.50% | 
+| p             |     2 |   0.00% |  58.50% | 
+| particular    |    28 |   0.01% |  58.51% | 
+| particularly  |    52 |   0.02% |  58.54% | 
+| per           |    83 |   0.04% |  58.57% | 
+| perhaps       |    39 |   0.02% |  58.59% | 
+| placed        |    29 |   0.01% |  58.61% | 
+| please        |     9 |   0.00% |  58.61% | 
+| plus          |    22 |   0.01% |  58.62% | 
+| possible      |   139 |   0.06% |  58.68% | 
+| presumably    |     2 |   0.00% |  58.68% | 
+| probably      |    69 |   0.03% |  58.72% | 
+| provides      |    26 |   0.01% |  58.73% | 
+| q             |    10 |   0.00% |  58.73% | 
+| que           |     1 |   0.00% |  58.73% | 
+| quite         |    22 |   0.01% |  58.74% | 
+| qv            |     0 |   0.00% |  58.74% | 
+| r             |     7 |   0.00% |  58.74% | 
+| rather        |    54 |   0.02% |  58.77% | 
+| rd            |     0 |   0.00% |  58.77% | 
+| re            |     0 |   0.00% |  58.77% | 
+| really        |   105 |   0.05% |  58.82% | 
+| reasonably    |     1 |   0.00% |  58.82% | 
+| regarding     |     9 |   0.00% |  58.82% | 
+| regardless    |     5 |   0.00% |  58.82% | 
+| regards       |     0 |   0.00% |  58.82% | 
+| relatively    |    31 |   0.01% |  58.84% | 
+| respectively  |     4 |   0.00% |  58.84% | 
+| right         |   131 |   0.06% |  58.90% | 
+| s             |     4 |   0.00% |  58.90% | 
+| said          |  5297 |   2.40% |  61.31% | #
+| same          |   173 |   0.08% |  61.38% | 
+| saw           |   109 |   0.05% |  61.43% | 
+| say           |   446 |   0.20% |  61.64% | 
+| saying        |   208 |   0.09% |  61.73% | 
+| says          |   291 |   0.13% |  61.86% | 
+| second        |    94 |   0.04% |  61.91% | 
+| secondly      |     0 |   0.00% |  61.91% | 
+| see           |   174 |   0.08% |  61.98% | 
+| seeing        |    30 |   0.01% |  62.00% | 
+| seem          |    28 |   0.01% |  62.01% | 
+| seemed        |    38 |   0.02% |  62.03% | 
+| seeming       |     2 |   0.00% |  62.03% | 
+| seems         |    34 |   0.02% |  62.04% | 
+| seen          |   122 |   0.06% |  62.10% | 
+| self          |     3 |   0.00% |  62.10% | 
+| selves        |     0 |   0.00% |  62.10% | 
+| sensible      |     7 |   0.00% |  62.10% | 
+| sent          |   110 |   0.05% |  62.15% | 
+| serious       |   130 |   0.06% |  62.21% | 
+| seriously     |    26 |   0.01% |  62.23% | 
+| seven         |   133 |   0.06% |  62.29% | 
+| several       |   229 |   0.10% |  62.39% | 
+| shall         |     2 |   0.00% |  62.39% | 
+| shan't        |     0 |   0.00% |  62.39% | 
+| she           |  1096 |   0.50% |  62.89% | 
+| she'd         |     0 |   0.00% |  62.89% | 
+| she'll        |     0 |   0.00% |  62.89% | 
+| she's         |     0 |   0.00% |  62.89% | 
+| should        |   307 |   0.14% |  63.03% | 
+| shouldn't     |     0 |   0.00% |  63.03% | 
+| since         |   362 |   0.16% |  63.19% | 
+| six           |   163 |   0.07% |  63.27% | 
+| so            |   449 |   0.20% |  63.47% | 
+| some          |   768 |   0.35% |  63.82% | 
+| somebody      |    10 |   0.00% |  63.82% | 
+| somehow       |    20 |   0.01% |  63.83% | 
+| someone       |    92 |   0.04% |  63.87% | 
+| something     |   112 |   0.05% |  63.92% | 
+| sometime      |     6 |   0.00% |  63.93% | 
+| sometimes     |    38 |   0.02% |  63.94% | 
+| somewhat      |     6 |   0.00% |  63.95% | 
+| somewhere     |    12 |   0.01% |  63.95% | 
+| soon          |    70 |   0.03% |  63.98% | 
+| sorry         |    12 |   0.01% |  63.99% | 
+| specified     |    13 |   0.01% |  64.00% | 
+| specify       |     2 |   0.00% |  64.00% | 
+| specifying    |     1 |   0.00% |  64.00% | 
+| still         |   352 |   0.16% |  64.16% | 
+| sub           |     0 |   0.00% |  64.16% | 
+| such          |   352 |   0.16% |  64.32% | 
+| sup           |     0 |   0.00% |  64.32% | 
+| sure          |    68 |   0.03% |  64.35% | 
+| t             |     1 |   0.00% |  64.35% | 
+| t's           |     0 |   0.00% |  64.35% | 
+| take          |   274 |   0.12% |  64.47% | 
+| taken         |   170 |   0.08% |  64.55% | 
+| tell          |    58 |   0.03% |  64.58% | 
+| tends         |     4 |   0.00% |  64.58% | 
+| th            |     1 |   0.00% |  64.58% | 
+| than          |   774 |   0.35% |  64.93% | 
+| thank         |     3 |   0.00% |  64.93% | 
+| thanks        |     5 |   0.00% |  64.93% | 
+| thanx         |     0 |   0.00% |  64.93% | 
+| that          |  5409 |   2.46% |  67.39% | #
+| that's        |     0 |   0.00% |  67.39% | 
+| thats         |     0 |   0.00% |  67.39% | 
+| the           | 29218 |  13.26% |  80.65% | #######
+| their         |  1153 |   0.52% |  81.18% | 
+| theirs        |     0 |   0.00% |  81.18% | 
+| them          |   559 |   0.25% |  81.43% | 
+| themselves    |    64 |   0.03% |  81.46% | 
+| then          |   329 |   0.15% |  81.61% | 
+| thence        |     0 |   0.00% |  81.61% | 
+| there         |   941 |   0.43% |  82.03% | 
+| there's       |     0 |   0.00% |  82.03% | 
+| thereafter    |     4 |   0.00% |  82.04% | 
+| thereby       |     2 |   0.00% |  82.04% | 
+| therefore     |     8 |   0.00% |  82.04% | 
+| therein       |     0 |   0.00% |  82.04% | 
+| theres        |     0 |   0.00% |  82.04% | 
+| thereupon     |     0 |   0.00% |  82.04% | 
+| these         |   305 |   0.14% |  82.18% | 
+| they          |  1802 |   0.82% |  83.00% | 
+| they'd        |     0 |   0.00% |  83.00% | 
+| they'll       |     0 |   0.00% |  83.00% | 
+| they're       |     0 |   0.00% |  83.00% | 
+| they've       |     0 |   0.00% |  83.00% | 
+| think         |   174 |   0.08% |  83.08% | 
+| third         |    61 |   0.03% |  83.10% | 
+| this          |  1250 |   0.57% |  83.67% | 
+| thorough      |    16 |   0.01% |  83.68% | 
+| thoroughly    |    18 |   0.01% |  83.69% | 
+| those         |   342 |   0.16% |  83.84% | 
+| though        |   102 |   0.05% |  83.89% | 
+| three         |   486 |   0.22% |  84.11% | 
+| through       |   326 |   0.15% |  84.26% | 
+| throughout    |    43 |   0.02% |  84.28% | 
+| thru          |     0 |   0.00% |  84.28% | 
+| thus          |    16 |   0.01% |  84.28% | 
+| to            | 11765 |   5.34% |  89.62% | ###
+| together      |    97 |   0.04% |  89.67% | 
+| too           |   172 |   0.08% |  89.75% | 
+| took          |   137 |   0.06% |  89.81% | 
+| toward        |    86 |   0.04% |  89.85% | 
+| towards       |     7 |   0.00% |  89.85% | 
+| tried         |    85 |   0.04% |  89.89% | 
+| tries         |     3 |   0.00% |  89.89% | 
+| truly         |     2 |   0.00% |  89.89% | 
+| try           |    67 |   0.03% |  89.92% | 
+| trying        |   154 |   0.07% |  89.99% | 
+| twice         |    28 |   0.01% |  90.01% | 
+| two           |   785 |   0.36% |  90.36% | 
+| u             |     0 |   0.00% |  90.36% | 
+| un            |    28 |   0.01% |  90.37% | 
+| under         |   381 |   0.17% |  90.55% | 
+| unfortunately |     6 |   0.00% |  90.55% | 
+| unless        |    23 |   0.01% |  90.56% | 
+| unlikely      |    27 |   0.01% |  90.57% | 
+| until         |   186 |   0.08% |  90.66% | 
+| unto          |     1 |   0.00% |  90.66% | 
+| up            |   807 |   0.37% |  91.02% | 
+| upon          |    23 |   0.01% |  91.03% | 
+| us            |   259 |   0.12% |  91.15% | 
+| use           |   243 |   0.11% |  91.26% | 
+| used          |   286 |   0.13% |  91.39% | 
+| useful        |    15 |   0.01% |  91.40% | 
+| uses          |    22 |   0.01% |  91.41% | 
+| using         |   100 |   0.05% |  91.45% | 
+| usually       |    29 |   0.01% |  91.47% | 
+| uucp          |     0 |   0.00% |  91.47% | 
+| v             |     1 |   0.00% |  91.47% | 
+| value         |    17 |   0.01% |  91.48% | 
+| various       |    33 |   0.01% |  91.49% | 
+| very          |   242 |   0.11% |  91.60% | 
+| via           |    12 |   0.01% |  91.61% | 
+| viz           |     0 |   0.00% |  91.61% | 
+| vs            |     0 |   0.00% |  91.61% | 
+| w             |     1 |   0.00% |  91.61% | 
+| want          |   206 |   0.09% |  91.70% | 
+| wants         |    49 |   0.02% |  91.72% | 
+| was           |  3308 |   1.50% |  93.22% | #
+| wasn't        |     0 |   0.00% |  93.22% | 
+| way           |   235 |   0.11% |  93.33% | 
+| we            |  1159 |   0.53% |  93.86% | 
+| we'd          |     0 |   0.00% |  93.86% | 
+| we'll         |     0 |   0.00% |  93.86% | 
+| we're         |     0 |   0.00% |  93.86% | 
+| we've         |     0 |   0.00% |  93.86% | 
+| welcome       |    19 |   0.01% |  93.87% | 
+| well          |   235 |   0.11% |  93.97% | 
+| went          |   117 |   0.05% |  94.03% | 
+| were          |  1617 |   0.73% |  94.76% | 
+| weren't       |     0 |   0.00% |  94.76% | 
+| what          |   526 |   0.24% |  95.00% | 
+| what's        |     0 |   0.00% |  95.00% | 
+| whatever      |    23 |   0.01% |  95.01% | 
+| when          |   818 |   0.37% |  95.38% | 
+| when's        |     0 |   0.00% |  95.38% | 
+| whence        |     0 |   0.00% |  95.38% | 
+| whenever      |     6 |   0.00% |  95.38% | 
+| where         |   477 |   0.22% |  95.60% | 
+| where's       |     0 |   0.00% |  95.60% | 
+| whereafter    |     0 |   0.00% |  95.60% | 
+| whereas       |     1 |   0.00% |  95.60% | 
+| whereby       |     0 |   0.00% |  95.60% | 
+| wherein       |     0 |   0.00% |  95.60% | 
+| whereupon     |     0 |   0.00% |  95.60% | 
+| wherever      |     6 |   0.00% |  95.60% | 
+| whether       |   258 |   0.12% |  95.72% | 
+| which         |  1089 |   0.49% |  96.21% | 
+| while         |   343 |   0.16% |  96.37% | 
+| whither       |     0 |   0.00% |  96.37% | 
+| who           |  1485 |   0.67% |  97.04% | 
+| who's         |     0 |   0.00% |  97.04% | 
+| whoever       |     3 |   0.00% |  97.04% | 
+| whole         |    60 |   0.03% |  97.07% | 
+| whom          |    57 |   0.03% |  97.10% | 
+| whose         |   116 |   0.05% |  97.15% | 
+| why           |   110 |   0.05% |  97.20% | 
+| why's         |     0 |   0.00% |  97.20% | 
+| will          |  1125 |   0.51% |  97.71% | 
+| willing       |    24 |   0.01% |  97.72% | 
+| wish          |     9 |   0.00% |  97.73% | 
+| with          |  2694 |   1.22% |  98.95% | #
+| within        |   109 |   0.05% |  99.00% | 
+| without       |   187 |   0.08% |  99.08% | 
+| won't         |     0 |   0.00% |  99.08% | 
+| wonder        |    16 |   0.01% |  99.09% | 
+| would         |  1002 |   0.45% |  99.55% | 
+| wouldn't      |     0 |   0.00% |  99.55% | 
+| x             |     0 |   0.00% |  99.55% | 
+| y             |     0 |   0.00% |  99.55% | 
+| yes           |    21 |   0.01% |  99.56% | 
+| yet           |    97 |   0.04% |  99.60% | 
+| you           |   715 |   0.32% |  99.92% | 
+| you'd         |     0 |   0.00% |  99.92% | 
+| you'll        |     0 |   0.00% |  99.92% | 
+| you're        |     0 |   0.00% |  99.92% | 
+| you've        |     0 |   0.00% |  99.92% | 
+| your          |   146 |   0.07% |  99.99% | 
+| yours         |     1 |   0.00% |  99.99% | 
+| yourself      |     8 |   0.00% |  99.99% | 
+| yourselves    |     0 |   0.00% |  99.99% | 
+| z             |     1 |   0.00% |  99.99% | 
+| zero          |    12 |   0.01% | 100.00% | 
+
+
+total items:       220,286
+distinct items:        581
+ratio:   379.1497
+write_values(): label=stop_words_rev has #581 items, key_hdr=stop_words_rev val_hdr=freq
+stats={'cnt': 581, 'total': 220286, 'max': 29218, 'val_width': 5, 'types': {<class 'int'>}, 'key_width': 14, 'type': 'd', 'type_flag': 's', 'min': 0}
+
+| stop_words_rev | freq  |   %ge   |  cum%   |
+| the            | 29218 |  13.26% |  13.26% | #######
+| of             | 13069 |   5.93% |  19.20% | ###
+| to             | 11765 |   5.34% |  24.54% | ###
+| and            | 10955 |   4.97% |  29.51% | ##
+| a              | 10667 |   4.84% |  34.35% | ##
+| in             |  9528 |   4.33% |  38.68% | ##
+| that           |  5409 |   2.46% |  41.13% | #
+| said           |  5297 |   2.40% |  43.54% | #
+| for            |  3931 |   1.78% |  45.32% | #
+| on             |  3621 |   1.64% |  46.97% | #
+| is             |  3443 |   1.56% |  48.53% | #
+| was            |  3308 |   1.50% |  50.03% | #
+| it             |  2853 |   1.30% |  51.33% | #
+| with           |  2694 |   1.22% |  52.55% | #
+| he             |  2524 |   1.15% |  53.69% | #
+| by             |  2408 |   1.09% |  54.79% | #
+| as             |  2384 |   1.08% |  55.87% | #
+| have           |  2340 |   1.06% |  56.93% | #
+| from           |  2327 |   1.06% |  57.99% | #
+| at             |  2254 |   1.02% |  59.01% | #
+| are            |  2108 |   0.96% |  59.97% | 
+| be             |  2001 |   0.91% |  60.88% | 
+| an             |  1826 |   0.83% |  61.71% | 
+| they           |  1802 |   0.82% |  62.52% | 
+| has            |  1799 |   0.82% |  63.34% | 
+| not            |  1740 |   0.79% |  64.13% | 
+| but            |  1707 |   0.77% |  64.91% | 
+| were           |  1617 |   0.73% |  65.64% | 
+| had            |  1545 |   0.70% |  66.34% | 
+| who            |  1485 |   0.67% |  67.02% | 
+| his            |  1409 |   0.64% |  67.65% | 
+| been           |  1370 |   0.62% |  68.28% | 
+| this           |  1250 |   0.57% |  68.84% | 
+| or             |  1220 |   0.55% |  69.40% | 
+| we             |  1159 |   0.53% |  69.92% | 
+| their          |  1153 |   0.52% |  70.45% | 
+| will           |  1125 |   0.51% |  70.96% | 
+| about          |  1124 |   0.51% |  71.47% | 
+| more           |  1121 |   0.51% |  71.98% | 
+| she            |  1096 |   0.50% |  72.47% | 
+| which          |  1089 |   0.49% |  72.97% | 
+| after          |  1009 |   0.46% |  73.43% | 
+| i              |  1005 |   0.46% |  73.88% | 
+| would          |  1002 |   0.45% |  74.34% | 
+| her            |   954 |   0.43% |  74.77% | 
+| one            |   945 |   0.43% |  75.20% | 
+| there          |   941 |   0.43% |  75.63% | 
+| also           |   836 |   0.38% |  76.01% | 
+| when           |   818 |   0.37% |  76.38% | 
+| new            |   815 |   0.37% |  76.75% | 
+| up             |   807 |   0.37% |  77.11% | 
+| can            |   801 |   0.36% |  77.48% | 
+| two            |   785 |   0.36% |  77.83% | 
+| its            |   776 |   0.35% |  78.19% | 
+| than           |   774 |   0.35% |  78.54% | 
+| some           |   768 |   0.35% |  78.89% | 
+| could          |   752 |   0.34% |  79.23% | 
+| out            |   742 |   0.34% |  79.57% | 
+| other          |   728 |   0.33% |  79.90% | 
+| if             |   720 |   0.33% |  80.22% | 
+| no             |   715 |   0.32% |  80.55% | 
+| you            |   715 |   0.32% |  80.87% | 
+| all            |   687 |   0.31% |  81.18% | 
+| into           |   651 |   0.30% |  81.48% | 
+| do             |   627 |   0.28% |  81.76% | 
+| because        |   584 |   0.27% |  82.03% | 
+| last           |   583 |   0.26% |  82.29% | 
+| over           |   567 |   0.26% |  82.55% | 
+| them           |   559 |   0.25% |  82.80% | 
+| many           |   535 |   0.24% |  83.05% | 
+| what           |   526 |   0.24% |  83.29% | 
+| may            |   494 |   0.22% |  83.51% | 
+| three          |   486 |   0.22% |  83.73% | 
+| where          |   477 |   0.22% |  83.95% | 
+| only           |   466 |   0.21% |  84.16% | 
+| so             |   449 |   0.20% |  84.36% | 
+| say            |   446 |   0.20% |  84.57% | 
+| before         |   437 |   0.20% |  84.76% | 
+| did            |   419 |   0.19% |  84.95% | 
+| most           |   414 |   0.19% |  85.14% | 
+| first          |   408 |   0.19% |  85.33% | 
+| like           |   401 |   0.18% |  85.51% | 
+| now            |   401 |   0.18% |  85.69% | 
+| under          |   381 |   0.17% |  85.86% | 
+| any            |   378 |   0.17% |  86.04% | 
+| him            |   375 |   0.17% |  86.21% | 
+| since          |   362 |   0.16% |  86.37% | 
+| still          |   352 |   0.16% |  86.53% | 
+| such           |   352 |   0.16% |  86.69% | 
+| down           |   345 |   0.16% |  86.85% | 
+| while          |   343 |   0.16% |  87.00% | 
+| those          |   342 |   0.16% |  87.16% | 
+| off            |   341 |   0.15% |  87.31% | 
+| being          |   335 |   0.15% |  87.46% | 
+| according      |   334 |   0.15% |  87.62% | 
+| then           |   329 |   0.15% |  87.77% | 
+| through        |   326 |   0.15% |  87.91% | 
+| get            |   325 |   0.15% |  88.06% | 
+| just           |   317 |   0.14% |  88.20% | 
+| should         |   307 |   0.14% |  88.34% | 
+| these          |   305 |   0.14% |  88.48% | 
+| during         |   299 |   0.14% |  88.62% | 
+| former         |   298 |   0.14% |  88.75% | 
+| says           |   291 |   0.13% |  88.89% | 
+| even           |   290 |   0.13% |  89.02% | 
+| used           |   286 |   0.13% |  89.15% | 
+| how            |   283 |   0.13% |  89.28% | 
+| four           |   281 |   0.13% |  89.40% | 
+| take           |   274 |   0.12% |  89.53% | 
+| against        |   272 |   0.12% |  89.65% | 
+| another        |   268 |   0.12% |  89.77% | 
+| between        |   267 |   0.12% |  89.89% | 
+| us             |   259 |   0.12% |  90.01% | 
+| whether        |   258 |   0.12% |  90.13% | 
+| going          |   251 |   0.11% |  90.24% | 
+| around         |   248 |   0.11% |  90.36% | 
+| here           |   246 |   0.11% |  90.47% | 
+| use            |   243 |   0.11% |  90.58% | 
+| very           |   242 |   0.11% |  90.69% | 
+| both           |   239 |   0.11% |  90.80% | 
+| way            |   235 |   0.11% |  90.90% | 
+| well           |   235 |   0.11% |  91.01% | 
+| know           |   230 |   0.10% |  91.11% | 
+| help           |   229 |   0.10% |  91.22% | 
+| several        |   229 |   0.10% |  91.32% | 
+| much           |   227 |   0.10% |  91.42% | 
+| our            |   217 |   0.10% |  91.52% | 
+| among          |   216 |   0.10% |  91.62% | 
+| does           |   216 |   0.10% |  91.72% | 
+| next           |   214 |   0.10% |  91.82% | 
+| near           |   209 |   0.09% |  91.91% | 
+| saying         |   208 |   0.09% |  92.01% | 
+| my             |   207 |   0.09% |  92.10% | 
+| want           |   206 |   0.09% |  92.19% | 
+| five           |   203 |   0.09% |  92.29% | 
+| few            |   195 |   0.09% |  92.37% | 
+| go             |   192 |   0.09% |  92.46% | 
+| without        |   187 |   0.08% |  92.55% | 
+| until          |   186 |   0.08% |  92.63% | 
+| might          |   184 |   0.08% |  92.71% | 
+| come           |   182 |   0.08% |  92.80% | 
+| least          |   180 |   0.08% |  92.88% | 
+| need           |   179 |   0.08% |  92.96% | 
+| later          |   177 |   0.08% |  93.04% | 
+| see            |   174 |   0.08% |  93.12% | 
+| think          |   174 |   0.08% |  93.20% | 
+| same           |   173 |   0.08% |  93.28% | 
+| too            |   172 |   0.08% |  93.35% | 
+| along          |   170 |   0.08% |  93.43% | 
+| taken          |   170 |   0.08% |  93.51% | 
+| known          |   169 |   0.08% |  93.59% | 
+| others         |   169 |   0.08% |  93.66% | 
+| far            |   167 |   0.08% |  93.74% | 
+| six            |   163 |   0.07% |  93.81% | 
+| away           |   158 |   0.07% |  93.88% | 
+| nearly         |   157 |   0.07% |  93.95% | 
+| however        |   154 |   0.07% |  94.02% | 
+| trying         |   154 |   0.07% |  94.09% | 
+| never          |   150 |   0.07% |  94.16% | 
+| cause          |   149 |   0.07% |  94.23% | 
+| each           |   147 |   0.07% |  94.30% | 
+| your           |   146 |   0.07% |  94.36% | 
+| once           |   144 |   0.07% |  94.43% | 
+| came           |   143 |   0.06% |  94.49% | 
+| must           |   140 |   0.06% |  94.56% | 
+| possible       |   139 |   0.06% |  94.62% | 
+| already        |   138 |   0.06% |  94.68% | 
+| took           |   137 |   0.06% |  94.75% | 
+| less           |   136 |   0.06% |  94.81% | 
+| believe        |   135 |   0.06% |  94.87% | 
+| little         |   135 |   0.06% |  94.93% | 
+| seven          |   133 |   0.06% |  94.99% | 
+| own            |   132 |   0.06% |  95.05% | 
+| likely         |   131 |   0.06% |  95.11% | 
+| name           |   131 |   0.06% |  95.17% | 
+| right          |   131 |   0.06% |  95.23% | 
+| serious        |   130 |   0.06% |  95.29% | 
+| outside        |   129 |   0.06% |  95.35% | 
+| enough         |   127 |   0.06% |  95.40% | 
+| every          |   124 |   0.06% |  95.46% | 
+| got            |   122 |   0.06% |  95.51% | 
+| seen           |   122 |   0.06% |  95.57% | 
+| me             |   120 |   0.05% |  95.62% | 
+| although       |   118 |   0.05% |  95.68% | 
+| went           |   117 |   0.05% |  95.73% | 
+| across         |   116 |   0.05% |  95.78% | 
+| whose          |   116 |   0.05% |  95.84% | 
+| associated     |   115 |   0.05% |  95.89% | 
+| become         |   115 |   0.05% |  95.94% | 
+| often          |   113 |   0.05% |  95.99% | 
+| something      |   112 |   0.05% |  96.04% | 
+| sent           |   110 |   0.05% |  96.09% | 
+| why            |   110 |   0.05% |  96.14% | 
+| saw            |   109 |   0.05% |  96.19% | 
+| within         |   109 |   0.05% |  96.24% | 
+| further        |   105 |   0.05% |  96.29% | 
+| really         |   105 |   0.05% |  96.34% | 
+| though         |   102 |   0.05% |  96.38% | 
+| almost         |   101 |   0.05% |  96.43% | 
+| eight          |   101 |   0.05% |  96.48% | 
+| better         |   100 |   0.05% |  96.52% | 
+| using          |   100 |   0.05% |  96.57% | 
+| having         |    99 |   0.04% |  96.61% | 
+| together       |    97 |   0.04% |  96.66% | 
+| yet            |    97 |   0.04% |  96.70% | 
+| again          |    95 |   0.04% |  96.74% | 
+| look           |    95 |   0.04% |  96.79% | 
+| keep           |    94 |   0.04% |  96.83% | 
+| second         |    94 |   0.04% |  96.87% | 
+| given          |    93 |   0.04% |  96.91% | 
+| became         |    92 |   0.04% |  96.95% | 
+| someone        |    92 |   0.04% |  97.00% | 
+| getting        |    91 |   0.04% |  97.04% | 
+| best           |    89 |   0.04% |  97.08% | 
+| different      |    89 |   0.04% |  97.12% | 
+| following      |    88 |   0.04% |  97.16% | 
+| nothing        |    86 |   0.04% |  97.20% | 
+| toward         |    86 |   0.04% |  97.24% | 
+| able           |    85 |   0.04% |  97.28% | 
+| tried          |    85 |   0.04% |  97.31% | 
+| per            |    83 |   0.04% |  97.35% | 
+| looking        |    81 |   0.04% |  97.39% | 
+| always         |    80 |   0.04% |  97.42% | 
+| anything       |    80 |   0.04% |  97.46% | 
+| meanwhile      |    80 |   0.04% |  97.50% | 
+| behind         |    79 |   0.04% |  97.53% | 
+| done           |    77 |   0.03% |  97.57% | 
+| ever           |    76 |   0.03% |  97.60% | 
+| despite        |    75 |   0.03% |  97.64% | 
+| allow          |    73 |   0.03% |  97.67% | 
+| instead        |    73 |   0.03% |  97.70% | 
+| old            |    72 |   0.03% |  97.74% | 
+| soon           |    70 |   0.03% |  97.77% | 
+| probably       |    69 |   0.03% |  97.80% | 
+| especially     |    68 |   0.03% |  97.83% | 
+| sure           |    68 |   0.03% |  97.86% | 
+| try            |    67 |   0.03% |  97.89% | 
+| available      |    66 |   0.03% |  97.92% | 
+| doing          |    66 |   0.03% |  97.95% | 
+| nine           |    65 |   0.03% |  97.98% | 
+| themselves     |    64 |   0.03% |  98.01% | 
+| third          |    61 |   0.03% |  98.04% | 
+| described      |    60 |   0.03% |  98.06% | 
+| example        |    60 |   0.03% |  98.09% | 
+| whole          |    60 |   0.03% |  98.12% | 
+| tell           |    58 |   0.03% |  98.15% | 
+| causes         |    57 |   0.03% |  98.17% | 
+| whom           |    57 |   0.03% |  98.20% | 
+| alone          |    56 |   0.03% |  98.22% | 
+| changes        |    56 |   0.03% |  98.25% | 
+| rather         |    54 |   0.02% |  98.27% | 
+| let            |    52 |   0.02% |  98.30% | 
+| particularly   |    52 |   0.02% |  98.32% | 
+| itself         |    51 |   0.02% |  98.34% | 
+| mostly         |    51 |   0.02% |  98.37% | 
+| am             |    50 |   0.02% |  98.39% | 
+| containing     |    50 |   0.02% |  98.41% | 
+| else           |    50 |   0.02% |  98.43% | 
+| everyone       |    50 |   0.02% |  98.46% | 
+| either         |    49 |   0.02% |  98.48% | 
+| wants          |    49 |   0.02% |  98.50% | 
+| ask            |    48 |   0.02% |  98.52% | 
+| goes           |    48 |   0.02% |  98.54% | 
+| followed       |    47 |   0.02% |  98.57% | 
+| actually       |    46 |   0.02% |  98.59% | 
+| course         |    45 |   0.02% |  98.61% | 
+| everything     |    45 |   0.02% |  98.63% | 
+| gone           |    45 |   0.02% |  98.65% | 
+| himself        |    45 |   0.02% |  98.67% | 
+| needs          |    45 |   0.02% |  98.69% | 
+| certain        |    44 |   0.02% |  98.71% | 
+| comes          |    44 |   0.02% |  98.73% | 
+| kept           |    44 |   0.02% |  98.75% | 
+| throughout     |    43 |   0.02% |  98.77% | 
+| consider       |    42 |   0.02% |  98.79% | 
+| contain        |    41 |   0.02% |  98.81% | 
+| indicated      |    41 |   0.02% |  98.82% | 
+| perhaps        |    39 |   0.02% |  98.84% | 
+| anyone         |    38 |   0.02% |  98.86% | 
+| seemed         |    38 |   0.02% |  98.88% | 
+| sometimes      |    38 |   0.02% |  98.89% | 
+| becoming       |    37 |   0.02% |  98.91% | 
+| above          |    36 |   0.02% |  98.93% | 
+| beyond         |    36 |   0.02% |  98.94% | 
+| necessary      |    36 |   0.02% |  98.96% | 
+| immediate      |    34 |   0.02% |  98.98% | 
+| ones           |    34 |   0.02% |  98.99% | 
+| seems          |    34 |   0.02% |  99.01% | 
+| appear         |    33 |   0.01% |  99.02% | 
+| asking         |    33 |   0.01% |  99.04% | 
+| mean           |    33 |   0.01% |  99.05% | 
+| various        |    33 |   0.01% |  99.07% | 
+| considering    |    31 |   0.01% |  99.08% | 
+| none           |    31 |   0.01% |  99.09% | 
+| relatively     |    31 |   0.01% |  99.11% | 
+| elsewhere      |    30 |   0.01% |  99.12% | 
+| seeing         |    30 |   0.01% |  99.14% | 
+| gets           |    29 |   0.01% |  99.15% | 
+| placed         |    29 |   0.01% |  99.16% | 
+| usually        |    29 |   0.01% |  99.18% | 
+| maybe          |    28 |   0.01% |  99.19% | 
+| neither        |    28 |   0.01% |  99.20% | 
+| nor            |    28 |   0.01% |  99.21% | 
+| otherwise      |    28 |   0.01% |  99.23% | 
+| particular     |    28 |   0.01% |  99.24% | 
+| seem           |    28 |   0.01% |  99.25% | 
+| twice          |    28 |   0.01% |  99.26% | 
+| un             |    28 |   0.01% |  99.28% | 
+| certainly      |    27 |   0.01% |  99.29% | 
+| knows          |    27 |   0.01% |  99.30% | 
+| unlikely       |    27 |   0.01% |  99.31% | 
+| clearly        |    26 |   0.01% |  99.33% | 
+| indeed         |    26 |   0.01% |  99.34% | 
+| provides       |    26 |   0.01% |  99.35% | 
+| seriously      |    26 |   0.01% |  99.36% | 
+| nobody         |    25 |   0.01% |  99.37% | 
+| currently      |    24 |   0.01% |  99.38% | 
+| willing        |    24 |   0.01% |  99.39% | 
+| below          |    23 |   0.01% |  99.40% | 
+| exactly        |    23 |   0.01% |  99.41% | 
+| onto           |    23 |   0.01% |  99.43% | 
+| unless         |    23 |   0.01% |  99.44% | 
+| upon           |    23 |   0.01% |  99.45% | 
+| whatever       |    23 |   0.01% |  99.46% | 
+| aside          |    22 |   0.01% |  99.47% | 
+| contains       |    22 |   0.01% |  99.48% | 
+| indicate       |    22 |   0.01% |  99.49% | 
+| plus           |    22 |   0.01% |  99.50% | 
+| quite          |    22 |   0.01% |  99.51% | 
+| uses           |    22 |   0.01% |  99.52% | 
+| happens        |    21 |   0.01% |  99.53% | 
+| yes            |    21 |   0.01% |  99.54% | 
+| allows         |    20 |   0.01% |  99.54% | 
+| normally       |    20 |   0.01% |  99.55% | 
+| overall        |    20 |   0.01% |  99.56% | 
+| somehow        |    20 |   0.01% |  99.57% | 
+| becomes        |    19 |   0.01% |  99.58% | 
+| everybody      |    19 |   0.01% |  99.59% | 
+| follows        |    19 |   0.01% |  99.60% | 
+| mainly         |    19 |   0.01% |  99.61% | 
+| welcome        |    19 |   0.01% |  99.62% | 
+| anybody        |    18 |   0.01% |  99.62% | 
+| definitely     |    18 |   0.01% |  99.63% | 
+| gives          |    18 |   0.01% |  99.64% | 
+| herself        |    18 |   0.01% |  99.65% | 
+| thoroughly     |    18 |   0.01% |  99.66% | 
+| except         |    17 |   0.01% |  99.66% | 
+| gotten         |    17 |   0.01% |  99.67% | 
+| value          |    17 |   0.01% |  99.68% | 
+| appropriate    |    16 |   0.01% |  99.69% | 
+| b              |    16 |   0.01% |  99.69% | 
+| d              |    16 |   0.01% |  99.70% | 
+| thorough       |    16 |   0.01% |  99.71% | 
+| thus           |    16 |   0.01% |  99.72% | 
+| wonder         |    16 |   0.01% |  99.72% | 
+| apart          |    15 |   0.01% |  99.73% | 
+| fifth          |    15 |   0.01% |  99.74% | 
+| ok             |    15 |   0.01% |  99.74% | 
+| useful         |    15 |   0.01% |  99.75% | 
+| beside         |    14 |   0.01% |  99.76% | 
+| brief          |    14 |   0.01% |  99.76% | 
+| anywhere       |    13 |   0.01% |  99.77% | 
+| looks          |    13 |   0.01% |  99.77% | 
+| specified      |    13 |   0.01% |  99.78% | 
+| somewhere      |    12 |   0.01% |  99.79% | 
+| sorry          |    12 |   0.01% |  99.79% | 
+| via            |    12 |   0.01% |  99.80% | 
+| zero           |    12 |   0.01% |  99.80% | 
+| hardly         |    11 |   0.00% |  99.81% | 
+| keeps          |    11 |   0.00% |  99.81% | 
+| myself         |    10 |   0.00% |  99.82% | 
+| nowhere        |    10 |   0.00% |  99.82% | 
+| q              |    10 |   0.00% |  99.83% | 
+| somebody       |    10 |   0.00% |  99.83% | 
+| besides        |     9 |   0.00% |  99.83% | 
+| c              |     9 |   0.00% |  99.84% | 
+| e              |     9 |   0.00% |  99.84% | 
+| entirely       |     9 |   0.00% |  99.85% | 
+| indicates      |     9 |   0.00% |  99.85% | 
+| obviously      |     9 |   0.00% |  99.85% | 
+| please         |     9 |   0.00% |  99.86% | 
+| regarding      |     9 |   0.00% |  99.86% | 
+| wish           |     9 |   0.00% |  99.87% | 
+| anyway         |     8 |   0.00% |  99.87% | 
+| oh             |     8 |   0.00% |  99.87% | 
+| therefore      |     8 |   0.00% |  99.88% | 
+| yourself       |     8 |   0.00% |  99.88% | 
+| ignored        |     7 |   0.00% |  99.88% | 
+| ltd            |     7 |   0.00% |  99.89% | 
+| merely         |     7 |   0.00% |  99.89% | 
+| moreover       |     7 |   0.00% |  99.89% | 
+| nevertheless   |     7 |   0.00% |  99.90% | 
+| ourselves      |     7 |   0.00% |  99.90% | 
+| r              |     7 |   0.00% |  99.90% | 
+| sensible       |     7 |   0.00% |  99.91% | 
+| towards        |     7 |   0.00% |  99.91% | 
+| everywhere     |     6 |   0.00% |  99.91% | 
+| formerly       |     6 |   0.00% |  99.92% | 
+| inner          |     6 |   0.00% |  99.92% | 
+| j              |     6 |   0.00% |  99.92% | 
+| liked          |     6 |   0.00% |  99.92% | 
+| okay           |     6 |   0.00% |  99.93% | 
+| sometime       |     6 |   0.00% |  99.93% | 
+| somewhat       |     6 |   0.00% |  99.93% | 
+| unfortunately  |     6 |   0.00% |  99.93% | 
+| whenever       |     6 |   0.00% |  99.94% | 
+| wherever       |     6 |   0.00% |  99.94% | 
+| co             |     5 |   0.00% |  99.94% | 
+| concerning     |     5 |   0.00% |  99.94% | 
+| inc            |     5 |   0.00% |  99.95% | 
+| regardless     |     5 |   0.00% |  99.95% | 
+| thanks         |     5 |   0.00% |  99.95% | 
+| afterwards     |     4 |   0.00% |  99.95% | 
+| beforehand     |     4 |   0.00% |  99.96% | 
+| ought          |     4 |   0.00% |  99.96% | 
+| respectively   |     4 |   0.00% |  99.96% | 
+| s              |     4 |   0.00% |  99.96% | 
+| tends          |     4 |   0.00% |  99.96% | 
+| thereafter     |     4 |   0.00% |  99.96% | 
+| hopefully      |     3 |   0.00% |  99.97% | 
+| novel          |     3 |   0.00% |  99.97% | 
+| self           |     3 |   0.00% |  99.97% | 
+| thank          |     3 |   0.00% |  99.97% | 
+| tries          |     3 |   0.00% |  99.97% | 
+| whoever        |     3 |   0.00% |  99.97% | 
+| accordingly    |     2 |   0.00% |  99.97% | 
+| consequently   |     2 |   0.00% |  99.97% | 
+| corresponding  |     2 |   0.00% |  99.98% | 
+| forth          |     2 |   0.00% |  99.98% | 
+| furthermore    |     2 |   0.00% |  99.98% | 
+| g              |     2 |   0.00% |  99.98% | 
+| herein         |     2 |   0.00% |  99.98% | 
+| k              |     2 |   0.00% |  99.98% | 
+| lately         |     2 |   0.00% |  99.98% | 
+| latter         |     2 |   0.00% |  99.98% | 
+| n              |     2 |   0.00% |  99.98% | 
+| namely         |     2 |   0.00% |  99.98% | 
+| o              |     2 |   0.00% |  99.98% | 
+| p              |     2 |   0.00% |  99.99% | 
+| presumably     |     2 |   0.00% |  99.99% | 
+| seeming        |     2 |   0.00% |  99.99% | 
+| shall          |     2 |   0.00% |  99.99% | 
+| specify        |     2 |   0.00% |  99.99% | 
+| thereby        |     2 |   0.00% |  99.99% | 
+| truly          |     2 |   0.00% |  99.99% | 
+| anyhow         |     1 |   0.00% |  99.99% | 
+| appreciate     |     1 |   0.00% |  99.99% | 
+| et             |     1 |   0.00% |  99.99% | 
+| f              |     1 |   0.00% |  99.99% | 
+| hence          |     1 |   0.00% |  99.99% | 
+| hers           |     1 |   0.00% |  99.99% | 
+| hi             |     1 |   0.00% |  99.99% | 
+| inasmuch       |     1 |   0.00% |  99.99% | 
+| m              |     1 |   0.00% |  99.99% | 
+| ours           |     1 |   0.00% | 100.00% | 
+| que            |     1 |   0.00% | 100.00% | 
+| reasonably     |     1 |   0.00% | 100.00% | 
+| specifying     |     1 |   0.00% | 100.00% | 
+| t              |     1 |   0.00% | 100.00% | 
+| th             |     1 |   0.00% | 100.00% | 
+| unto           |     1 |   0.00% | 100.00% | 
+| v              |     1 |   0.00% | 100.00% | 
+| w              |     1 |   0.00% | 100.00% | 
+| whereas        |     1 |   0.00% | 100.00% | 
+| yours          |     1 |   0.00% | 100.00% | 
+| z              |     1 |   0.00% | 100.00% | 
+|                |     0 |   0.00% | 100.00% | 
+| a's            |     0 |   0.00% | 100.00% | 
+| ain't          |     0 |   0.00% | 100.00% | 
+| amongst        |     0 |   0.00% | 100.00% | 
+| anyways        |     0 |   0.00% | 100.00% | 
+| aren't         |     0 |   0.00% | 100.00% | 
+| awfully        |     0 |   0.00% | 100.00% | 
+| c'mon          |     0 |   0.00% | 100.00% | 
+| c's            |     0 |   0.00% | 100.00% | 
+| can't          |     0 |   0.00% | 100.00% | 
+| cannot         |     0 |   0.00% | 100.00% | 
+| cant           |     0 |   0.00% | 100.00% | 
+| com            |     0 |   0.00% | 100.00% | 
+| couldn't       |     0 |   0.00% | 100.00% | 
+| didn't         |     0 |   0.00% | 100.00% | 
+| doesn't        |     0 |   0.00% | 100.00% | 
+| don't          |     0 |   0.00% | 100.00% | 
+| downwards      |     0 |   0.00% | 100.00% | 
+| edu            |     0 |   0.00% | 100.00% | 
+| eg             |     0 |   0.00% | 100.00% | 
+| etc            |     0 |   0.00% | 100.00% | 
+| ex             |     0 |   0.00% | 100.00% | 
+| greetings      |     0 |   0.00% | 100.00% | 
+| h              |     0 |   0.00% | 100.00% | 
+| hadn't         |     0 |   0.00% | 100.00% | 
+| hasn't         |     0 |   0.00% | 100.00% | 
+| haven't        |     0 |   0.00% | 100.00% | 
+| he'd           |     0 |   0.00% | 100.00% | 
+| he'll          |     0 |   0.00% | 100.00% | 
+| he's           |     0 |   0.00% | 100.00% | 
+| hello          |     0 |   0.00% | 100.00% | 
+| here's         |     0 |   0.00% | 100.00% | 
+| hereafter      |     0 |   0.00% | 100.00% | 
+| hereby         |     0 |   0.00% | 100.00% | 
+| hereupon       |     0 |   0.00% | 100.00% | 
+| hither         |     0 |   0.00% | 100.00% | 
+| how's          |     0 |   0.00% | 100.00% | 
+| howbeit        |     0 |   0.00% | 100.00% | 
+| i'd            |     0 |   0.00% | 100.00% | 
+| i'll           |     0 |   0.00% | 100.00% | 
+| i'm            |     0 |   0.00% | 100.00% | 
+| i've           |     0 |   0.00% | 100.00% | 
+| ie             |     0 |   0.00% | 100.00% | 
+| insofar        |     0 |   0.00% | 100.00% | 
+| inward         |     0 |   0.00% | 100.00% | 
+| isn't          |     0 |   0.00% | 100.00% | 
+| it'd           |     0 |   0.00% | 100.00% | 
+| it'll          |     0 |   0.00% | 100.00% | 
+| it's           |     0 |   0.00% | 100.00% | 
+| l              |     0 |   0.00% | 100.00% | 
+| latterly       |     0 |   0.00% | 100.00% | 
+| lest           |     0 |   0.00% | 100.00% | 
+| let's          |     0 |   0.00% | 100.00% | 
+| mustn't        |     0 |   0.00% | 100.00% | 
+| nd             |     0 |   0.00% | 100.00% | 
+| non            |     0 |   0.00% | 100.00% | 
+| noone          |     0 |   0.00% | 100.00% | 
+| qv             |     0 |   0.00% | 100.00% | 
+| rd             |     0 |   0.00% | 100.00% | 
+| re             |     0 |   0.00% | 100.00% | 
+| regards        |     0 |   0.00% | 100.00% | 
+| secondly       |     0 |   0.00% | 100.00% | 
+| selves         |     0 |   0.00% | 100.00% | 
+| shan't         |     0 |   0.00% | 100.00% | 
+| she'd          |     0 |   0.00% | 100.00% | 
+| she'll         |     0 |   0.00% | 100.00% | 
+| she's          |     0 |   0.00% | 100.00% | 
+| shouldn't      |     0 |   0.00% | 100.00% | 
+| sub            |     0 |   0.00% | 100.00% | 
+| sup            |     0 |   0.00% | 100.00% | 
+| t's            |     0 |   0.00% | 100.00% | 
+| thanx          |     0 |   0.00% | 100.00% | 
+| that's         |     0 |   0.00% | 100.00% | 
+| thats          |     0 |   0.00% | 100.00% | 
+| theirs         |     0 |   0.00% | 100.00% | 
+| thence         |     0 |   0.00% | 100.00% | 
+| there's        |     0 |   0.00% | 100.00% | 
+| therein        |     0 |   0.00% | 100.00% | 
+| theres         |     0 |   0.00% | 100.00% | 
+| thereupon      |     0 |   0.00% | 100.00% | 
+| they'd         |     0 |   0.00% | 100.00% | 
+| they'll        |     0 |   0.00% | 100.00% | 
+| they're        |     0 |   0.00% | 100.00% | 
+| they've        |     0 |   0.00% | 100.00% | 
+| thru           |     0 |   0.00% | 100.00% | 
+| u              |     0 |   0.00% | 100.00% | 
+| uucp           |     0 |   0.00% | 100.00% | 
+| viz            |     0 |   0.00% | 100.00% | 
+| vs             |     0 |   0.00% | 100.00% | 
+| wasn't         |     0 |   0.00% | 100.00% | 
+| we'd           |     0 |   0.00% | 100.00% | 
+| we'll          |     0 |   0.00% | 100.00% | 
+| we're          |     0 |   0.00% | 100.00% | 
+| we've          |     0 |   0.00% | 100.00% | 
+| weren't        |     0 |   0.00% | 100.00% | 
+| what's         |     0 |   0.00% | 100.00% | 
+| when's         |     0 |   0.00% | 100.00% | 
+| whence         |     0 |   0.00% | 100.00% | 
+| where's        |     0 |   0.00% | 100.00% | 
+| whereafter     |     0 |   0.00% | 100.00% | 
+| whereby        |     0 |   0.00% | 100.00% | 
+| wherein        |     0 |   0.00% | 100.00% | 
+| whereupon      |     0 |   0.00% | 100.00% | 
+| whither        |     0 |   0.00% | 100.00% | 
+| who's          |     0 |   0.00% | 100.00% | 
+| why's          |     0 |   0.00% | 100.00% | 
+| won't          |     0 |   0.00% | 100.00% | 
+| wouldn't       |     0 |   0.00% | 100.00% | 
+| x              |     0 |   0.00% | 100.00% | 
+| y              |     0 |   0.00% | 100.00% | 
+| you'd          |     0 |   0.00% | 100.00% | 
+| you'll         |     0 |   0.00% | 100.00% | 
+| you're         |     0 |   0.00% | 100.00% | 
+| you've         |     0 |   0.00% | 100.00% | 
+| yourselves     |     0 |   0.00% | 100.00% | 
+
+
+total items:       220,286
+distinct items:        581
+ratio:   379.1497
+Done.
+bin/summarizer: calling rouge.sh
+bin/rouge.sh: (in e2jk.env): calling flatten yaml on E2JK_CONFIG="bin/config_patas_D3.yml"
+setup_logging(): env_key=LOG_CFG undefined, using path="logging.yaml"
+setup_logging(): loading path="{}"...
+Hello from "fyml.py" version 1.0 (by team "#e2jkplusplus").
+config=<sum_config.SummaryConfig object at 0x7f6206ac7908>
+config.cfg={'output': {'results_dir': 'results', 'summary_dir': 'outputs/D3', 'max_words': 100}, 'project': {'team_id': 9, 'release_title': 'D3'}, 'aquaint': {'aquaint_topic_index': '/dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml', 'aquaint2_directory': '/dropbox/17-18/573/AQUAINT-2', 'aquaint_doc_dir': None, 'aquaint1_directory': '/dropbox/17-18/573/AQUAINT'}}
+Done.
+bin/fyml.sh: fyml returning env.tmp
+bin/rouge.sh: (in e2jk.env): TMP_ENV=env.tmp
+/home2/jgreve/lin573/summarizer
+bin/		d3.err	    logging.yaml		run.dat
+conf/		d3.out	    old/			run_stop_Ntoke_Nqr.dat
+config_un.yml	d3.tmp	    outputs/			run_stop_Ytoke_Yqr.dat
+cosine_results	doc/	    qrmatrix.py@		shelve_db.bak
+D1.cmd		env.tmp     README			shelve_db.dat
+D2.cmd		err.log     README.md			shelve_db.dir
+d2.err		info.log    results/			src/
+d2.out		info.log.1  results_stop_Ntoke_Nqr.dat	temp2.dat
+d2.tmp		info.sav    results_stop_Ytoke_Yqr.dat	temp.dat
+D3.cmd		junk/	    run/
+found 46 docsets out of 368 total files in dir="/dropbox/17-18/573/Data/models/devtest")
+found 46 docsets out of 46 total files in dir="outputs/D3")
+Scanning for model files...
+find_filenames(): dir="/dropbox/17-18/573/Data/models/devtest"
+Scanning for system output files...
+find_filenames(): dir="outputs/D3"
+Opening "results/D3_rouge.xml" for writing...
+Success.
+setup_logging(): env_key=LOG_CFG undefined, using path="logging.yaml"
+setup_logging(): loading path="{}"...
+Hello from src/rouge_tableize.py
+2018-05-17 22:26:20,119:ERR:__main__: 0001: skipping line w/no fields = "---------------------------------------------"
+2018-05-17 22:26:20,121:ERR:__main__: 0005: skipping line w/no fields = "............................................."
+2018-05-17 22:26:20,173:ERR:__main__: 0052: skipping line w/no fields = "---------------------------------------------"
+2018-05-17 22:26:20,174:ERR:__main__: 0056: skipping line w/no fields = "............................................."
+2018-05-17 22:26:20,216:ERR:__main__: 0103: skipping line w/no fields = "---------------------------------------------"
+2018-05-17 22:26:20,217:ERR:__main__: 0107: skipping line w/no fields = "............................................."
+2018-05-17 22:26:20,249:ERR:__main__: 0154: skipping line w/no fields = "---------------------------------------------"
+2018-05-17 22:26:20,250:ERR:__main__: 0158: skipping line w/no fields = "............................................."
+src/rouge_tableize.py: Loaded 204 lines from file="results/D3_rouge_scores.out"
+src/rouge_tableize.py: Done.
+bin/rouge.sh: wrote results to results/D3_rouge_scores.out, see results/D3_rouge_scores.out.csv for an excel-friendlier format.
+bin/summarizer: Done.
