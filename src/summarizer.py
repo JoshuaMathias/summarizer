@@ -87,6 +87,7 @@ if __name__ == "__main__":
     logger.info('config.ONE_FILE                 ="%s"', config.ONE_FILE )
     logger.info('config.ARTICLE_FILE             ="%s"', config.ARTICLE_FILE )
 
+    source_description = "*unkown*" # set this to a suitable label for our statistics summary.
     if config.AQUAINT:
         index_reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
                                                            aquaint1 = config.AQUAINT1_DIRECTORY,
@@ -102,6 +103,7 @@ if __name__ == "__main__":
         #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
         topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
         logger.info( 'topic_index=%s', topic_index )
+        source_description = str(topic_index)
         for docset in topic_index.documentSets(docset_type='docseta'):
             msg = 'processing %s' % docset
             u.eprint( msg  ) # high level summary to stdout for our user.
@@ -115,10 +117,12 @@ if __name__ == "__main__":
         smry = Summarizer(config.MAX_WORDS)
 
         u.eprint('config.ARTICLE_FILE="{}"'.format( config.ARTICLE_FILE ))
+        source_description = str(config.ARTICLE_FILE)
         articles = content_provider.ContentReader().read_raw_files(config.ARTICLE_FILE)
 
         for article in articles:
             logger.info('article=%s', article )
             print(smry.summarize(article))
 
+    qrmatrix.write_statistics( source_description ) # write some output for what happened.
     print('Done.')
