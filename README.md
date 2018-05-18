@@ -112,6 +112,9 @@ convenience to gather operational data.
 
 ## Additional Information
 
+### Software Architecture
+There are three main components to the software, the Topic Loader, the Summarizer, and the Summary output. These correspond to the Model, Controller, and View in the system, with the Summarizer invoking the Topic Loader to create the Document and Article data, which is then presented as the Summaries.
+
 ### Call Sequence
 
 ```
