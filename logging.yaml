@@ -62,8 +62,8 @@ loggers:
         propagate: no
 
 root:
-    level: INFO
-    #level: DEBUG
+    #level: INFO
+    level: DEBUG
     # note: console logger set to write WARNING messages to stderr.
     handlers: [console, file_handler, error_file_handler]
     #handlers: [console, info_file_handler, error_file_handler]
