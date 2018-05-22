@@ -40,6 +40,9 @@ class TestSummarizer(unittest.TestCase):
 
         self.sampleXML = '<DOC>\n<BODY>\n<TEXT>\n<P>\nThis is a test\nThis is still a test.\n</P>\n</TEXT>\n</BODY>\n</DOC>'
 
+        self.samplePara = '  This starts with a tab\t and then cr\n   and then a thing happens like that.'
+        self.fixedPara =  'This starts with a tab and then cr and then a thing happens like that.'
+
     # Not a great test, but mostly a template for mocking file reading in Python
     # (Seems readline iteration is broken in unittest mock, hence the weird StringIO invocation)
     def test_SummaryReturnsMinSizeWhenStoryIsLarger(self):
@@ -99,10 +102,16 @@ class TestSummarizer(unittest.TestCase):
         textBlock = doctree.find('text')
         testArticleReader = article_reader.ArticleReader('','','')
         paraTag = textBlock.find('p')
-        print('read from XML ||%s||' % paraTag.contents[0])
         modifiedText = testArticleReader.__convert_bs_string__(paraTag.contents[0])
 
         self.assertEqual(modifiedText, '\nThis is a test\nThis is still a test.\n')
+
+    def test_ParagraphReaderFormatting(self):
+        testArticleReader = article_reader.ArticleReader('','','')
+        article = article_content.Article('test')
+        testArticleReader.__add_paragraph__(article, self.samplePara)
+
+        self.assertEqual(article.paragraphs[0], self.fixedPara)
 
 if __name__ == '__main__':
     unittest.main()
