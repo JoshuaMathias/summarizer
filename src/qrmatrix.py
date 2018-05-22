@@ -326,13 +326,27 @@ def qr_sum(docset, config):
         while added == False:
             for x in ranked:
                 #if len(x[1]) + word_count < 150:
-                if len(x[1]) + word_count < 100:
-                    logger.debug( 'len(x[1])=%d, word_cnt=%s, x[0]=%s, x[1]=%s', len(x[1]), word_count, x[0], x[1])
+                #if len(x[1]) + word_count < 100:
+                #---------------------------
+                # jgreve: Seems word count limit should be based on
+                # number of non-tokenized words in derived our output sentence.
+                # For example, 2nd best-ranked sentence from
+                # DocSet( id:D1001A-A "Columbine Massacre" 20):
+                #    x[0]="...suspects in Tuesday's massacre.",
+                #    x[1]=[..., 'suspects', 'tuesday', 'massacre']
+                # Tokenized x[0] will have more words.
+                # Seems like an x[0].split() would get us back on track.
+                x_word_count = len( x[0].split() ) # word count for x, metric will likely change.
+                if x_word_count + word_count < 100:
+                    logger.debug( ':KEEP: x_word_cnt=%d, len(x[1])=%d, word_cnt=%s, x[0]=%s, x[1]=%s', x_word_count, len(x[1]), word_count, x[0], x[1])
                     selected_content.append(x)
-                    word_count += len(x[1])
+                    #word_count += len(x[1])
+                    word_count += x_word_count
                     added = True
                     remove_words = x[1]
                     break
+                else:
+                    logger.debug( ':skip: x_word_cnt=%d, len(x[1])=%d, word_cnt=%s, x[0]=%s, x[1]=%s', x_word_count, len(x[1]), word_count, x[0], x[1])
             if added == False:
                 word_count = 101
                 break
