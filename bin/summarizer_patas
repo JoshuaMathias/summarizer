@@ -7,6 +7,7 @@
 
 # Caller needs to set the E2JK_CONFIG to the config file we should be using.
 
+#export E2JK_CONFIG=bin/config_patas_D3jg.yml
 export E2JK_CONFIG=bin/config_patas_D3.yml
 echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
 

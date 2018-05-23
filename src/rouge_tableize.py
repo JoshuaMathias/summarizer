@@ -110,7 +110,9 @@ with open( in_filename, 'r' ) as in_file:
         line = line.strip()
         fields = line.split()
         if len(fields) <= 1:
-            logger.error('%04d: skipping line w/no fields = "%s"', line_cnt, line)
+            msg = '%04d: skipping line w/no fields = "%s"' % (line_cnt, line)
+            u.eprint(msg)
+            logger.info(msg) # looks weird to have this show up as :ERR:
             continue # skip empty lines
         logger.debug('%04d: "%s"', line_cnt, line)
         if re.search( r' ROUGE-\d Average_', line ):
