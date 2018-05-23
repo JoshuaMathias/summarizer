@@ -14,6 +14,7 @@ import topic_index_reader
 import sum_config
 import nltk
 import os
+import sys
 
 
 # import fss
@@ -87,6 +88,8 @@ if __name__ == "__main__":
     logger.info('config.ONE_FILE                 ="%s"', config.ONE_FILE )
     logger.info('config.ARTICLE_FILE             ="%s"', config.ARTICLE_FILE )
 
+    summary_word_counts = { }
+
     source_description = "*unkown*" # set this to a suitable label for our statistics summary.
     if config.AQUAINT:
         index_reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
@@ -103,6 +106,7 @@ if __name__ == "__main__":
         #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
         topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
         logger.info( 'topic_index=%s', topic_index )
+        logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(topic_index)
         for docset in topic_index.documentSets(docset_type='docseta'):
             msg = 'processing %s' % docset
@@ -111,7 +115,10 @@ if __name__ == "__main__":
             print('%s : %s' % (docset.id, docset.topic_title)) # requried in stdout
             smry.summary = ''
             smry.summary_size = 0
-            print(qrmatrix.qr_sum(docset, config))
+            summary_text = qrmatrix.qr_sum(docset, config)
+            summary_word_count = len( summary_text.split() )
+            logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
+            summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)
 
     elif config.ONE_FILE:
         smry = Summarizer(config.MAX_WORDS)
@@ -125,4 +132,5 @@ if __name__ == "__main__":
             print(smry.summarize(article))
 
     qrmatrix.write_statistics( source_description ) # write some output for what happened.
+    u.write_values( sys.stderr, "summary_word_counts", summary_word_counts)
     print('Done.')

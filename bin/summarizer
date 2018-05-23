@@ -6,9 +6,24 @@
 # (Which is is pretty much what we've always been doing)
 # note: the following assumes our config path is in $2
 
+# jgreve: added code to abort if our called programs fail,
+# e.g. fail fast if src/summarizer.py blows up instead of
+# continuing with calculating (possibly stale) rouge scores.
+#   Mon May 21 15:45:19 PDT 2018
 
-# environment setup thigns are (hopefully) all consolidated in bin/ej2k.env.
-source bin/e2jk.env
+
+# environment setup things are (hopefully) all consolidated in bin/ej2k.env.
+echo ""
+echo "--------------------------"
+step="bin/e2jk.env"
+echo "$0: calling '$step $@'" >&2
+source "$step"
+retcode=$?
+if (( 0 != $retcode )); then
+   echo "$0: ERROR: \"$step\" returned $retcode, aborting."
+   exit 1
+fi
+echo "$0: after \"$step\" - ran ok."
 
 # check our output directory
 echo "$0: checking E2JK_OUTPUT_RESULTS_DIR=\"$E2JK_OUTPUT_RESULTS_DIR\"" >&2
@@ -24,9 +39,36 @@ fi
 # remove log files (if any)
 rm -f err.log info.log
 
+# count summary sizes.
+export E2JK_OUTPUT_SUMMARY_DIR="outputs/D3jg"
 
-echo "$0: calling summarizer.py $@" >&2
-src/summarizer.py $@
-echo "$0: calling rouge.sh" >&2
-bin/rouge.sh
+echo "--- begin E2JK env-vars ---"
+set | grep "^E2JK"
+echo "--- end E2JK env-ars ---"
+
+echo ""
+echo "--------------------------"
+step=src/summarizer.py
+echo "$0: calling '$step $@'" >&2
+"$step" $@
+retcode=$?
+if (( 0 != $retcode )); then
+   echo "$0: ERROR: \"$step\" returned $retcode, aborting."
+   exit 1
+fi
+echo "$0: after \"$step\" - ran ok."
+
+
+echo ""
+echo "--------------------------"
+step=bin/rouge.sh
+echo "$0: calling '$step $@'" >&2
+"$step" $@
+retcode=$?
+if (( 0 != $retcode )); then
+   echo "$0: ERROR: \"$step\" returned $retcode, aborting."
+   exit 1
+fi
+echo "$0: after \"$step\" - ran ok."
+
 echo "$0: Done." >&2

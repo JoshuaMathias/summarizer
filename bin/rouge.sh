@@ -21,7 +21,9 @@ ROUGE_OUT=${E2JK_OUTPUT_RESULTS_DIR}/${E2JK_PROJECT_RELEASE_TITLE}_rouge_scores.
 
 # Python part, creates the rouge config file for perl.
 MYDATA_DIR="outputs/D2"
-export E2JK_OUTPUT_SUMMARY_DIR="outputs/D3"
+# OLD: export E2JK_OUTPUT_SUMMARY_DIR="outputs/D3"
+# Use this one which is dynamically derived by bin/e2jk.env:
+#    E2JK_OUTPUT_SUMMARY_DIR=outputs/D3jg
 
 MODELDATA_DIR="/dropbox/17-18/573/Data/models/devtest"
 # for use with:
