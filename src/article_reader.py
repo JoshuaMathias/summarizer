@@ -1,3 +1,4 @@
+import re
 import local_util as u
 logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 
@@ -54,6 +55,7 @@ class ArticleReader():
         return text, ''
 
     def __add_paragraph__(self, article, paraText):
+        paraText = ' '.join(paraText.split())
         if len(article.paragraphs) == 0:
             paraText, byline = self.__extract_byline__(paraText)
             if not article.dateline and len(byline) > 0:
