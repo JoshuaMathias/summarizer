@@ -163,6 +163,9 @@ def qr_sum(docset, config):
 
         sentence_position = 0
         for paragraph in article.paragraphs:
+            paragraph = re.sub("(\n|\t)", " ", paragraph)  
+            paragraph = re.sub("  +", " ", paragraph)  
+            paragraph = re.sub("^ ", "", paragraph)
             sentences = sent_tokenize(paragraph)
 
             for sentence in sentences:
