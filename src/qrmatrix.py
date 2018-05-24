@@ -294,7 +294,7 @@ def qr_sum(docset, config):
     selected_content = [] # list of sentences selected for
 
     # while 100 words not used up and shortest sentence isn't too long
-    while word_count < 100 and word_count + short < 100:
+    while word_count <= 100 and word_count + short <= 100:
         for sentence in all_sentences:
 
             # TODO: implement computation for t and g values from CLASSY [2001]
