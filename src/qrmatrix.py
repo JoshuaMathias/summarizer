@@ -135,6 +135,7 @@ def qr_sum(docset, config):
     stop_words = get_stop_words( ) # jgreve: added for post-hoc analysis
 
     article_count = 0
+    num_articles = len(docset.articles)
     logger.info('%s: docset=%s', fname, docset )
     for idx, article in enumerate(docset.articles):
         article_count += 1
@@ -284,9 +285,9 @@ def qr_sum(docset, config):
 
         for word in sentence[1]:
             if word in words_dict:
-                # tfidf = get_tfidf(words_tally[word], article_count, len(words_docs[word]))
+                tfidf = get_tfidf(words_tally[word], num_articles, len(words_docs[word]))
                 # feat_vec[words_dict[word]] = tfidf
-                feat_vec[words_dict[word]] = words_tally[word]
+                # feat_vec[words_dict[word]] = words_tally[word]
 
         # print(sum(feat_vec))
 
