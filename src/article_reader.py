@@ -55,7 +55,7 @@ class ArticleReader():
         return text, ''
 
     def __add_paragraph__(self, article, paraText):
-        # paraText = ' '.join(paraText.split())
+        paraText = ' '.join(paraText.split())
         if len(article.paragraphs) == 0:
             paraText, byline = self.__extract_byline__(paraText)
             if not article.dateline and len(byline) > 0:
