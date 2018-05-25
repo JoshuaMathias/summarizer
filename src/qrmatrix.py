@@ -287,7 +287,7 @@ def qr_sum(docset, config):
         article_length.append(article_word_count)
 
     if len(words_docs) > 0:
-        lowest_word_docs = next(iter(words_docs.values()))
+        lowest_word_docs = words_docs[words_docs.keys()[0]] # Initialize with any value from words_docs
         for word_docs in words_docs:
             if len(word_docs) < lowest_word_docs:
                 lowest_word_docs = len(word_docs)
