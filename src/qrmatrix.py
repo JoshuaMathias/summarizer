@@ -293,6 +293,7 @@ def qr_sum(docset, config):
                 # word_val = words_tally[word]
                 # tfidf = get_tfidf(words_tally[word], num_articles, len(words_docs[word]))
                 word_val = get_doc_freq(num_articles, len(words_docs[word]))
+                word_val *= words_tally[word]
                 feat_vec[words_dict[word]] = word_val
 
         # print(sum(feat_vec))
