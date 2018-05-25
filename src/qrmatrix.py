@@ -287,7 +287,7 @@ def qr_sum(docset, config):
         article_length.append(article_word_count)
 
 # CREATE FEATURE VECTORS
-    lowest_df = math.log(min(words_docs) / (1 + article_count)) # Used to normalize (and make positive) the value of tfdf for each word
+    lowest_df = math.log(min(words_docs.values()) / (1 + article_count)) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
         # print("\n\n", sentence[0], "\n", sentence[3], sentence[4])
 
