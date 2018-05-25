@@ -24,8 +24,8 @@ def get_tfidf(tally, ac, dc):
 
 # tf * document frequency
 # Muliply by -1 so that it's a positive number (dc is always less than ac+1)
-def get_tfdf(tally, ac, dc):
-    return -1*tally * (math.log(dc / (1 + ac)))
+def get_tfdf(tally, ac, dc, lowest_df):
+    return tally * (1+(math.log(dc / (1 + ac)) - lowest_df)) # Subtract lowest df to normalize and get a positive number (higher is better). Add 1 so we never get 0.
 
 # Document frequency from FastSum paper
 def get_doc_freq(ac, dc):
@@ -287,6 +287,7 @@ def qr_sum(docset, config):
         article_length.append(article_word_count)
 
 # CREATE FEATURE VECTORS
+    lowest_df = min(words_docs) / (1 + article_count) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
         # print("\n\n", sentence[0], "\n", sentence[3], sentence[4])
 
@@ -296,7 +297,7 @@ def qr_sum(docset, config):
             if word in words_dict:
                 # word_val = words_tally[word]
                 # tfidf = get_tfidf(words_tally[word], article_count, len(words_docs[word]))
-                word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]))
+                word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]), lowest_df)
                 # word_val = get_doc_freq(article_count, len(words_docs[word]))
                 # word_val *= words_tally[word]
                 feat_vec[words_dict[word]] = word_val
