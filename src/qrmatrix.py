@@ -22,8 +22,10 @@ from scipy import spatial
 def get_tfidf(tally, ac, dc):
     return tally * (math.log(ac / (1 + dc)))
 
+# tf * document frequency
+# Muliply by -1 so that it's a positive number (dc is always less than ac+1)
 def get_tfdf(tally, ac, dc):
-    return tally * (math.log(dc / (1 + ac)))
+    return -1*tally * (math.log(dc / (1 + ac)))
 
 # Document frequency from FastSum paper
 def get_doc_freq(ac, dc):
