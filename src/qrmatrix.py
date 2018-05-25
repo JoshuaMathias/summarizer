@@ -16,8 +16,15 @@ from nltk.tokenize import sent_tokenize, word_tokenize # for tokenizing sentence
 
 from scipy import spatial
 
+# tally: # times word appears in document
+# ac: number of articles
+# dc: number of documents the word appears in
 def get_tfidf(tally, ac, dc):
     return tally * (math.log(ac / (1 + dc)))
+
+# Document frequency from FastSum paper
+def get_doc_freq(ac, dc):
+    return dc / ac
 
 
 
@@ -283,9 +290,10 @@ def qr_sum(docset, config):
 
         for word in sentence[1]:
             if word in words_dict:
-                tfidf = get_tfidf(words_tally[word], num_articles, len(words_docs[word]))
-                # feat_vec[words_dict[word]] = tfidf
-                # feat_vec[words_dict[word]] = words_tally[word]
+                # word_val = words_tally[word]
+                # tfidf = get_tfidf(words_tally[word], num_articles, len(words_docs[word]))
+                word_val = get_doc_freq(num_articles, len(words_docs[word]))
+                feat_vec[words_dict[word]] = word_val
 
         # print(sum(feat_vec))
 
