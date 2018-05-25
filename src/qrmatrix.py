@@ -22,6 +22,9 @@ from scipy import spatial
 def get_tfidf(tally, ac, dc):
     return tally * (math.log(ac / (1 + dc)))
 
+def get_tfdf(tally, ac, dc):
+    return tally * (math.log(dc / (1 + ac)))
+
 # Document frequency from FastSum paper
 def get_doc_freq(ac, dc):
     return dc / ac
@@ -291,8 +294,9 @@ def qr_sum(docset, config):
             if word in words_dict:
                 # word_val = words_tally[word]
                 # tfidf = get_tfidf(words_tally[word], article_count, len(words_docs[word]))
-                word_val = get_doc_freq(article_count, len(words_docs[word]))
-                word_val *= words_tally[word]
+                word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]))
+                # word_val = get_doc_freq(article_count, len(words_docs[word]))
+                # word_val *= words_tally[word]
                 feat_vec[words_dict[word]] = word_val
 
         # print(sum(feat_vec))
