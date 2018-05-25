@@ -165,8 +165,6 @@ def qr_sum(docset, config):
         sentence_position = 0
         for paragraph in article.paragraphs:
             sentences = sent_tokenize(paragraph)
-            if sentence_position >= 5:
-                break
 
             for sentence in sentences:
                 raw_words = word_tokenize(sentence)
