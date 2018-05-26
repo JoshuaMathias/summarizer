@@ -81,7 +81,7 @@ def qr_sum(docset, config):
     # TODO: Define method of refusing fragment sentences
     short = 100 # temporary solution to fragment sentences making it into summary
 
-    stop_words = preprocess.get_stop_words( ) # jgreve: added for post-hoc analysis
+    preprocessor = preprocess.preprocess()
 
     article_count = 0
     logger.info('%s: docset=%s', fname, docset )
@@ -115,7 +115,7 @@ def qr_sum(docset, config):
             sentences = preprocess.preprocess_sents(paragraph)
 
             for sentence in sentences:
-                words, norm_words = preprocess.preprocess_words(sentence)
+                words, norm_words = preprocess.preprocess_words(sentence, stop_words)
 
                 article_word_count += len(words)
 
