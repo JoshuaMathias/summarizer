@@ -51,26 +51,6 @@ class preprocess:
 	    u.eprint(msg)
 	    return self.STOP_WORDS # important: this *must* still point to the same thing stop_words does.
 
-	def write_statistics(self, label ):
-	    # place holder for other stats we might want to track.
-	    # the idea is summary.py will call this after the dust settles
-	    # so we can get some numbers on what happened.
-	    write_stop_word_stats(label)
-
-	def write_stop_word_stats(self, label):
-	    logger.error('write_stop_word_stats(): writing stop_words frequency to STDOUT (search on "stop_wrods_FREQ")')
-	    if not self.STOP_QRFLAG:
-	        logger.error('   note: STOP_QRFLAG=False, so no stop-word activity to report')
-	        return # to do: actually count the stopword dict and bail if total(hits) = 0.
-	    stop_words = get_stop_words( )
-	    sys.stdout.write( '#stop_words=%d, STOP_TOKENIZE=%s STOP_QRFLAG=%s' % ( len(self.stop_words), str(self.STOP_TOKENIZE), str(self.STOP_QRFLAG)  ) )
-	    # note: requires the usage of our code increment
-	    # words in the STOP_WORDS dict whenever they actually
-	    # stop something.
-	    sys.stdout.write('\n--- stop_words_FREQ for {} ---'.format(label))
-	    u.write_values( sys.stdout, "stop_words", self.stop_words )
-	    u.write_values( sys.stdout, "stop_words_rev", self.stop_words, descending_freq=True)
-
 	# Return list of tokenized words from sentence
 	def preprocess_words(self, sentence):
 	    raw_words = word_tokenize(sentence)
