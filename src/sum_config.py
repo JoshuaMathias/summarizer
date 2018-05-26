@@ -8,16 +8,25 @@ class SummaryConfig():
 
     DEFAULT_SUMMARY_DIR = 'outputs/D2'
     DEFAULT_RESULTS_DIR = 'outputs/results'
+    DEFAULT_MAX_WORDS = 100
+    DEFAULT_WORD_COUNTS_FILE = 'word_counts.txt'
 
     DEFAULT_TEAM_ID = 9
     DEFAULT_RELEASE_TITLE = 'Naruto ++'
-    DEFAULT_MAX_WORDS = 100
 
     def __init__(self, config_file):
         with open(config_file, 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
 
         self.cfg = cfg # lets keep this around, will be useful. jgreve
+        self.TEAM_ID = self.__read_config_val_2__(cfg,
+                                                  'project',
+                                                  'team_id',
+                                                  SummaryConfig.DEFAULT_TEAM_ID)
+        self.RELEASE_TITLE = self.__read_config_val_2__(cfg,
+                                                        'project',
+                                                        'release_title',
+                                                        SummaryConfig.DEFAULT_RELEASE_TITLE)
         self.AQUAINT1_DIRECTORY = self.__read_config_val_2__(cfg,
                                                              'aquaint',
                                                              'aquaint1_directory',
@@ -42,14 +51,10 @@ class SummaryConfig():
                                                                    'output',
                                                                    'results_dir',
                                                                    SummaryConfig.DEFAULT_RESULTS_DIR)
-        self.TEAM_ID = self.__read_config_val_2__(cfg,
-                                                  'project',
-                                                  'team_id',
-                                                  SummaryConfig.DEFAULT_TEAM_ID)
-        self.RELEASE_TITLE = self.__read_config_val_2__(cfg,
-                                                        'project',
-                                                        'release_title',
-                                                        SummaryConfig.DEFAULT_RELEASE_TITLE)
+        self.WORD_COUNTS_FILE = self.__read_config_val_2__(cfg,
+                                                       'output',
+                                                       'word_counts_file',
+                                                       SummaryConfig.DEFAULT_WORD_COUNTS_FILE)
         self.MAX_WORDS = self.__read_config_val_2__(cfg,
                                                     'project',
                                                     'max_words',
