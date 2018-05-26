@@ -110,7 +110,7 @@ if __name__ == "__main__":
         logger.info( 'topic_index=%s', topic_index )
 
         logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
-        train_counts.train_counts(topic_index.documentSets(), config.WORD_COUNTS_FILE)
+        # train_counts.train_counts(topic_index.documentSets(), config.WORD_COUNTS_FILE)
 
         logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(topic_index)
