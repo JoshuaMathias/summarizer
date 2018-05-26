@@ -112,10 +112,10 @@ def qr_sum(docset, config):
 
         sentence_position = 0
         for paragraph in article.paragraphs:
-            sentences = preprocess.preprocess_sents(paragraph)
+            sentences = preprocessor.preprocess_sents(paragraph)
 
             for sentence in sentences:
-                words, norm_words = preprocess.preprocess_words(sentence, stop_words)
+                words, norm_words = preprocessor.preprocess_words(sentence, stop_words)
 
                 article_word_count += len(words)
 
