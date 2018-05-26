@@ -37,7 +37,7 @@ class preprocess:
 	    for line in stop_lines:
 	        stop_line_cnt += 1
 	        line = line.lower().strip()
-	        if STOP_TOKENIZE:
+	        if self.STOP_TOKENIZE:
 	            words = word_tokenize( line )
 	            logger.debug('stop_words[{:03d}]: line="{}" --> words={}'.format(stop_line_cnt, line, words ))
 	            for word in words:
@@ -49,7 +49,7 @@ class preprocess:
 	    msg = 'get_stop_words(): loaded #stop_words=%d, #lines=%d, STOP_TOKENIZE=%s STOP_QRFLAG=%s' % ( len(self.stop_words), stop_line_cnt, str(self.STOP_TOKENIZE), str(self.STOP_QRFLAG)  )
 	    logger.info( msg )
 	    u.eprint(msg)
-	    return STOP_WORDS # important: this *must* still point to the same thing stop_words does.
+	    return self.STOP_WORDS # important: this *must* still point to the same thing stop_words does.
 
 	def write_statistics(self, label ):
 	    # place holder for other stats we might want to track.
@@ -63,13 +63,13 @@ class preprocess:
 	        logger.error('   note: STOP_QRFLAG=False, so no stop-word activity to report')
 	        return # to do: actually count the stopword dict and bail if total(hits) = 0.
 	    stop_words = get_stop_words( )
-	    sys.stdout.write( '#stop_words=%d, STOP_TOKENIZE=%s STOP_QRFLAG=%s' % ( len(stop_words), str(self.STOP_TOKENIZE), str(self.STOP_QRFLAG)  ) )
+	    sys.stdout.write( '#stop_words=%d, STOP_TOKENIZE=%s STOP_QRFLAG=%s' % ( len(self.stop_words), str(self.STOP_TOKENIZE), str(self.STOP_QRFLAG)  ) )
 	    # note: requires the usage of our code increment
 	    # words in the STOP_WORDS dict whenever they actually
 	    # stop something.
 	    sys.stdout.write('\n--- stop_words_FREQ for {} ---'.format(label))
-	    u.write_values( sys.stdout, "stop_words", stop_words )
-	    u.write_values( sys.stdout, "stop_words_rev", stop_words, descending_freq=True)
+	    u.write_values( sys.stdout, "stop_words", self.stop_words )
+	    u.write_values( sys.stdout, "stop_words_rev", self.stop_words, descending_freq=True)
 
 	# Return list of tokenized words from sentence
 	def preprocess_words(self, sentence):
