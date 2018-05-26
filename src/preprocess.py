@@ -70,7 +70,7 @@ def write_stop_word_stats(label):
     u.write_values( sys.stdout, "stop_words_rev", stop_words, descending_freq=True)
 
 # Return list of tokenized words from sentence
-def preprocess_words(sent):
+def preprocess_words(sentence):
     raw_words = word_tokenize(sentence)
     norm_words = []
     words = []
