@@ -6,6 +6,7 @@ logger = u.get_logger( __name__ ) #  https://docs.python.org/3/howto/logging.htm
 STOP_WORDS        = None
 STOP_TOKENIZE     = True # +D3.err, original loop above: no change, still R1.R=0.22264.
 STOP_QRFLAG       = True # Whether or not to apply stopwords to qrmatrix population.
+STOP_DEBUG_CUTOFF = 50 # Only dump the first 50 stop_word hits.
 
 class preprocess:
 	def __init__(self):
