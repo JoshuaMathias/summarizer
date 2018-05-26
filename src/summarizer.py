@@ -19,6 +19,7 @@ import sys
 
 # import fss
 import qrmatrix
+import train_counts
 
 class Summarizer():
     def __init__(self, nwords):
@@ -87,6 +88,7 @@ if __name__ == "__main__":
     logger.info('config.AQUAINT2_DIRECTORY       ="%s"', config.AQUAINT2_DIRECTORY )
     logger.info('config.ONE_FILE                 ="%s"', config.ONE_FILE )
     logger.info('config.ARTICLE_FILE             ="%s"', config.ARTICLE_FILE )
+    logger.info('config.WORD_COUNTS_FILE             ="%s"', config.WORD_COUNTS_FILE )
 
     summary_word_counts = { }
 
@@ -106,6 +108,10 @@ if __name__ == "__main__":
         #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
         topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
         logger.info( 'topic_index=%s', topic_index )
+
+        logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
+        train_counts.train_counts(topic_index.documentSets(), config.WORD_COUNTS_FILE)
+
         logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(topic_index)
         for docset in topic_index.documentSets(docset_type='docseta'):
@@ -131,6 +137,7 @@ if __name__ == "__main__":
             logger.info('article=%s', article )
             print(smry.summarize(article))
 
-    qrmatrix.write_statistics( source_description ) # write some output for what happened.
+    
+    # qrmatrix.write_statistics( source_description ) # write some output for what happened.
     u.write_values( sys.stderr, "summary_word_counts", summary_word_counts)
     print('Done.')
