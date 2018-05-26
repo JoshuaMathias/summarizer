@@ -8,7 +8,7 @@ STOP_TOKENIZE     = True # +D3.err, original loop above: no change, still R1.R=0
 STOP_QRFLAG       = True # Whether or not to apply stopwords to qrmatrix population.
 
 class preprocess:
-	def __init__():
+	def __init__(self):
 		self.stop_words = get_stop_words()
 		self.stop_file = "src/stop_words"
 
@@ -52,13 +52,13 @@ class preprocess:
 	    u.eprint(msg)
 	    return STOP_WORDS # important: this *must* still point to the same thing stop_words does.
 
-	def write_statistics( label ):
+	def write_statistics(self, label ):
 	    # place holder for other stats we might want to track.
 	    # the idea is summary.py will call this after the dust settles
 	    # so we can get some numbers on what happened.
 	    write_stop_word_stats(label)
 
-	def write_stop_word_stats(label):
+	def write_stop_word_stats(self, label):
 	    global STOP_TOKENIZE        # jgreve: these flags are additions to the original D3 logic, note that
 	    global STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
 	    logger.error('write_stop_word_stats(): writing stop_words frequency to STDOUT (search on "stop_wrods_FREQ")')
@@ -75,7 +75,7 @@ class preprocess:
 	    u.write_values( sys.stdout, "stop_words_rev", stop_words, descending_freq=True)
 
 	# Return list of tokenized words from sentence
-	def preprocess_words(sentence):
+	def preprocess_words(self, sentence):
 	    raw_words = word_tokenize(sentence)
 	    norm_words = []
 	    words = []
@@ -135,12 +135,12 @@ class preprocess:
 
 
 	# Return sentences from paragraph
-	def preprocess_sents(paragraph):
+	def preprocess_sents(self, paragraph):
 	    sentences = sent_tokenize(paragraph)
 	    return sentences
 
 	# Return a list of all the words (with frequency counts) in a docset
-	def words_from_docset(docset):
+	def words_from_docset(self, docset):
 		docset_words = {}
 		for idx, article in enumerate(docset.articles):
 				paragraphs = article.paragraphs
