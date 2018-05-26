@@ -1,4 +1,5 @@
 from nltk.tokenize import sent_tokenize, word_tokenize # for tokenizing sentences and words
+import re # for removing multiple \s characters and source formatting
 import local_util as u
 logger = u.get_logger( __name__ ) #  https://docs.python.org/3/howto/logging.html
 
