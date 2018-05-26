@@ -1,3 +1,4 @@
+import preprocess
 
 # Go through training set and write to file:
 # 	One line for each word

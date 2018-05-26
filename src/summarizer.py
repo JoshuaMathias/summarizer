@@ -10,7 +10,7 @@ logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 
 
 import argparse
-import topic_index_reader
+import test_topic_index_reader
 import sum_config
 import nltk
 import os
@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     source_description = "*unkown*" # set this to a suitable label for our statistics summary.
     if config.AQUAINT:
-        index_reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
+        index_reader = test_topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
                                                            aquaint1 = config.AQUAINT1_DIRECTORY,
                                                            aquaint2 = config.AQUAINT2_DIRECTORY,
                                                            dbname = 'shelve_db')
@@ -106,15 +106,15 @@ if __name__ == "__main__":
         smry = Summarizer(config.MAX_WORDS)
 
         #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
-        topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
-        logger.info( 'topic_index=%s', topic_index )
+        test_topic_index = index_reader.read_test_topic_index_file(docset_type = 'docseta')
+        logger.info( 'test_topic_index=%s', test_topic_index )
 
         logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
-        train_counts.train_counts(topic_index.documentSets(), config.WORD_COUNTS_FILE)
+        train_counts.train_counts(test_topic_index.documentSets(), config.WORD_COUNTS_FILE)
 
-        logger.debug( '\n\n--- for docset in topic_index.... ---' )
-        source_description = str(topic_index)
-        for docset in topic_index.documentSets(docset_type='docseta'):
+        logger.debug( '\n\n--- for docset in test_topic_index.... ---' )
+        source_description = str(test_topic_index)
+        for docset in test_topic_index.documentSets(docset_type='docseta'):
             msg = 'processing %s' % docset
             u.eprint( msg  ) # high level summary to stdout for our user.
             logger.info( msg )
@@ -137,7 +137,7 @@ if __name__ == "__main__":
             logger.info('article=%s', article )
             print(smry.summarize(article))
 
-    
+
     # qrmatrix.write_statistics( source_description ) # write some output for what happened.
     u.write_values( sys.stderr, "summary_word_counts", summary_word_counts)
     print('Done.')
