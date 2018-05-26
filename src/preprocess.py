@@ -3,25 +3,23 @@ import re # for removing multiple \s characters and source formatting
 import local_util as u
 logger = u.get_logger( __name__ ) #  https://docs.python.org/3/howto/logging.html
 
-STOP_WORDS        = None
-STOP_TOKENIZE     = True # +D3.err, original loop above: no change, still R1.R=0.22264.
-STOP_QRFLAG       = True # Whether or not to apply stopwords to qrmatrix population.
-STOP_DEBUG_CUTOFF = 50 # Only dump the first 50 stop_word hits.
 
 class preprocess:
 	def __init__(self):
+		self.STOP_WORDS        = None
+		self.STOP_TOKENIZE     = True # +D3.err, original loop above: no change, still R1.R=0.22264.
+		self.STOP_QRFLAG       = True # Whether or not to apply stopwords to qrmatrix population.
+		self.STOP_DEBUG_CUTOFF = 50 # Only dump the first 50 stop_word hits.
 		self.stop_words = self.get_stop_words()
 		self.stop_file = "src/stop_words"
 
 	def get_stop_words(self):
-	    global STOP_WORDS # be explicit about this being a global (module level variable).
-	    global STOP_TOKENIZE
 
-	    if STOP_WORDS:
-	        return STOP_WORDS # recycle what we already have.
+	    if self.STOP_WORDS:
+	        return self.STOP_WORDS # recycle what we already have.
 	    # If we reach this point, STOP_WORDS is None so we need to load it.
-	    STOP_WORDS = dict( ) # start a new dictionary,
-	    self.stop_words = STOP_WORDS # jgreve: aliasing original var name (lower case stop_wrods)
+	    self.STOP_WORDS = dict( ) # start a new dictionary,
+	    self.stop_words = self.STOP_WORDS # jgreve: aliasing original var name (lower case stop_wrods)
 	    # so I don't edit the actual logic.
 	   
 	    self.stop_file = "src/stop_words"
@@ -48,7 +46,7 @@ class preprocess:
 	            # original D3 code.
 	            if line not in self.stop_words:
 	                self.stop_words[line] = 0
-	    msg = 'get_stop_words(): loaded #stop_words=%d, #lines=%d, STOP_TOKENIZE=%s STOP_QRFLAG=%s' % ( len(self.stop_words), stop_line_cnt, str(STOP_TOKENIZE), str(STOP_QRFLAG)  )
+	    msg = 'get_stop_words(): loaded #stop_words=%d, #lines=%d, STOP_TOKENIZE=%s STOP_QRFLAG=%s' % ( len(self.stop_words), stop_line_cnt, str(self.STOP_TOKENIZE), str(self.STOP_QRFLAG)  )
 	    logger.info( msg )
 	    u.eprint(msg)
 	    return STOP_WORDS # important: this *must* still point to the same thing stop_words does.
@@ -60,14 +58,12 @@ class preprocess:
 	    write_stop_word_stats(label)
 
 	def write_stop_word_stats(self, label):
-	    global STOP_TOKENIZE        # jgreve: these flags are additions to the original D3 logic, note that
-	    global STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
 	    logger.error('write_stop_word_stats(): writing stop_words frequency to STDOUT (search on "stop_wrods_FREQ")')
-	    if not STOP_QRFLAG:
+	    if not self.STOP_QRFLAG:
 	        logger.error('   note: STOP_QRFLAG=False, so no stop-word activity to report')
 	        return # to do: actually count the stopword dict and bail if total(hits) = 0.
 	    stop_words = get_stop_words( )
-	    sys.stdout.write( '#stop_words=%d, STOP_TOKENIZE=%s STOP_QRFLAG=%s' % ( len(stop_words), str(STOP_TOKENIZE), str(STOP_QRFLAG)  ) )
+	    sys.stdout.write( '#stop_words=%d, STOP_TOKENIZE=%s STOP_QRFLAG=%s' % ( len(stop_words), str(self.STOP_TOKENIZE), str(self.STOP_QRFLAG)  ) )
 	    # note: requires the usage of our code increment
 	    # words in the STOP_WORDS dict whenever they actually
 	    # stop something.
@@ -83,7 +79,7 @@ class preprocess:
 	#-----------------------------------------------------------------------------
 
 	    # before D3.err (d3_orig) yields R1.R = 0.22264
-	    if not STOP_QRFLAG:
+	    if not self.STOP_QRFLAG:
 	        # Original D3 code, here for human traceability
 	        for w in raw_words:
 	            if re.search("[a-zA-Z]", w) != None:
@@ -99,8 +95,8 @@ class preprocess:
 	                    norm_words.append(w) # keep it
 	                else:
 	                    self.stop_words[w] += 1 # track how often we "hit" this stop word.
-	                    if STOP_DEBUG_CUTOFF >= 1:
-	                        STOP_DEBUG_CUTOFF -= 1
+	                    if self.STOP_DEBUG_CUTOFF >= 1:
+	                        self.STOP_DEBUG_CUTOFF -= 1
 	                        logger.debug('stop_words: hit w="%s", so not adding to norm_words', w )
 
 	            # The following yields R1.R = 0.24428
