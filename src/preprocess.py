@@ -9,7 +9,7 @@ STOP_QRFLAG       = True # Whether or not to apply stopwords to qrmatrix populat
 
 class preprocess:
 	def __init__(self):
-		self.stop_words = get_stop_words()
+		self.stop_words = self.get_stop_words()
 		self.stop_file = "src/stop_words"
 
 	def get_stop_words(self):
