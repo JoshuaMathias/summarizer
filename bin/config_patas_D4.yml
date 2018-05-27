@@ -8,6 +8,9 @@ aquaint:
     # aquaint_doc_dir: 
     aquaint_test_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
     aquaint_train_topic_index: /dropbox/17-18/573/Data/Documents/training/2009/UpdateSumm09_test_topics.xml
+    shelve_db_dev: 'shelve_db_dev'
+    shelve_db_train: 'shelve_db_train'
+    shelve_db_test: 'shelve_db_test'
 
 output:
     summary_dir: outputs/D4

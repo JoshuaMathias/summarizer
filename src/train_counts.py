@@ -18,11 +18,11 @@ def train_counts(docsets, out_file):
 		for word, count in docset_words:
 			if word in docset_counts:
 				docset_counts[word] += 1
-				word_counts += count
+				word_counts[word] += count
 
 			else:
 				docset_counts[word] = 1
-				word_counts = count
+				word_counts[word] = count
 		break # Test on only one docset
 	with open(out_file, 'w') as counts_file:
 		for word in docset_counts:
@@ -34,4 +34,6 @@ def read_train_counts(word_counts_file):
 	word_counts = {}
 	docset_counts = {}
 	num_docsets = 0
+	# with open(out_file, 'w') as counts_file:
+
 	return word_counts, docset_counts, num_docsets

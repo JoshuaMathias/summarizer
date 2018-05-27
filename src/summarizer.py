@@ -72,6 +72,7 @@ if __name__ == "__main__":
     dir_path = os.path.dirname(os.path.realpath(__file__))
     argparser = argparse.ArgumentParser(description='summarizer.py v. '+version+' by team #e2jkplusplus')
     argparser.add_argument('-c', '--config', metavar='CONFIG', default=os.path.join(dir_path, 'config.yml'), help='Config File(s)')
+    argparser.add_argument('-f', '--final', action="store_true", help='Run final evaluation on evaltest data')
     args = argparser.parse_args()
 
     u.eprint('Hello from "summarizer.py" version '+version+' (by team "#e2jkplusplus").')
@@ -94,14 +95,20 @@ if __name__ == "__main__":
 
     source_description = "*unkown*" # set this to a suitable label for our statistics summary.
     if config.AQUAINT:
-        test_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TEST_TOPIC_INDEX_FILE,
-                                                           aquaint1 = config.AQUAINT1_DIRECTORY,
-                                                           aquaint2 = config.AQUAINT2_DIRECTORY,
-                                                           dbname = 'shelve_db')
+        if args.final:
+            test_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TEST_TOPIC_INDEX_FILE,
+                                                               aquaint1 = config.AQUAINT1_DIRECTORY,
+                                                               aquaint2 = config.AQUAINT2_DIRECTORY,
+                                                               dbname = config.SHELVE_DB_TEST)
+        else:
+            test_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TEST_TOPIC_INDEX_FILE,
+                                                               aquaint1 = config.AQUAINT1_DIRECTORY,
+                                                               aquaint2 = config.AQUAINT2_DIRECTORY,
+                                                               dbname = config.SHELVE_DB_DEV)
         train_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TRAIN_TOPIC_INDEX_FILE,
                                                            aquaint1 = config.AQUAINT1_DIRECTORY,
                                                            aquaint2 = config.AQUAINT2_DIRECTORY,
-                                                           dbname = 'shelve_db')
+                                                           dbname = config.SHELVE_DB_TRAIN)
         # todo: move shelve_db into config.yaml ? (jgreve)
         #u.eprint('index_reader={}'.format(index_reader) )
         logger.info('test_index_reader=%s', test_index_reader )

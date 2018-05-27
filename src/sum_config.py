@@ -7,6 +7,9 @@ class SummaryConfig():
     DEFAULT_AQUAINT_DOC_DIR = None
     DEFAULT_TEST_TOPIC_INDEX = '/opt/dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml'
     DEFAULT_TRAIN_TOPIC_INDEX = '/opt/dropbox/17-18/573/Data/Documents/training/2009/UpdateSumm09_test_topics.xml'
+    SHELVE_DB_DEV = 'shelve_db_dev'
+    SHELVE_DB_TRAIN = 'shelve_db_train'
+    SHELVE_DB_TEST = 'shelve_db_test'
 
     DEFAULT_SUMMARY_DIR = 'outputs/D2'
     DEFAULT_RESULTS_DIR = 'outputs/results'
@@ -49,6 +52,18 @@ class SummaryConfig():
                                                                    'aquaint',
                                                                    'aquaint_train_topic_index',
                                                                    SummaryConfig.DEFAULT_TRAIN_TOPIC_INDEX)
+        self.SHELVE_DB_DEV = self.__read_config_val_2__(cfg,
+                                                                   'aquaint',
+                                                                   'shelve_db_dev',
+                                                                   SummaryConfig.SHELVE_DB_DEV)
+        self.SHELVE_DB_TRAIN = self.__read_config_val_2__(cfg,
+                                                                   'aquaint',
+                                                                   'shelve_db_train',
+                                                                   SummaryConfig.SHELVE_DB_TRAIN)
+        self.SHELVE_DB_TEST = self.__read_config_val_2__(cfg,
+                                                                   'aquaint',
+                                                                   'shelve_db_test',
+                                                                   SummaryConfig.SHELVE_DB_TEST)
         self.OUTPUT_SUMMARY_DIRECTORY = self.__read_config_val_2__(cfg,
                                                                    'output',
                                                                    'summary_dir',
