@@ -110,14 +110,14 @@ class PeerSummaries():
 
 if __name__ == '__main__':
     # Command Line Argument Parsing. Provides argument interpretation and help text.
-    version = "1.0"
+    version = "0.4"
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    argparser = argparse.ArgumentParser(description='summarizer.py v. '+version+' by team #e2jkplusplus')
+    argparser = argparse.ArgumentParser(description='sentence_distance.py v. '+version+' by team #e2jkplusplus')
     argparser.add_argument('-c', '--config', metavar='CONFIG', default=os.path.join(dir_path, 'config.yml'), help='Config File(s)')
     argparser.add_argument('-p', '--peers', metavar='PEER', default='/opt/dropbox/17-18/573/Data/peers/training/')
     args = argparser.parse_args()
 
-    config = sum_config.SummaryConfig(args.config)
+    config = sum_config.SummaryConfig(args.c)
     reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
                                                  aquaint1=config.AQUAINT1_DIRECTORY,
                                                  aquaint2=config.AQUAINT2_DIRECTORY,
