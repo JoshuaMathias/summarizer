@@ -113,6 +113,7 @@ if __name__ == "__main__":
         test_topic_index = test_index_reader.read_topic_index_file(docset_type = 'docseta')
         logger.info( 'test_topic_index=%s', test_topic_index )
 
+        train_topic_index = train_index_reader.read_topic_index_file()
         logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
         train_counts.train_counts(train_topic_index.documentSets(), config.WORD_COUNTS_FILE)
 
