@@ -104,17 +104,17 @@ if __name__ == "__main__":
                                                            dbname = 'shelve_db')
         # todo: move shelve_db into config.yaml ? (jgreve)
         #u.eprint('index_reader={}'.format(index_reader) )
-        logger.info('index_reader=%s', index_reader )
+        logger.info('test_index_reader=%s', test_index_reader )
 
         logger.info('config.MAX_WORDS=%s', config.MAX_WORDS)
         smry = Summarizer(config.MAX_WORDS)
 
         #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
-        test_topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
+        test_topic_index = test_index_reader.read_topic_index_file(docset_type = 'docseta')
         logger.info( 'test_topic_index=%s', test_topic_index )
 
         logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
-        train_counts.train_counts(test_topic_index.documentSets(), config.WORD_COUNTS_FILE)
+        train_counts.train_counts(train_topic_index.documentSets(), config.WORD_COUNTS_FILE)
 
         logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(test_topic_index)
