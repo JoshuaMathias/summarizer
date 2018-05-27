@@ -122,7 +122,7 @@ if __name__ == "__main__":
 
         train_topic_index = train_index_reader.read_topic_index_file()
         # Only train counts if the word counts file is not found
-        if os.path.exists(config.WORD_COUNTS_FILE):
+        if not os.path.exists(config.WORD_COUNTS_FILE):
             logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
             train_counts.train_counts(train_topic_index.documentSets(), config.WORD_COUNTS_FILE)
 
