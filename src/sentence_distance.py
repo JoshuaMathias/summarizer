@@ -130,6 +130,7 @@ if __name__ == '__main__':
         outfile = open(docset.topic_id + "_line_weight_cos.txt", 'w')
         tokenized_docset = TokenizedDocSet(docset)
         for summary in peer_summaries.summaries:
-            tokenized_docset.compare_summary(summary)
+            for article in tokenized_docset.articles:
+                article.compare_summary(summary)
         tokenized_docset.summary_sentence_order(outfile)
 

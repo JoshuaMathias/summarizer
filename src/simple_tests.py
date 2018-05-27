@@ -139,7 +139,25 @@ class TestSummarizer(unittest.TestCase):
 
         self.assertAlmostEqual(1.0, sentence_distance.reverse_jaccard_distance_value(set(tokens1), set(tokens1)))
         self.assertGreater(0.09, sentence_distance.reverse_jaccard_distance_value(set(tokens1), set(tokens2)))
-        print(sentence_distance.reverse_jaccard_distance_value(set(tokens1), set(tokens2)))
+
+    def test_CosineDistance(self):
+        tokens1 = sentence_distance.sentence_tokens_with_alpha_only(self.para1Sample)
+        tokens2 = sentence_distance.sentence_tokens_with_alpha_only(self.para2Sample)
+
+        self.assertAlmostEqual(1.0, sentence_distance.cosine_similarity_ngrams(set(tokens1), set(tokens1)))
+        self.assertLess(0.15, sentence_distance.cosine_similarity_ngrams(set(tokens1), set(tokens2)))
+
+    def test_StatisticsGatherer(self):
+        docset = article_content.DocSet('test', 'test')
+        docset.topic_id = 'Test'
+        article = article_content.Article('test')
+        article.paragraphs.append(self.para1Sample)
+        article.paragraphs.append(self.para2Sample)
+        mock_file = io.StringIO('Ziggy played guitar jamming.\nNow Ziggy really sang.\nWhere were the spiders?\n')
+        with patch('sentence_distance.open', return_value=mock_file, create=True):
+            summary = sentence_distance.Summary('test.dat')
+
+
 
 if __name__ == '__main__':
     unittest.main()
