@@ -10,9 +10,10 @@ def train_counts(docsets, out_file):
 	word_counts = {}
 	# doc_counts = {}
 	docset_counts = {}
-
+	num_docsets = 0
 	preprocessor = preprocess.preprocess()
 	for docset in docsets:
+		num_docsets += 1
 		docset_words = preprocessor.words_from_docset(docset)
 		for word, count in docset_words:
 			if word in docset_counts:
@@ -22,8 +23,15 @@ def train_counts(docsets, out_file):
 			else:
 				docset_counts[word] = 1
 				word_counts = count
-
+		break # Test on only one docset
 	with open(out_file, 'w') as counts_file:
 		for word in docset_counts:
-			counts_file.write(word+"\t"+docset_counts[word]+"\t"+word_counts[word])
+			counts_file.write(word+"\t"+docset_counts[word]+"\t"+word_counts[word]+"\n")
+		counts_file.write(num_docsets+" total docsets"+"\n")
 
+# Read and return word_counts, docset_counts, num_docsets
+def read_train_counts(word_counts_file):
+	word_counts = {}
+	docset_counts = {}
+	num_docsets = 0
+	return word_counts, docset_counts, num_docsets
