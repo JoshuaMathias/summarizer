@@ -59,7 +59,8 @@ class TokenizedArticle():
             summary_index = summary_line_index if summary_line_index < 10 else 9
             for para_index in range(len(self.paragraphs)):
                 for line_index in range(len(self.paragraphs[para_index])):
-                    self.statistics[para_index, line_index, summary_index] += reverse_jaccard_distance_value(summary_line_set, set(self.paragraphs[para_index][line_index]))
+                    self.statistics[para_index, line_index, summary_index] += \
+                        cosine_similarity_ngrams(summary_line_4_grams, ngrams(self.paragraphs[para_index][line_index]))
 
 
 class Summary():
@@ -77,6 +78,29 @@ class TokenizedDocSet():
         for article in docset.articles:
             self.articles.append(TokenizedArticle(article))
 
+    def summary_sentence_order(self, outfile):
+        all_articles = list()
+        for article in self.articles:
+            line_count = 0
+            paragraph_count = 0
+            for paragraph in article.paragraphs:
+                sentence_count = 0
+                for sentence in paragraph:
+                    if len(all_articles) < (line_count + 1):
+                        all_articles.append(article.statistics[paragraph_count, sentence_count, 0])
+                    else:
+                        all_articles[line_count] += article.statistics[paragraph_count, sentence_count, 0]
+                    sentence_count += 1
+                    line_count += 1
+                paragraph_count += 1
+
+        line_no = 1
+        for weight in all_articles:
+            outfile.write('Line %d\t%s\n' % (line_no, weight))
+            line_no += 1
+
+        outfile.flush()
+
 class PeerSummaries():
     def __init__(self, docset, peer_directory):
         self.summaries = list()
@@ -90,7 +114,7 @@ if __name__ == '__main__':
     dir_path = os.path.dirname(os.path.realpath(__file__))
     argparser = argparse.ArgumentParser(description='summarizer.py v. '+version+' by team #e2jkplusplus')
     argparser.add_argument('-c', '--config', metavar='CONFIG', default=os.path.join(dir_path, 'config.yml'), help='Config File(s)')
-    argparser.add_argument('-p', '--peers', metavar='PEER', default='/opt/dropbox/17-18/573/Data/peers/')
+    argparser.add_argument('-p', '--peers', metavar='PEER', default='/opt/dropbox/17-18/573/Data/peers/training/')
     args = argparser.parse_args()
 
     config = sum_config.SummaryConfig(args.config)
@@ -101,4 +125,6 @@ if __name__ == '__main__':
 
     for docset in reader.documentSets(docset_type='docseta'):
         peer_summaries = PeerSummaries(docset, args.p)
+        outfile = open(docset.topic_id + "_line_weight_cos.txt", 'w')
+        peer_summaries.summary_sentence_order(outfile)
 
