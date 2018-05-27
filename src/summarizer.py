@@ -10,7 +10,7 @@ logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 
 
 import argparse
-import test_topic_index_reader
+import topic_index_reader
 import sum_config
 import nltk
 import os
@@ -94,7 +94,11 @@ if __name__ == "__main__":
 
     source_description = "*unkown*" # set this to a suitable label for our statistics summary.
     if config.AQUAINT:
-        index_reader = test_topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
+        test_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TEST_TOPIC_INDEX_FILE,
+                                                           aquaint1 = config.AQUAINT1_DIRECTORY,
+                                                           aquaint2 = config.AQUAINT2_DIRECTORY,
+                                                           dbname = 'shelve_db')
+        train_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TRAIN_TOPIC_INDEX_FILE,
                                                            aquaint1 = config.AQUAINT1_DIRECTORY,
                                                            aquaint2 = config.AQUAINT2_DIRECTORY,
                                                            dbname = 'shelve_db')
@@ -106,13 +110,13 @@ if __name__ == "__main__":
         smry = Summarizer(config.MAX_WORDS)
 
         #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
-        test_topic_index = index_reader.read_test_topic_index_file(docset_type = 'docseta')
+        test_topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
         logger.info( 'test_topic_index=%s', test_topic_index )
 
         logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
         train_counts.train_counts(test_topic_index.documentSets(), config.WORD_COUNTS_FILE)
 
-        logger.debug( '\n\n--- for docset in test_topic_index.... ---' )
+        logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(test_topic_index)
         for docset in test_topic_index.documentSets(docset_type='docseta'):
             msg = 'processing %s' % docset

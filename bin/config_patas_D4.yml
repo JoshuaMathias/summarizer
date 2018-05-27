@@ -1,0 +1,21 @@
+project:
+    team_id: 9
+    release_title: D4
+aquaint:
+    aquaint1_directory: /dropbox/17-18/573/AQUAINT
+    aquaint2_directory: /dropbox/17-18/573/AQUAINT-2
+
+    # aquaint_doc_dir: 
+    aquaint_test_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
+    aquaint_train_topic_index: /dropbox/17-18/573/Data/Documents/training/2009/UpdateSumm09_test_topics.xml
+
+output:
+    summary_dir: outputs/D4
+    #results_dir: outputs/results   (jgreve: not supposed to be child of outputs)
+    results_dir: results
+    max_words: 100
+    word_counts_file: word_counts.txt
+
+# Test configuration to read one article file only
+# one_config:
+#    article_file: aquaint_test1/nyt/1999/19990330_NYT
