@@ -117,14 +117,19 @@ if __name__ == '__main__':
     argparser.add_argument('-p', '--peers', metavar='PEER', default='/opt/dropbox/17-18/573/Data/peers/training/')
     args = argparser.parse_args()
 
-    config = sum_config.SummaryConfig(args.c)
+    config = sum_config.SummaryConfig(args.config)
     reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
                                                  aquaint1=config.AQUAINT1_DIRECTORY,
                                                  aquaint2=config.AQUAINT2_DIRECTORY,
                                                  dbname='shelve_db')
 
-    for docset in reader.documentSets(docset_type='docseta'):
-        peer_summaries = PeerSummaries(docset, args.p)
+    topic_index = reader.read_topic_index_file(docset_type = 'docseta')
+
+    for docset in topic_index.documentSets(docset_type='docseta'):
+        peer_summaries = PeerSummaries(docset, args.peers)
         outfile = open(docset.topic_id + "_line_weight_cos.txt", 'w')
-        peer_summaries.summary_sentence_order(outfile)
+        tokenized_docset = TokenizedDocSet(docset)
+        for summary in peer_summaries.summaries:
+            tokenized_docset.compare_summary(summary)
+        tokenized_docset.summary_sentence_order(outfile)
 
