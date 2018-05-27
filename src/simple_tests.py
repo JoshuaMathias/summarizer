@@ -153,10 +153,14 @@ class TestSummarizer(unittest.TestCase):
         article = article_content.Article('test')
         article.paragraphs.append(self.para1Sample)
         article.paragraphs.append(self.para2Sample)
+        docset.articles.append(article)
+        tkn_docset = sentence_distance.TokenizedDocSet(docset)
         mock_file = io.StringIO('Ziggy played guitar jamming.\nNow Ziggy really sang.\nWhere were the spiders?\n')
         with patch('sentence_distance.open', return_value=mock_file, create=True):
             summary = sentence_distance.Summary('test.dat')
-
+            for tkn_art in tkn_docset.articles:
+                tkn_art.compare_summary(summary)
+            self.assertLess(0.0, tkn_docset.articles[0].statistics[0, 0, 0])
 
 
 if __name__ == '__main__':

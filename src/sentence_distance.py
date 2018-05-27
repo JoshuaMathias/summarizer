@@ -1,5 +1,6 @@
 import numpy as np
 import nltk
+from nltk.util import ngrams
 import re
 import math
 import argparse
@@ -21,8 +22,8 @@ def sentence_tokens_with_alpha_only(sentence):
 def reverse_jaccard_distance_value(tokens1, tokens2):
     return 1.0 - nltk.jaccard_distance(tokens1, tokens2)
 
-def ngrams(tokens, n):
-    return(list(nltk.util.ngrams(tokens, n)))
+def make_ngrams(tokens, n):
+    return(list(ngrams(tokens, n)))
 
 def cosine_similarity_ngrams(a, b):
     vec1 = Counter(a)
@@ -55,12 +56,12 @@ class TokenizedArticle():
     def compare_summary(self, summary):
         for summary_line_index in range(len(summary.line_tokens)):
             summary_line_set = set(summary.line_tokens[summary_line_index])
-            summary_line_4_grams = ngrams(summary.line_tokens, 4)
+            summary_line_4_grams = make_ngrams(summary.line_tokens[summary_line_index], 4)
             summary_index = summary_line_index if summary_line_index < 10 else 9
             for para_index in range(len(self.paragraphs)):
                 for line_index in range(len(self.paragraphs[para_index])):
-                    self.statistics[para_index, line_index, summary_index] += \
-                        cosine_similarity_ngrams(summary_line_4_grams, ngrams(self.paragraphs[para_index][line_index]))
+                    sim = cosine_similarity_ngrams(summary_line_4_grams, make_ngrams(self.paragraphs[para_index][line_index], 4))
+                    self.statistics[para_index, line_index, summary_index] += sim
 
 
 class Summary():
