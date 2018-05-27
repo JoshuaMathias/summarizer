@@ -5,6 +5,7 @@ import topic_index_reader
 import article_content
 import rougescore
 import sum_config
+import sentence_distance
 import bs4
 from unittest.mock import patch
 import io
@@ -43,6 +44,10 @@ class TestSummarizer(unittest.TestCase):
         self.samplePara = '  This starts with a tab\t and then cr\n   and then a thing happens like that.'
         self.fixedPara =  'This starts with a tab and then cr and then a thing happens like that.'
 
+        self.para1Sample ="Ziggy played guitar, jamming good with Weird and Gilly and the spiders from Mars. He played it left hand but made it too far; became the special man. Then we were Ziggy's band"
+        self.para2Sample ="Now Ziggy really sang, screwed up eyes and screwed down hairdo like some cat from Japan. He could lick 'em by smiling. He could leave 'em to hang. Came on so loaded man. Well hung and snow white tan."
+        self.para3Sample ="So where were the spiders? While the fly tried to break our balls with just the beer light to guide us. So we bitched about the fans and should we crush his sweet hands?"
+
     # Not a great test, but mostly a template for mocking file reading in Python
     # (Seems readline iteration is broken in unittest mock, hence the weird StringIO invocation)
     def test_SummaryReturnsMinSizeWhenStoryIsLarger(self):
@@ -59,27 +64,6 @@ class TestSummarizer(unittest.TestCase):
             self.assertEqual(tir.aquaint1, '/opt/dropbox/17-18/573/AQUAINT')
             self.assertEqual(tir.aquaint2, '/opt/dropbox/17-18/573/AQUAINT-2')
 
-    # def test_ContentReaderReassignsAquaintAndAquaint2(self):
-    #     cr = content_provider.ContentReader(aquaint2 = 'MyAquaint2Path', aquaint = 'MyAquaintPath')
-    #     self.assertEqual(cr.AQUAINT_DIR, 'MyAquaintPath')
-    #     self.assertEqual(cr.AQUAINT2_DIR, 'MyAquaint2Path')
-    #
-    # def test_ContentReadRawFile(self):
-    #     cr = content_provider.ContentReader()
-    #     mock_file = io.StringIO(''.join(self.storyText))
-    #     with patch('content_provider.open', return_value=mock_file, create=True):
-    #         articles = cr.read_raw_files('test.dat')
-    #         self.assertEqual(articles[0].body[0], self.storyBody)
-    #         self.assertEquals(len(articles[0].body), 1)
-    #         self.assertEquals(len(articles), 1)
-    #
-    # def test_ContentReadSGML(self):
-    #     cr = content_provider.ContentReader()
-    #     mock_file = io.StringIO(''.join(self.storySGML))
-    #     with patch('content_provider.open', reeturn_value=mock_file, create=True):
-    #         articles = cr.read_raw_files('test.dat')
-    #         self.assertEqual(len(articles[0].body), 1)
-
     def test_RougeScore(self):
         counter = rougescore.RougeCounter(0.5)
         rouge1 = counter.rouge_n(self.peer1, [self.model], 1)
@@ -89,7 +73,7 @@ class TestSummarizer(unittest.TestCase):
         self.assertAlmostEqual(rouge2, 0.7272727272727272)
 
     def test_Config(self):
-        mock_file = io.StringIO(''.join(self.configText))
+        mock_file = io.StringIO(self.configText)
         with patch('sum_config.open', return_value=mock_file, create=True):
             config = sum_config.SummaryConfig('test.dat')
             self.assertEqual(config.TEAM_ID, 'test')
@@ -112,6 +96,50 @@ class TestSummarizer(unittest.TestCase):
         testArticleReader.__add_paragraph__(article, self.samplePara)
 
         self.assertEqual(article.paragraphs[0], self.fixedPara)
+
+    def test_TokenizeOnlyIfAlnumCharactersPresent(self):
+        sample_sentence = 'If I told you 100 times, this is the 99th.'
+        sample_tokens = sentence_distance.sentence_tokens_with_alpha_only(sample_sentence)
+        self.assertEqual(len(sample_tokens), 9)
+        self.assertEqual(sample_tokens[-1], '99th')
+
+    def sampleArticle(self):
+        sample_article = article_content.Article('test')
+        sample_article.paragraphs.append(self.para1Sample)
+        sample_article.paragraphs.append(self.para2Sample)
+        sample_article.paragraphs.append(self.para3Sample)
+
+        return sample_article
+
+    def test_ArticleTokenize(self):
+        sample_article = self.sampleArticle()
+
+        tokenized_article = sentence_distance.TokenizedArticle(sample_article)
+
+        self.assertEqual(3, len(tokenized_article.paragraphs))
+        self.assertEqual(3, len(tokenized_article.paragraphs[0]))
+
+    def test_ArticleStatisticsSetup(self):
+        sample_article = self.sampleArticle()
+
+        tokenized_article = sentence_distance.TokenizedArticle(sample_article)
+
+        self.assertEqual(3, len(tokenized_article.statistics))
+        self.assertEqual(tokenized_article.max_sentences, len(tokenized_article.statistics[0]))
+
+    def test_PeerSummary(self):
+        mock_file = io.StringIO('this thing.\nis acting as.\na simple.\ntest of summarization.\n')
+        with patch('sentence_distance.open', return_value=mock_file, create=True):
+            summary = sentence_distance.Summary('test.dat')
+            self.assertEqual(4, len(summary.line_tokens))
+
+    def test_JaccardDistance(self):
+        tokens1 = sentence_distance.sentence_tokens_with_alpha_only(self.para1Sample)
+        tokens2 = sentence_distance.sentence_tokens_with_alpha_only(self.para2Sample)
+
+        self.assertAlmostEqual(1.0, sentence_distance.reverse_jaccard_distance_value(set(tokens1), set(tokens1)))
+        self.assertGreater(0.09, sentence_distance.reverse_jaccard_distance_value(set(tokens1), set(tokens2)))
+        print(sentence_distance.reverse_jaccard_distance_value(set(tokens1), set(tokens2)))
 
 if __name__ == '__main__':
     unittest.main()
