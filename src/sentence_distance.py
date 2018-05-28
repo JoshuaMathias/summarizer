@@ -60,9 +60,12 @@ class TokenizedArticle():
             for para_index in range(len(self.paragraphs)):
                 for line_index in range(len(self.paragraphs[para_index])):
                     sim = cosine_similarity_ngrams(summary_line_4_grams, make_ngrams(self.paragraphs[para_index][line_index], 4))
-#                    if sim > 0.0:
-#                        print('%s %s %s' % (sim, summary.line_tokens[summary_line_index], self.paragraphs[para_index][line_index]))
                     self.statistics[para_index, line_index, summary_index] += sim
+
+    def len(self):
+        length = 0
+        for paragraph in self.paragraphs:
+            length += len(paragraph)
 
 class Summary():
     def __init__(self, summary_filename):
@@ -88,15 +91,19 @@ class TokenizedDocSet():
         try:
             self.line_count[line_number] += 1
         except IndexError:
-            print('ERROR self.line_count has length %d, but accessing line %d' % (len(self.line_count), line_number))
+            logger.error('self.line_count has length %d, but accessing line %d' % (len(self.line_count), line_number))
             raise IndexError()
 
 class PeerSummaries():
     def __init__(self, docset, peer_directory):
         self.summaries = list()
+        summary_count = 0
         for file in os.listdir(peer_directory):
-            if fnmatch.fnmatch(file, docset.topic_id + "*"):
+            if fnmatch.fnmatch(file, summary_file_pattern(docset)):
                 self.summaries.append(Summary(os.path.join(peer_directory, file)))
+                summary_count += 1
+
+        logger.info('Found %d summary files in %s' % (summary_count, summary_file_pattern(docset)))
 
 class WeightAverages():
     def __init__(self):
@@ -174,19 +181,30 @@ class ArticleOrderTable(WeightAverages):
 
                     self.add_value(summary_line, article_index, article_value, docset.line_count[summary_line])
 
+class ParagraphOrderTable(WeightAverages):
+    def __init__(self):
+        super().__init__()
+
+    def addDocSet(self, docset):
+        for summary_line in range(10):
+            if len(docset.line_count) > summary_line and docset.line_count[summary_line] > 0:
+                for article_index in range(len(docset.articles)):
+                    line_count = 0
+                    paragraph_count = 0
+                    article = docset.articles[article_index]
+                    for paragraph in article.paragraphs:
+                        paragraph_value = 0.0
+                        sentence_count = 0
+                        for sentence in paragraph:
+                            paragraph_value += article.statistics[paragraph_count, sentence_count, summary_line]
+                            sentence_count += 1
+                            line_count += 1
+
+                        self.add_value(summary_line, paragraph_count, paragraph_value, docset.line_count[summary_line])
+                        paragraph_count += 1
+
 def summary_file_pattern(docset):
     return docset.topic_id.upper()[0:-1] + "*"
-
-class PeerSummaries():
-    def __init__(self, docset, peer_directory):
-        self.summaries = list()
-        summary_count = 0
-        for file in os.listdir(peer_directory):
-            if fnmatch.fnmatch(file, summary_file_pattern(docset)):
-                self.summaries.append(Summary(os.path.join(peer_directory, file)))
-                summary_count += 1
-
-        print('Found %d summary files in %s' % (summary_count, summary_file_pattern(docset)))
 
 if __name__ == '__main__':
     # Command Line Argument Parsing. Provides argument interpretation and help text.
@@ -207,6 +225,9 @@ if __name__ == '__main__':
 
     sentence_order_table = SentenceOrderTable()
     article_order_table = ArticleOrderTable()
+    paragraph_order_table = ParagraphOrderTable()
+    total_article_lines = 0.0
+    num_articles = 0
     for docset in topic_index.documentSets(docset_type='docseta'):
         peer_summaries = PeerSummaries(docset, args.peers)
         tokenized_docset = TokenizedDocSet(docset)
@@ -216,12 +237,20 @@ if __name__ == '__main__':
 
             for article in tokenized_docset.articles:
                 article.compare_summary(summary)
+                total_article_lines += article.len()
+                num_articles += 1
 
         sentence_order_table.addDocSet(tokenized_docset)
         article_order_table.addDocSet(tokenized_docset)
+        paragraph_order_table.addDocSet(tokenized_docset)
+
+    logger.info('Average article length = %s' % (total_article_lines / num_articles))
 
     sentence_outfile = open('SentenceOrder.csv', 'w')
     sentence_order_table.output_averages(sentence_outfile)
 
     article_outfile = open('ArticleOrder.csv', 'w')
     article_order_table.output_averages(article_outfile)
+
+    paragraph_outfile = open('ParagraphOrder.csv', 'w')
+    paragraph_order_table.output_averages(paragraph_outfile)
