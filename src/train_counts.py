@@ -26,9 +26,12 @@ def train_counts(docsets, out_file):
 				word_stats.append(count)
 				word_counts[word] = word_stats
 		break # Test on only one docset
+
 	with open(out_file, 'w') as counts_file:
-		for word in docset_counts:
-			counts_file.write(str(word)+"\t"+str(docset_counts[word])+"\t"+str(word_counts[word])+"\n")
+
+		for word in word_counts:
+			word_stats = word_counts[word]
+			counts_file.write(str(word)+"\t"+str(word_stats[0])+"\t"+str(word_stats[1])+"\n")
 		counts_file.write(num_docsets+" total docsets"+"\n")
 
 # Read and return word_counts, docset_counts, num_docsets
