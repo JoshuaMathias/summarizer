@@ -78,9 +78,9 @@ def qr_sum(docset, config):
     short = 100 # temporary solution to fragment sentences making it into summary
 
     preprocessor = preprocess.preprocess()
-    STOP_TOKENIZE = preprocess.STOP_TOKENIZE       # jgreve: these flags are additions to the original D3 logic, note that
-    STOP_QRFLAG = preprocess.STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
-    STOP_DEBUG_CUTOFF = preprocess.STOP_DEBUG_CUTOFF
+    STOP_TOKENIZE = preprocessor.STOP_TOKENIZE       # jgreve: these flags are additions to the original D3 logic, note that
+    STOP_QRFLAG = preprocessor.STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
+    STOP_DEBUG_CUTOFF = preprocessor.STOP_DEBUG_CUTOFF
 
     article_count = 0
     logger.info('%s: docset=%s', fname, docset )
