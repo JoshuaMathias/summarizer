@@ -123,9 +123,9 @@ class preprocess:
 				paragraphs = article.paragraphs
 				if len(paragraphs):
 					for paragraph in paragraphs:
-						sentences = preprocess_sents(paragraph)
+						sentences = self.preprocess_sents(paragraph)
 						for sentence in sentences:
-							words = preprocess_words(sentence)
+							words = self.preprocess_words(sentence)
 							for word in words:
 								if word in docset_words:
 									docset_words[word] += 1
