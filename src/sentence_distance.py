@@ -6,6 +6,7 @@ import math
 import argparse
 import os
 import fnmatch
+import time
 from collections import Counter
 
 import article_content
@@ -136,6 +137,9 @@ class WeightAverages():
         outfile.flush()
         outfile.close()
 
+# This is already my second rewrite of the code, but if I had time to further refactor,
+# I'd make these three subclasses a single class, since all of the statistics here are
+# easily derived in one pass instead of three separate passes as done here.
 class SentenceOrderTable(WeightAverages):
     def __init__(self):
         super().__init__()
@@ -243,11 +247,13 @@ if __name__ == '__main__':
 
     logger.info('Average article length = %s' % (total_article_lines / num_articles))
 
-    sentence_outfile = open('SentenceOrder.csv', 'w')
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+
+    sentence_outfile = open('SentenceOrder-%s.csv' % timestamp, 'w')
     sentence_order_table.output_averages(sentence_outfile)
 
-    article_outfile = open('ArticleOrder.csv', 'w')
+    article_outfile = open('ArticleOrder-%s.csv' % timestamp, 'w')
     article_order_table.output_averages(article_outfile)
 
-    paragraph_outfile = open('ParagraphOrder.csv', 'w')
+    paragraph_outfile = open('ParagraphOrder-%s.csv' % timestamp, 'w')
     paragraph_order_table.output_averages(paragraph_outfile)
