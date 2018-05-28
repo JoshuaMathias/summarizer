@@ -214,6 +214,7 @@ if __name__ == '__main__':
     argparser = argparse.ArgumentParser(description='sentence_distance.py v. '+version+' by team #e2jkplusplus')
     argparser.add_argument('-c', '--config', metavar='CONFIG', default=os.path.join(dir_path, 'config.yml'), help='Config File(s)')
     argparser.add_argument('-p', '--peers', metavar='PEER', default='/opt/dropbox/17-18/573/Data/peers/training/')
+    argparser.add_argument('-o', '--output', metavar='OUTPUT', default ='.')
     args = argparser.parse_args()
 
     config = sum_config.SummaryConfig(args.config)
@@ -248,12 +249,15 @@ if __name__ == '__main__':
     logger.info('Average article length = %s' % (total_article_lines / num_articles))
 
     timestamp = time.strftime("%Y%m%d-%H%M%S")
+    sentence_filename = os.path.join(args.output, 'SummaryOrderBySentence-%s.csv' % timestamp)
+    article_filename = os.path.join(args.output, 'SummaryOrderByArticle-%s.csv' % timestamp)
+    paragraph_filename = os.path.join(args.output, 'SummaryOrderByParagraph-%s.csv' % timestamp)
 
-    sentence_outfile = open('SentenceOrder-%s.csv' % timestamp, 'w')
+    sentence_outfile = open(sentence_filename, 'w')
     sentence_order_table.output_averages(sentence_outfile)
 
-    article_outfile = open('ArticleOrder-%s.csv' % timestamp, 'w')
+    article_outfile = open(article_filename, 'w')
     article_order_table.output_averages(article_outfile)
 
-    paragraph_outfile = open('ParagraphOrder-%s.csv' % timestamp, 'w')
+    paragraph_outfile = open(paragraph_filename, 'w')
     paragraph_order_table.output_averages(paragraph_outfile)
