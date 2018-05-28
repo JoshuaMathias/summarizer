@@ -6,7 +6,7 @@ import preprocess
 # 	Where word_count is the total number of appearances in the training set
 #	doc_count is the number of documents the word is found in
 #	docset_count is the number of docsets the word is found in
-def train_counts(docsets, out_file):
+def train_counts(docsets, out_file=None):
 	word_counts = {}
 	# doc_counts = {}
 	num_docsets = 0
@@ -26,12 +26,14 @@ def train_counts(docsets, out_file):
 				word_stats.append(count)
 				word_counts[word] = word_stats
 
-	with open(out_file, 'w') as counts_file:
+	if out_file is not None:
+		with open(out_file, 'w') as counts_file:
 
-		for word in word_counts:
-			word_stats = word_counts[word]
-			counts_file.write(str(word)+"\t"+str(word_stats[0])+"\t"+str(word_stats[1])+"\n")
-		counts_file.write(str(num_docsets)+" total docsets"+"\n")
+			for word in word_counts:
+				word_stats = word_counts[word]
+				counts_file.write(str(word)+"\t"+str(word_stats[0])+"\t"+str(word_stats[1])+"\n")
+			counts_file.write(str(num_docsets)+" total docsets"+"\n")
+	return word_counts, num_docsets
 
 # Read and return word_counts, docset_counts, num_docsets
 def read_train_counts(word_counts_file):
@@ -43,4 +45,4 @@ def read_train_counts(word_counts_file):
 			split_line = line.split()
 			if not split_line == "docsets":
 				word_counts[split_line[0]] = (split_line[1], split_line[2])
-	return word_counts, docset_counts, num_docsets
+	return word_counts, num_docsets

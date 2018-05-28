@@ -124,7 +124,9 @@ if __name__ == "__main__":
         # Only train counts if the word counts file is not found
         if not os.path.exists(config.WORD_COUNTS_FILE):
             logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
-            train_counts.train_counts(train_topic_index.documentSets(), config.WORD_COUNTS_FILE)
+            trained_word_counts, num_trained_docsets = train_counts.train_counts(train_topic_index.documentSets(), config.WORD_COUNTS_FILE)
+        else:
+            trained_word_counts, num_trained_docsets = train_counts.read_train_counts(config.WORD_COUNTS_FILE)
 
         logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(test_topic_index)
@@ -135,7 +137,7 @@ if __name__ == "__main__":
             print('%s : %s' % (docset.id, docset.topic_title)) # requried in stdout
             smry.summary = ''
             smry.summary_size = 0
-            summary_text = qrmatrix.qr_sum(docset, config)
+            summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets)
             summary_word_count = len( summary_text.split() )
             logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
             summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)

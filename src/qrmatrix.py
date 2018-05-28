@@ -49,7 +49,7 @@ def get_doc_freq(ac, dc):
 
 
 
-def qr_sum(docset, config):
+def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
     global STOP_TOKENIZE        # jgreve: these flags are additions to the original D3 logic, note that
     global STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
     global STOP_DEBUG_CUTOFF
@@ -184,8 +184,9 @@ def qr_sum(docset, config):
         for word in sentence[1]:
             if word in words_dict:
                 # word_val = words_tally[word]
-                # tfidf = get_tfidf(words_tally[word], article_count, len(words_docs[word]))
                 word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]), lowest_df)
+                word_stats = trained_word_counts[word]
+                word_val = get_tfidf(word_val, num_trained_docsets, word_stats[1])
                 # word_val = get_doc_freq(article_count, len(words_docs[word]))
                 # word_val *= words_tally[word]
                 feat_vec[words_dict[word]] = word_val
