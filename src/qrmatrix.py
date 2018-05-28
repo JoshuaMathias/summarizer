@@ -47,10 +47,6 @@ def get_doc_freq(ac, dc):
 # In D3 the effect was QR.No and Tokenize.No
 
 
-# STOP_WORDS        = None
-STOP_TOKENIZE     = True # +D3.err, original loop above: no change, still R1.R=0.22264.
-STOP_QRFLAG       = True # Whether or not to apply stopwords to qrmatrix population.
-STOP_DEBUG_CUTOFF = 50 # Only dump the first 50 stop_word hits.
 
 
 def qr_sum(docset, config):
@@ -82,6 +78,9 @@ def qr_sum(docset, config):
     short = 100 # temporary solution to fragment sentences making it into summary
 
     preprocessor = preprocess.preprocess()
+    STOP_TOKENIZE = preprocess.STOP_TOKENIZE       # jgreve: these flags are additions to the original D3 logic, note that
+    STOP_QRFLAG = preprocess.STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
+    STOP_DEBUG_CUTOFF = preprocess.STOP_DEBUG_CUTOFF
 
     article_count = 0
     logger.info('%s: docset=%s', fname, docset )

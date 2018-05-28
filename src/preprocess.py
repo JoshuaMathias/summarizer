@@ -39,7 +39,7 @@ class preprocess:
 	        line = line.lower().strip()
 	        if self.STOP_TOKENIZE:
 	            words = word_tokenize( line )
-	            logger.debug('stop_words[{:03d}]: line="{}" --> words={}'.format(stop_line_cnt, line, words ))
+	            # logger.debug('stop_words[{:03d}]: line="{}" --> words={}'.format(stop_line_cnt, line, words ))
 	            for word in words:
 	                self.stop_words[word] = 0
 	        else:
