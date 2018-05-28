@@ -60,8 +60,8 @@ class TokenizedArticle():
             for para_index in range(len(self.paragraphs)):
                 for line_index in range(len(self.paragraphs[para_index])):
                     sim = cosine_similarity_ngrams(summary_line_4_grams, make_ngrams(self.paragraphs[para_index][line_index], 4))
-                    if sim > 0.0:
-                        print('%s %s %s' % (sim, summary.line_tokens[summary_line_index], self.paragraphs[para_index][line_index]))
+#                    if sim > 0.0:
+#                        print('%s %s %s' % (sim, summary.line_tokens[summary_line_index], self.paragraphs[para_index][line_index]))
                     self.statistics[para_index, line_index, summary_index] += sim
 
 class Summary():
@@ -81,11 +81,15 @@ class TokenizedDocSet():
             self.articles.append(TokenizedArticle(article))
 
     def add_summary_line(self, line_number):
-        if len(self.line_count) < line_number:
+        if len(self.line_count) <= line_number:
             for n in range(len(self.line_count), line_number + 1):
                 self.line_count.append(0)
 
-        self.line_count[line_number] += 1
+        try:
+            self.line_count[line_number] += 1
+        except IndexError:
+            print('ERROR self.line_count has length %d, but accessing line %d' % (len(self.line_count), line_number))
+            raise IndexError()
 
 class PeerSummaries():
     def __init__(self, docset, peer_directory):
@@ -100,14 +104,14 @@ class WeightAverages():
         self.count_table = list()
 
     def add_value(self, line_index, horiz_index, value, weight):
-        if len(self.value_table) < line_index:
+        if len(self.value_table) <= line_index:
             for n in range(len(self.value_table), line_index + 1):
                 self.value_table.append(list())
                 self.count_table.append(list())
 
         horiz_list = self.value_table[line_index]
         count_list = self.count_table[line_index]
-        if len(horiz_list) < horiz_index:
+        if len(horiz_list) <= horiz_index:
             for m in range(len(horiz_list), horiz_index + 1):
                 horiz_list.append(0.0)
                 count_list.append(0)
@@ -119,9 +123,9 @@ class WeightAverages():
         for l in range(len(self.value_table)):
             for h in range(len(self.value_table[l])):
                 if self.count_table[l][h] > 0:
-                    outfile.write(self.value_table[l][h] / self.count_table[l][h])
+                    outfile.write('%s' % (self.value_table[l][h] / self.count_table[l][h]))
                 else:
-                    outfile.write(0.0)
+                    outfile.write('0.0')
                 if h < len(self.value_table[l]) - 1:
                     outfile.write (',')
             outfile.write('\n')
@@ -147,13 +151,6 @@ class SentenceOrderTable(WeightAverages):
                     sentence_count += 1
                     line_count += 1
                 paragraph_count += 1
-
-        line_no = 1
-        for weight in all_articles:
-            outfile.write('Line %d\t%s\n' % (line_no, weight))
-            line_no += 1
-
-        outfile.flush()
 
 def summary_file_pattern(docset):
     return docset.topic_id.upper()[0:-1] + "-" + docset.topic_id[-1].upper() + "*"
