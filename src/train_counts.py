@@ -32,7 +32,7 @@ def train_counts(docsets, out_file):
 		for word in word_counts:
 			word_stats = word_counts[word]
 			counts_file.write(str(word)+"\t"+str(word_stats[0])+"\t"+str(word_stats[1])+"\n")
-		counts_file.write(num_docsets+" total docsets"+"\n")
+		counts_file.write(str(num_docsets)+" total docsets"+"\n")
 
 # Read and return word_counts, docset_counts, num_docsets
 def read_train_counts(word_counts_file):
