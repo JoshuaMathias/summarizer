@@ -15,7 +15,7 @@ def train_counts(docsets, out_file):
 	for docset in docsets:
 		num_docsets += 1
 		docset_words = preprocessor.words_from_docset(docset)
-		for word, count in docset_words:
+		for word, count in docset_words.items():
 			if word in docset_counts:
 				docset_counts[word] += 1
 				word_counts[word] += count
