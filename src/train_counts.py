@@ -27,6 +27,7 @@ def train_counts(docsets, out_file):
 				word_counts[word] = word_stats
 		break # Test on only one docset
 
+	print("word counts: "+str(word_counts))
 	with open(out_file, 'w') as counts_file:
 
 		for word in word_counts:
