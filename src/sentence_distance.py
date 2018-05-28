@@ -61,6 +61,8 @@ class TokenizedArticle():
             for para_index in range(len(self.paragraphs)):
                 for line_index in range(len(self.paragraphs[para_index])):
                     sim = cosine_similarity_ngrams(summary_line_4_grams, make_ngrams(self.paragraphs[para_index][line_index], 4))
+                    if sim > 0.0:
+                        print('%s %s %s' % (sim, summary.line_tokens[summary_line_index], self.paragraphs[para_index][line_index]))
                     self.statistics[para_index, line_index, summary_index] += sim
 
 
@@ -102,12 +104,19 @@ class TokenizedDocSet():
 
         outfile.flush()
 
+def summary_file_pattern(docset):
+    return docset.topic_id.upper()[0:-1] + "-" + docset.topic_id[-1].upper() + "*"
+
 class PeerSummaries():
     def __init__(self, docset, peer_directory):
         self.summaries = list()
+        summary_count = 0
         for file in os.listdir(peer_directory):
-            if fnmatch.fnmatch(file, docset.topic_id + "*"):
+            if fnmatch.fnmatch(file, summary_file_pattern(docset)):
                 self.summaries.append(Summary(os.path.join(peer_directory, file)))
+                summary_count += 1
+
+        print('Found %d summary files in %s' % (summary_count, summary_file_pattern(docset)))
 
 if __name__ == '__main__':
     # Command Line Argument Parsing. Provides argument interpretation and help text.
