@@ -15,7 +15,7 @@ def train_counts(docsets, out_file):
 		num_docsets += 1
 		docset_words = preprocessor.words_from_docset(docset)
 		for word, count in docset_words.items():
-			if word in docset_counts:
+			if word in word_counts:
 				word_stats = word_counts[word]
 				word_stats[0] += 1 # docset count
 				word_stats[1] += count # word count
@@ -27,7 +27,6 @@ def train_counts(docsets, out_file):
 				word_counts[word] = word_stats
 		break # Test on only one docset
 
-	print("word counts: "+str(word_counts))
 	with open(out_file, 'w') as counts_file:
 
 		for word in word_counts:
