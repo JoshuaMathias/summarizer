@@ -39,7 +39,7 @@ def train_counts(docsets, out_file=None):
 def read_train_counts(word_counts_file):
 	word_counts = {}
 	num_docsets = 0
-	with open(out_file, 'w') as counts_file:
+	with open(word_counts_file, 'w') as counts_file:
 		for line in counts_file:
 			line = line.strip()
 			split_line = line.split()
