@@ -55,14 +55,12 @@ class TokenizedArticle():
 
     def compare_summary(self, summary):
         for summary_line_index in range(len(summary.line_tokens)):
-            summary_line_set = set(summary.line_tokens[summary_line_index])
             summary_line_4_grams = make_ngrams(summary.line_tokens[summary_line_index], 4)
             summary_index = summary_line_index if summary_line_index < 10 else 9
             for para_index in range(len(self.paragraphs)):
                 for line_index in range(len(self.paragraphs[para_index])):
                     sim = cosine_similarity_ngrams(summary_line_4_grams, make_ngrams(self.paragraphs[para_index][line_index], 4))
                     self.statistics[para_index, line_index, summary_index] += sim
-
 
 class Summary():
     def __init__(self, summary_filename):
@@ -75,32 +73,17 @@ class Summary():
 class TokenizedDocSet():
     def __init__(self, docset):
         self.articles = list()
+        self.line_count = list()
 
         for article in docset.articles:
             self.articles.append(TokenizedArticle(article))
 
-    def summary_sentence_order(self, outfile):
-        all_articles = list()
-        for article in self.articles:
-            line_count = 0
-            paragraph_count = 0
-            for paragraph in article.paragraphs:
-                sentence_count = 0
-                for sentence in paragraph:
-                    if len(all_articles) < (line_count + 1):
-                        all_articles.append(article.statistics[paragraph_count, sentence_count, 0])
-                    else:
-                        all_articles[line_count] += article.statistics[paragraph_count, sentence_count, 0]
-                    sentence_count += 1
-                    line_count += 1
-                paragraph_count += 1
+    def add_summary_line(self, line_number):
+        if len(self.line_count) < line_number:
+            for n in range(len(self.line_count), line_number + 1):
+                self.line_count.append(0)
 
-        line_no = 1
-        for weight in all_articles:
-            outfile.write('Line %d\t%s\n' % (line_no, weight))
-            line_no += 1
-
-        outfile.flush()
+        self.line_count[line_number] += 1
 
 class PeerSummaries():
     def __init__(self, docset, peer_directory):
@@ -108,6 +91,61 @@ class PeerSummaries():
         for file in os.listdir(peer_directory):
             if fnmatch.fnmatch(file, docset.topic_id + "*"):
                 self.summaries.append(Summary(os.path.join(peer_directory, file)))
+
+class WeightAverages():
+    def __init__(self):
+        self.value_table = list()
+        self.count_table = list()
+
+    def add_value(self, line_index, horiz_index, value, weight):
+        if len(self.value_table) < line_index:
+            for n in range(len(self.value_table), line_index + 1):
+                self.value_table.append(list())
+                self.count_table.append(list())
+
+        horiz_list = self.value_table[line_index]
+        count_list = self.count_table[line_index]
+        if len(horiz_list) < horiz_index:
+            for m in range(len(horiz_list), horiz_index + 1):
+                horiz_list.append(0.0)
+                count_list.append(0)
+
+        horiz_list[horiz_index] += value
+        count_list[horiz_index] += weight
+
+    def output_averages(self, outfile):
+        for l in range(len(self.value_table)):
+            for h in range(len(self.value_table[l])):
+                if self.count_table[l][h] > 0:
+                    outfile.write(self.value_table[l][h] / self.count_table[l][h])
+                else:
+                    outfile.write(0.0)
+                if h < len(self.value_table[l]) - 1:
+                    outfile.write (',')
+            outfile.write('\n')
+        outfile.flush()
+        outfile.close()
+
+class SentenceOrderTable(WeightAverages):
+    def __init__(self):
+        super().__init__()
+
+    def addDocSet(self, docset):
+        for article in docset.articles:
+            line_count = 0
+            paragraph_count = 0
+            for paragraph in article.paragraphs:
+                sentence_count = 0
+                for sentence in paragraph:
+                    for summary_line in range(0, 10):
+                        if docset.line_count[summary_line] > 0:
+                            self.add_value(summary_line, line_count,
+                                           article.statistics[paragraph_count, sentence_count, summary_line],
+                                           docset.line_count[summary_line])
+                    sentence_count += 1
+                    line_count += 1
+                paragraph_count += 1
+
 
 if __name__ == '__main__':
     # Command Line Argument Parsing. Provides argument interpretation and help text.
@@ -128,10 +166,15 @@ if __name__ == '__main__':
 
     for docset in topic_index.documentSets(docset_type='docseta'):
         peer_summaries = PeerSummaries(docset, args.peers)
-        outfile = open(docset.topic_id + "_line_weight_cos.txt", 'w')
+        outfile = open(docset.topic_id + "sentence_order.txt", 'w')
         tokenized_docset = TokenizedDocSet(docset)
+        sentence_order_table = SentenceOrderTable()
         for summary in peer_summaries.summaries:
+            for n in range(len(summary.line_tokens)):
+                tokenized_docset.add_summary_line(n)
+
             for article in tokenized_docset.articles:
                 article.compare_summary(summary)
-        tokenized_docset.summary_sentence_order(outfile)
 
+        sentence_order_table.addDocSet(tokenized_docset)
+        sentence_order_table.output_averages(outfile)
