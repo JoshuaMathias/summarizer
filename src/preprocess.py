@@ -125,7 +125,7 @@ class preprocess:
 					for paragraph in paragraphs:
 						sentences = self.preprocess_sents(paragraph)
 						for sentence in sentences:
-							words = self.preprocess_words(sentence)
+							words, _ = self.preprocess_words(sentence)
 							for word in words:
 								if word in docset_words:
 									docset_words[word] += 1
