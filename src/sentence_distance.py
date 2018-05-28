@@ -143,7 +143,7 @@ class SentenceOrderTable(WeightAverages):
             for paragraph in article.paragraphs:
                 sentence_count = 0
                 for sentence in paragraph:
-                    for summary_line in range(0, 10):
+                    for summary_line in range(10):
                         if docset.line_count[summary_line] > 0:
                             self.add_value(summary_line, line_count,
                                            article.statistics[paragraph_count, sentence_count, summary_line],
@@ -151,6 +151,28 @@ class SentenceOrderTable(WeightAverages):
                     sentence_count += 1
                     line_count += 1
                 paragraph_count += 1
+
+class ArticleOrderTable(WeightAverages):
+    def __init__(self):
+        super().__init__()
+
+    def addDocSet(self, docset):
+        for summary_line in range(10):
+            if docset.line_count[summary_line] > 0:
+                for article_index in range(len(docset.articles)):
+                    article_value = 0.0
+                    line_count = 0
+                    paragraph_count = 0
+                    article = docset.articles[article_index]
+                    for paragraph in article.paragraphs:
+                        sentence_count = 0
+                        for sentence in paragraph:
+                            article_value += article.statistics[paragraph_count, sentence_count, summary_line]
+                            sentence_count += 1
+                            line_count += 1
+                        paragraph_count += 1
+
+                    self.add_value(summary_line, article_index, article_value, docset.line_count[summary_line])
 
 def summary_file_pattern(docset):
     return docset.topic_id.upper()[0:-1] + "-" + docset.topic_id[-1].upper() + "*"
@@ -183,11 +205,11 @@ if __name__ == '__main__':
 
     topic_index = reader.read_topic_index_file(docset_type = 'docseta')
 
+    sentence_order_table = SentenceOrderTable()
+    article_order_table = ArticleOrderTable()
     for docset in topic_index.documentSets(docset_type='docseta'):
         peer_summaries = PeerSummaries(docset, args.peers)
-        outfile = open(docset.topic_id + "sentence_order.txt", 'w')
         tokenized_docset = TokenizedDocSet(docset)
-        sentence_order_table = SentenceOrderTable()
         for summary in peer_summaries.summaries:
             for n in range(len(summary.line_tokens)):
                 tokenized_docset.add_summary_line(n)
@@ -196,4 +218,10 @@ if __name__ == '__main__':
                 article.compare_summary(summary)
 
         sentence_order_table.addDocSet(tokenized_docset)
-        sentence_order_table.output_averages(outfile)
+        article_order_table.addDocSet(tokenized_docset)
+
+    sentence_outfile = open('SentenceOrder.csv')
+    sentence_order_table.output_averages(sentence_outfile)
+
+    article_outfile = open('ArticleOrder.csv')
+    article_order_table.output_averages(article_outfile)
