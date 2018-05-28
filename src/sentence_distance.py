@@ -144,7 +144,7 @@ class SentenceOrderTable(WeightAverages):
                 sentence_count = 0
                 for sentence in paragraph:
                     for summary_line in range(10):
-                        if docset.line_count[summary_line] > 0:
+                        if len(docset.line_count) > summary_line and docset.line_count[summary_line] > 0:
                             self.add_value(summary_line, line_count,
                                            article.statistics[paragraph_count, sentence_count, summary_line],
                                            docset.line_count[summary_line])
@@ -158,7 +158,7 @@ class ArticleOrderTable(WeightAverages):
 
     def addDocSet(self, docset):
         for summary_line in range(10):
-            if docset.line_count[summary_line] > 0:
+            if len(docset.line_count) > summary_line and docset.line_count[summary_line] > 0:
                 for article_index in range(len(docset.articles)):
                     article_value = 0.0
                     line_count = 0
@@ -175,7 +175,7 @@ class ArticleOrderTable(WeightAverages):
                     self.add_value(summary_line, article_index, article_value, docset.line_count[summary_line])
 
 def summary_file_pattern(docset):
-    return docset.topic_id.upper()[0:-1] + "-" + docset.topic_id[-1].upper() + "*"
+    return docset.topic_id.upper()[0:-1] + "*"
 
 class PeerSummaries():
     def __init__(self, docset, peer_directory):
@@ -220,8 +220,8 @@ if __name__ == '__main__':
         sentence_order_table.addDocSet(tokenized_docset)
         article_order_table.addDocSet(tokenized_docset)
 
-    sentence_outfile = open('SentenceOrder.csv')
+    sentence_outfile = open('SentenceOrder.csv', 'w')
     sentence_order_table.output_averages(sentence_outfile)
 
-    article_outfile = open('ArticleOrder.csv')
+    article_outfile = open('ArticleOrder.csv', 'w')
     article_order_table.output_averages(article_outfile)
