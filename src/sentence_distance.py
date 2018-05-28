@@ -42,6 +42,7 @@ class TokenizedArticle():
         self.num_paragraphs = len(article.paragraphs)
         self.max_sentences = 0
         self.paragraphs = list()
+        self.length = 0
 
         for paragraph_text in article.paragraphs:
             paragraph_tokens = list()
@@ -50,6 +51,7 @@ class TokenizedArticle():
 
             self.paragraphs.append(paragraph_tokens)
             self.max_sentences = max(self.max_sentences, len(paragraph_tokens))
+            self.length += len(paragraph_tokens)
 
         self.statistics = np.zeros((len(self.paragraphs), self.max_sentences, 10))
 
@@ -61,11 +63,6 @@ class TokenizedArticle():
                 for line_index in range(len(self.paragraphs[para_index])):
                     sim = cosine_similarity_ngrams(summary_line_4_grams, make_ngrams(self.paragraphs[para_index][line_index], 4))
                     self.statistics[para_index, line_index, summary_index] += sim
-
-    def len(self):
-        length = 0
-        for paragraph in self.paragraphs:
-            length += len(paragraph)
 
 class Summary():
     def __init__(self, summary_filename):
@@ -237,7 +234,7 @@ if __name__ == '__main__':
 
             for article in tokenized_docset.articles:
                 article.compare_summary(summary)
-                total_article_lines += article.len()
+                total_article_lines += article.length
                 num_articles += 1
 
         sentence_order_table.addDocSet(tokenized_docset)
