@@ -44,5 +44,5 @@ def read_train_counts(word_counts_file):
 			line = line.strip()
 			split_line = line.split()
 			if not split_line == "docsets":
-				word_counts[split_line[0]] = (split_line[1], split_line[2])
+				word_counts[split_line[0]] = (int(split_line[1]), int(split_line[2]))
 	return word_counts, num_docsets
