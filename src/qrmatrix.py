@@ -16,8 +16,20 @@ from nltk.tokenize import sent_tokenize, word_tokenize # for tokenizing sentence
 
 from scipy import spatial
 
+# tally: # times word appears in document
+# ac: number of articles (total article count)
+# dc: number of documents the word appears in
 def get_tfidf(tally, ac, dc):
     return tally * (math.log(ac / (1 + dc)))
+
+# tf * document frequency
+# Muliply by -1 so that it's a positive number (dc is always less than ac+1)
+def get_tfdf(tally, ac, dc, lowest_df):
+    return tally * (1+(math.log(dc / (1 + ac)) - lowest_df)) # Subtract lowest df to normalize and get a positive number (higher is better). Add 1 so we never get 0.
+
+# Document frequency from FastSum paper
+def get_doc_freq(ac, dc):
+    return dc / ac
 
 
 
@@ -274,7 +286,14 @@ def qr_sum(docset, config):
 
         article_length.append(article_word_count)
 
+    if len(words_docs) > 0:
+        lowest_word_docs = float("inf")
+        for word_docs in words_docs:
+            if len(word_docs) < lowest_word_docs:
+                lowest_word_docs = len(word_docs)
+
 # CREATE FEATURE VECTORS
+    lowest_df = math.log(lowest_word_docs) / (1 + article_count) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
         # print("\n\n", sentence[0], "\n", sentence[3], sentence[4])
 
@@ -282,9 +301,12 @@ def qr_sum(docset, config):
 
         for word in sentence[1]:
             if word in words_dict:
+                # word_val = words_tally[word]
                 # tfidf = get_tfidf(words_tally[word], article_count, len(words_docs[word]))
-                # feat_vec[words_dict[word]] = tfidf
-                feat_vec[words_dict[word]] = words_tally[word]
+                word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]), lowest_df)
+                # word_val = get_doc_freq(article_count, len(words_docs[word]))
+                # word_val *= words_tally[word]
+                feat_vec[words_dict[word]] = word_val
 
         # print(sum(feat_vec))
 
@@ -294,7 +316,7 @@ def qr_sum(docset, config):
     selected_content = [] # list of sentences selected for
 
     # while 100 words not used up and shortest sentence isn't too long
-    while word_count < 100 and word_count + short < 100:
+    while word_count <= 100 and word_count + short <= 100:
         for sentence in all_sentences:
 
             # TODO: implement computation for t and g values from CLASSY [2001]
