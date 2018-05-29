@@ -85,9 +85,9 @@ class TopicIndex():
     def documentSets(self, docset_type='all'):
         for topic in self.topics:
             for docset in topic.docsets:
+                print("current docset type: "+str(docset.type.lower())+" docset_type param: "+str(docset_type))
                 if docset_type == 'docseta' or docset_type == 'docsetb':
-                    print("current: docset type: "+str(docset.type.lower())+" docset_type param: "+str(docset_type))
                     if docset.type.lower() == docset_type:
                         yield docset
-                else:
+                else if docset_type == 'all':
                     yield docset
