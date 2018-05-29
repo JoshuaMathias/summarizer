@@ -53,7 +53,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
     global STOP_TOKENIZE        # jgreve: these flags are additions to the original D3 logic, note that
     global STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
     global STOP_DEBUG_CUTOFF
-
+    print("num_trained_docsets: "+str(num_trained_docsets))
     word_count = 0
     fname='qr_sum' # for labeling log statments.
 
@@ -185,13 +185,14 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
             if word in words_dict:
                 # word_val = words_tally[word]
                 word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]), lowest_df)
-                trained_word_count = 0
-                trained_docset_count = 0
-                if word in trained_word_counts:
-                    word_stats = trained_word_counts[word]
-                    trained_word_count = word_stats[0]
-                    trained_docset_count = word_stats[1]
-                word_val = get_tfidf(word_val, num_trained_docsets, trained_docset_count)
+                if num_trained_docsets > 0:
+                    trained_word_count = 0
+                    trained_docset_count = 0
+                    if word in trained_word_counts:
+                        word_stats = trained_word_counts[word]
+                        trained_word_count = word_stats[0]
+                        trained_docset_count = word_stats[1]
+                    word_val = get_tfidf(word_val, num_trained_docsets, trained_docset_count)
                 # word_val = get_doc_freq(article_count, len(words_docs[word]))
                 # word_val *= words_tally[word]
                 feat_vec[words_dict[word]] = word_val
