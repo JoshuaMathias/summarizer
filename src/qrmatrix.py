@@ -95,7 +95,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
         # Extract date from article id
         title = article.id
         date = "x"
-        # print(title)
+        print("title: "+str(title)) 
         if len(title) < 17:
             date = title[3:11]
         else:
