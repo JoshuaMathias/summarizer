@@ -176,7 +176,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
 # CREATE FEATURE VECTORS
     highest_word_count = 0
     for _, trained_word_stats in trained_word_counts.iter():
-        if highest_word_count < trained_word_stats[0]
+        if highest_word_count < trained_word_stats[0]:
             highest_word_count = trained_word_stats[0]
     lowest_df = math.log(lowest_word_docs / highest_word_count) / (1 + (article_count / num_trained_docsets) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
