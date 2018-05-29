@@ -19,6 +19,7 @@ import sys
 
 # import fss
 import qrmatrix
+import train_counts
 
 class Summarizer():
     def __init__(self, nwords):
@@ -71,6 +72,7 @@ if __name__ == "__main__":
     dir_path = os.path.dirname(os.path.realpath(__file__))
     argparser = argparse.ArgumentParser(description='summarizer.py v. '+version+' by team #e2jkplusplus')
     argparser.add_argument('-c', '--config', metavar='CONFIG', default=os.path.join(dir_path, 'config.yml'), help='Config File(s)')
+    argparser.add_argument('-f', '--final', action="store_true", help='Run final evaluation on evaltest data')
     args = argparser.parse_args()
 
     u.eprint('Hello from "summarizer.py" version '+version+' (by team "#e2jkplusplus").')
@@ -87,35 +89,55 @@ if __name__ == "__main__":
     logger.info('config.AQUAINT2_DIRECTORY       ="%s"', config.AQUAINT2_DIRECTORY )
     logger.info('config.ONE_FILE                 ="%s"', config.ONE_FILE )
     logger.info('config.ARTICLE_FILE             ="%s"', config.ARTICLE_FILE )
+    logger.info('config.WORD_COUNTS_FILE             ="%s"', config.WORD_COUNTS_FILE )
 
     summary_word_counts = { }
 
     source_description = "*unkown*" # set this to a suitable label for our statistics summary.
     if config.AQUAINT:
-        index_reader = topic_index_reader.TopicIndexReader(config.aquaint_topic_file_path(),
+        if args.final:
+            test_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TEST_TOPIC_INDEX_FILE,
+                                                               aquaint1 = config.AQUAINT1_DIRECTORY,
+                                                               aquaint2 = config.AQUAINT2_DIRECTORY,
+                                                               dbname = config.SHELVE_DB_TEST)
+        else:
+            test_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TEST_TOPIC_INDEX_FILE,
+                                                               aquaint1 = config.AQUAINT1_DIRECTORY,
+                                                               aquaint2 = config.AQUAINT2_DIRECTORY,
+                                                               dbname = config.SHELVE_DB_DEV)
+        train_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TRAIN_TOPIC_INDEX_FILE,
                                                            aquaint1 = config.AQUAINT1_DIRECTORY,
                                                            aquaint2 = config.AQUAINT2_DIRECTORY,
-                                                           dbname = 'shelve_db')
+                                                           dbname = config.SHELVE_DB_TRAIN)
         # todo: move shelve_db into config.yaml ? (jgreve)
         #u.eprint('index_reader={}'.format(index_reader) )
-        logger.info('index_reader=%s', index_reader )
+        logger.info('test_index_reader=%s', test_index_reader )
 
         logger.info('config.MAX_WORDS=%s', config.MAX_WORDS)
         smry = Summarizer(config.MAX_WORDS)
 
         #logger.info('config.topic_file_path()="%s"', config.aquaint_topic_file_path())
-        topic_index = index_reader.read_topic_index_file(docset_type = 'docseta')
-        logger.info( 'topic_index=%s', topic_index )
+        test_topic_index = test_index_reader.read_topic_index_file(docset_type = 'docseta')
+        logger.info( 'test_topic_index=%s', test_topic_index )
+
+        train_topic_index = train_index_reader.read_topic_index_file()
+        # Only train counts if the word counts file is not found
+        if not os.path.exists(config.WORD_COUNTS_FILE):
+            logger.debug('\n\n--- Writing word frequencies of training set to '+config.WORD_COUNTS_FILE+' ---')
+            trained_word_counts, num_trained_docsets = train_counts.train_counts(train_topic_index.documentSets(), config.WORD_COUNTS_FILE)
+        else:
+            trained_word_counts, num_trained_docsets = train_counts.read_train_counts(config.WORD_COUNTS_FILE)
+
         logger.debug( '\n\n--- for docset in topic_index.... ---' )
-        source_description = str(topic_index)
-        for docset in topic_index.documentSets(docset_type='docseta'):
+        source_description = str(test_topic_index)
+        for docset in test_topic_index.documentSets(docset_type='docseta'):
             msg = 'processing %s' % docset
             u.eprint( msg  ) # high level summary to stdout for our user.
             logger.info( msg )
             print('%s : %s' % (docset.id, docset.topic_title)) # requried in stdout
             smry.summary = ''
             smry.summary_size = 0
-            summary_text = qrmatrix.qr_sum(docset, config)
+            summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets)
             summary_word_count = len( summary_text.split() )
             logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
             summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)
@@ -131,6 +153,7 @@ if __name__ == "__main__":
             logger.info('article=%s', article )
             print(smry.summarize(article))
 
-    qrmatrix.write_statistics( source_description ) # write some output for what happened.
+
+    # qrmatrix.write_statistics( source_description ) # write some output for what happened.
     u.write_values( sys.stderr, "summary_word_counts", summary_word_counts)
     print('Done.')
