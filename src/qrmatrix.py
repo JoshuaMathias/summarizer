@@ -179,6 +179,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
         if highest_word_count < trained_word_stats[0]:
             highest_word_count = trained_word_stats[0]
     lowest_df = math.log(lowest_word_docs / highest_word_count) / (1 + (article_count / num_trained_docsets)) # Used to normalize (and make positive) the value of tfdf for each word
+    # lowest_df = math.log(lowest_word_docs) / (1 + (article_count)) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
         # print("\n\n", sentence[0], "\n", sentence[3], sentence[4])
 
@@ -188,8 +189,8 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
             if word in words_dict:
                 # word_val = words_tally[word]
                 trained_word_count = 1
+                trained_docset_count = 1
                 if num_trained_docsets > 0:
-                    trained_docset_count = 0
                     if word in trained_word_counts:
                         word_stats = trained_word_counts[word]
                         trained_word_count = word_stats[0]
