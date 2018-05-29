@@ -21,12 +21,12 @@ from scipy import spatial
 # ac: number of articles (total article count)
 # dc: number of documents the word appears in
 def get_tfidf(tally, ac, dc):
-    return tally * (10 + math.log10(ac / (1 + dc)))
+    return tally * (ac + math.log10(ac / (1 + dc)))
 
 # tf * document frequency
 # Muliply by -1 so that it's a positive number (dc is always less than ac+1)
 def get_tfdf(tally, ac, dc, lowest_df):
-    return tally * (10 + (math.log10(dc / (ac)))) # Subtract lowest df to normalize and get a positive number (higher is better). Add 1 so we never get 0.
+    return tally * (ac + (math.log10(dc / (ac)))) # Subtract lowest df to normalize and get a positive number (higher is better). Add 1 so we never get 0.
 
 
 # Document frequency from FastSum paper
