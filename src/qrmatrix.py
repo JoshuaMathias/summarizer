@@ -178,8 +178,8 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
     # for _, trained_word_stats in trained_word_counts.items():
     #     if highest_word_count < trained_word_stats[0]:
     #         highest_word_count = trained_word_stats[0]
-    lowest_df = math.log(lowest_word_docs) / (1 + (article_count / num_trained_docsets)) # Used to normalize (and make positive) the value of tfdf for each word
-    # lowest_df = math.log(lowest_word_docs) / (1 + (article_count)) # Used to normalize (and make positive) the value of tfdf for each word
+    # lowest_df = math.log(lowest_word_docs) / (1 + (article_count / num_trained_docsets)) # Used to normalize (and make positive) the value of tfdf for each word
+    lowest_df = math.log(lowest_word_docs) / (1 + (article_count)) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
         # print("\n\n", sentence[0], "\n", sentence[3], sentence[4])
 
@@ -188,14 +188,14 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
         for word in sentence[1]:
             if word in words_dict:
                 # word_val = words_tally[word]
-                trained_word_count = 1
-                trained_docset_count = 1
-                if num_trained_docsets > 0:
-                    if word in trained_word_counts:
-                        word_stats = trained_word_counts[word]
-                        trained_word_count = word_stats[0]
-                        trained_docset_count = word_stats[1]
-                word_val = get_tfdf(words_tally[word], article_count / num_trained_docsets, len(words_docs[word]) / trained_docset_count, lowest_df)
+                # trained_word_count = 1
+                # trained_docset_count = 1
+                # if num_trained_docsets > 0:
+                #     if word in trained_word_counts:
+                #         word_stats = trained_word_counts[word]
+                #         trained_word_count = word_stats[0]
+                #         trained_docset_count = word_stats[1]
+                word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]), lowest_df)
                 # word_val = get_tfidf(words_tally[word], num_trained_docsets, trained_docset_count)
                 # word_val = get_doc_freq(article_count, len(words_docs[word]))
                 # word_val *= words_tally[word]
