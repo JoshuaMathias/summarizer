@@ -1,5 +1,5 @@
 # qrmatrix.py.d3b, attempt to recreate qrmatrix.py.d3err
-# qrmatrix.py.d3_orig, ROUGE-1, 0.22264, 0.25731, 0.23795  
+# qrmatrix.py.d3_orig, ROUGE-1, 0.22264, 0.25731, 0.23795
 # this is the official D3 version.
 # This function taks a list of documents (from class) and writes a single file to summary
 import local_util as u
@@ -52,7 +52,7 @@ def get_doc_freq(ac, dc):
 
 
 
-def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
+def qr_sum(docset, config, _word_counts, num__docsets):
     global STOP_TOKENIZE        # jgreve: these flags are additions to the original D3 logic, note that
     global STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
     global STOP_DEBUG_CUTOFF
@@ -76,6 +76,15 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
 
     article_length = [] # num_words
 
+    # Topic words
+    # --------------------------
+    raw_topic_words = word_tokenize(docset.topic_title)
+
+    topic_words = []
+
+    for tw in raw_topic_words:
+        topic_words.append(tw.lower())
+
     # TODO: Define method of refusing fragment sentences
     short = 100 # temporary solution to fragment sentences making it into summary
 
@@ -97,7 +106,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
         # Extract date from article id
         title = article.id
         date = "x"
-        print("title: "+str(title)) 
+        print("title: "+str(title))
         if len(title) < 17:
             date = title[3:11]
         else:
@@ -178,10 +187,10 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
 
 # CREATE FEATURE VECTORS
     # highest_word_count = 0
-    # for _, trained_word_stats in trained_word_counts.items():
-    #     if highest_word_count < trained_word_stats[0]:
-    #         highest_word_count = trained_word_stats[0]
-    # lowest_df = math.log(lowest_word_docs) / (1 + (article_count / num_trained_docsets)) # Used to normalize (and make positive) the value of tfdf for each word
+    # for _, _word_stats in _word_counts.items():
+    #     if highest_word_count < _word_stats[0]:
+    #         highest_word_count = _word_stats[0]
+    # lowest_df = math.log(lowest_word_docs) / (1 + (article_count / num__docsets)) # Used to normalize (and make positive) the value of tfdf for each word
     lowest_df = math.log(lowest_word_docs / (1 + (article_count))) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
         # print("\n\n", sentence[0], "\n", sentence[3], sentence[4])
@@ -191,18 +200,24 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
         for word in sentence[1]:
             if word in words_dict:
                 #word_val = words_tally[word]
-                trained_word_count = 1
-                trained_docset_count = 1
-                if num_trained_docsets > 0:
-                    if word in trained_word_counts:
-                        word_stats = trained_word_counts[word]
-                        trained_docset_count = word_stats[0]
-                        trained_word_count = word_stats[1]
-                word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]), lowest_df)
-                word_val = get_tfidf(word_val, num_trained_docsets, trained_docset_count)
+                _word_count = 1
+                _docset_count = 1
+                if num__docsets > 0:
+                    if word in _word_counts:
+                        word_stats = _word_counts[word]
+                        _docset_count = word_stats[0]
+                        _word_count = word_stats[1]
+
+                topic_weighted_tally = words_tally[word]
+
+                if word in topic_words:
+                    topic_weighted_tally *= 3.5 # weight of 3.5 returns the best results. 4 is good too.
+
+                word_val = get_tfdf(topic_weighted_tally, article_count, len(words_docs[word]), lowest_df)
+                word_val = get_tfidf(word_val, num__docsets, _docset_count)
                 # word_val = get_doc_freq(article_count, len(words_docs[word]))
                 # word_val *= words_tally[word]
-                # print("word val: "+str(word_val)+" article count: "+str(article_count)+" words_docs count: "+str(len(words_docs[word]))+" num_trained_docsets: "+str(num_trained_docsets)+" trained_docset_count: "+str(trained_docset_count))
+                # print("word val: "+str(word_val)+" article count: "+str(article_count)+" words_docs count: "+str(len(words_docs[word]))+" num__docsets: "+str(num__docsets)+" _docset_count: "+str(_docset_count))
                 feat_vec[words_dict[word]] = word_val
 
         # print(sum(feat_vec))
@@ -284,7 +299,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
 
 # WRITE SUMMARY TO FILE
     #directory = config.DEFAULT_SUMMARY_DIR
-    directory = config.OUTPUT_SUMMARY_DIRECTORY # jgreve: confg.yml files dont set the defaults. 
+    directory = config.OUTPUT_SUMMARY_DIRECTORY # jgreve: confg.yml files dont set the defaults.
 
     # u.eprint('   docset.id      ="{}"'.format(docset.id)) # both appear to be the same
     # u.eprint('   docset.topic_id="{}"'.format(docset.topic_id))
