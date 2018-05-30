@@ -7,7 +7,7 @@
 
 # Caller needs to set the E2JK_CONFIG to the config file we should be using.
 
-pip3 install -r requirements.txt
+# pip3 install -r requirements.txt # You need to run this yourself on your system/patas.
 
 export E2JK_CONFIG=bin/config_patas_D4.yml
 echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
