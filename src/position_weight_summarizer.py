@@ -49,12 +49,20 @@ class PositionWeights():
             text_list = list()
             for paragraph in article.paragraphs:
                 text_list += nltk.tokenize.sent_tokenize(paragraph)
-            article_list += text_list
+            article_list.append(text_list)
+
+        print('ArticleIndex is of length %d' % len(article_list))
+        print('Article One is of length %d' % len(article_list[0]))
 
         summary = list()
         summary_text = ''
         while len(summary_text.split()) < 100:
-            candidate_sentence = article_list(self.argmax(len(summary)))
+            cand_idx = self.argmax(len(summary))
+            idx1 = cand_idx[0]
+            idx2 = cand_idx[1]
+            print('Hammering it home, index is %d %d' % (idx1, idx2))
+            print('Sentence is "%s"' % article_list[idx1][idx2])
+            candidate_sentence = article_list[idx1][idx2]
             if len(candidate_sentence.split()) + len(summary_text.split()) < 100:
                 if len(summary_text) > 0:
                     summary_text += ' ' + candidate_sentence

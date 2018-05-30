@@ -12,7 +12,7 @@ logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 import argparse
 import topic_index_reader
 import sum_config
-import position_weights
+import position_weight_summarizer
 import nltk
 import os
 import sys
@@ -88,9 +88,21 @@ if __name__ == "__main__":
     logger.info('config.AQUAINT                  ="%s"', config.AQUAINT )
     logger.info('config.AQUAINT1_DIRECTORY       ="%s"', config.AQUAINT1_DIRECTORY )
     logger.info('config.AQUAINT2_DIRECTORY       ="%s"', config.AQUAINT2_DIRECTORY )
-    logger.info('config.ONE_FILE                 ="%s"', config.ONE_FILE )
     logger.info('config.ARTICLE_FILE             ="%s"', config.ARTICLE_FILE )
-    logger.info('config.WORD_COUNTS_FILE             ="%s"', config.WORD_COUNTS_FILE )
+    logger.info('config.WORD_COUNTS_FILE         ="%s"', config.WORD_COUNTS_FILE )
+
+    logger.info('config.ARTICLE_WEIGHT_FILE      ="%s"', config.ARTICLE_WEIGHT_FILE )
+    logger.info('config.SENTENCE_WEIGHT_FILE     ="%s"', config.SENTENCE_WEIGHT_FILE )
+
+    if config.QRMATRIX:
+        logger.info('config.QRMATRIX          = TRUE')
+    else:
+        logger.info('config.QRMATRIX          = FALSE')
+
+    if config.SENTENCE_LOCATION:
+        logger.info('config.SENTENCE_LOCATION = TRUE')
+    else:
+        logger.info('config.QRMATRIX          = FALSE')
 
     summary_word_counts = { }
 
@@ -132,7 +144,8 @@ if __name__ == "__main__":
 
         logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(test_topic_index)
-        summary_weights = position_weights.PositionWeights(config.ARTICLE_WEIGHT_FILE, config.SENTENCE_WEIGHT_FILE)
+        logger.info('Reading weights from "%s" and "%s"', config.ARTICLE_WEIGHT_FILE, config.SENTENCE_WEIGHT_FILE )
+        summary_weights = position_weight_summarizer.PositionWeights(config.ARTICLE_WEIGHT_FILE, config.SENTENCE_WEIGHT_FILE)
         for docset in test_topic_index.documentSets(docset_type='docseta'):
             msg = 'processing %s' % docset
             u.eprint( msg  ) # high level summary to stdout for our user.
@@ -146,9 +159,12 @@ if __name__ == "__main__":
                 logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
                 summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)
             elif config.SENTENCE_LOCATION:
+                logger.info('summary_weights.position_sum(docset (%s))', docset.id)
                 summary_text = summary_weights.position_sum(docset)
                 summary_word_count = len(summary_text.split())
                 logger.info('summary_weights.position_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text)
+                print('summary_weights.position_sum(docset=%s): summary_word_count=%d, summary_text="%s"' % (docset, summary_word_count, summary_text))
+
                 summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count, 0)
 
     # qrmatrix.write_statistics( source_description ) # write some output for what happened.
