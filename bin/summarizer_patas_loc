@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# jgreve: Time for SCRIPTPATH to die, too much of a headache to
+# try and keep everything aligned. (2018-05-13)
+# Instead we'll just run bin/scripts from the project folder.
+# (Which is is pretty much what we've always been doing)
+
+# Caller needs to set the E2JK_CONFIG to the config file we should be using.
+
+#export E2JK_CONFIG=bin/config_patas_D3jg.yml
+export E2JK_CONFIG=bin/config_patas_loc_D4.yml
+echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
+
+bin/summarizer -c "$E2JK_CONFIG"
