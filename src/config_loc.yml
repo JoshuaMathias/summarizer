@@ -6,7 +6,7 @@ aquaint:
     aquaint1_directory: src/aquaint_test1
     aquaint2_directory: src/aquaint_test2
 
-    aquaint_doc_dir: 
+    aquaint_doc_dir:
     aquaint_topic_index: src/GuidedSumm10_test_topics.xml
 
 output:
@@ -15,3 +15,6 @@ output:
     max_words: 100
 
 qrmatrix:
+sentence_location:
+    article_weight_file: outputs/position_data/SummaryOrderByArticle-20180528-134057.csv
+    sentence_weight_file: outputs/position_data/SummaryOrderBySentence-20180528-134057.csv

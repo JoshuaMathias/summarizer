@@ -12,6 +12,7 @@ logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 import argparse
 import topic_index_reader
 import sum_config
+import position_weights
 import nltk
 import os
 import sys
@@ -94,6 +95,7 @@ if __name__ == "__main__":
     summary_word_counts = { }
 
     source_description = "*unkown*" # set this to a suitable label for our statistics summary.
+
     if config.AQUAINT:
         if args.final:
             test_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TEST_TOPIC_INDEX_FILE,
@@ -130,6 +132,7 @@ if __name__ == "__main__":
 
         logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(test_topic_index)
+        summary_weights = position_weights.PositionWeights(config.ARTICLE_WEIGHT_FILE, config.SENTENCE_WEIGHT_FILE)
         for docset in test_topic_index.documentSets(docset_type='docseta'):
             msg = 'processing %s' % docset
             u.eprint( msg  ) # high level summary to stdout for our user.
@@ -137,22 +140,16 @@ if __name__ == "__main__":
             print('%s : %s' % (docset.id, docset.topic_title)) # requried in stdout
             smry.summary = ''
             smry.summary_size = 0
-            summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets)
-            summary_word_count = len( summary_text.split() )
-            logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
-            summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)
-
-    elif config.ONE_FILE:
-        smry = Summarizer(config.MAX_WORDS)
-
-        u.eprint('config.ARTICLE_FILE="{}"'.format( config.ARTICLE_FILE ))
-        source_description = str(config.ARTICLE_FILE)
-        articles = content_provider.ContentReader().read_raw_files(config.ARTICLE_FILE)
-
-        for article in articles:
-            logger.info('article=%s', article )
-            print(smry.summarize(article))
-
+            if config.QRMATRIX:
+                summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets)
+                summary_word_count = len( summary_text.split() )
+                logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
+                summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)
+            elif config.SENTENCE_LOCATION:
+                summary_text = summary_weights.position_sum(docset)
+                summary_word_count = len(summary_text.split())
+                logger.info('summary_weights.position_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text)
+                summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count, 0)
 
     # qrmatrix.write_statistics( source_description ) # write some output for what happened.
     u.write_values( sys.stderr, "summary_word_counts", summary_word_counts)

@@ -19,6 +19,9 @@ class SummaryConfig():
     DEFAULT_TEAM_ID = 9
     DEFAULT_RELEASE_TITLE = 'Naruto ++'
 
+    DEFAULT_ARTICLE_WEIGHT_FILE = 'outputs/position_data/sample_article_data.csv'
+    DEFAULT_SENTENCE_WEIGHT_FILE = 'outputs/position_data/sample_sentence_data.csv'
+
     def __init__(self, config_file):
         with open(config_file, 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
@@ -82,7 +85,17 @@ class SummaryConfig():
                                                     SummaryConfig.DEFAULT_MAX_WORDS)
 
         self.AQUAINT = 'aquaint' in cfg
-        self.ONE_FILE = 'one_file' in cfg and self.AQUAINT == False
+        self.QRMATRIX = 'qrmatrix' in cfg
+        self.SENTENCE_LOCATION = 'sentence_location' in cfg
+
+        self.ARTICLE_WEIGHT_FILE = self.__read_config_val_2__(cfg,
+                                                              'sentence_location',
+                                                              'article_weight_file',
+                                                              SummaryConfig.DEFAULT_ARTICLE_WEIGHT_FILE)
+        self.SENTENCE_WEIGHT_FILE = self.__read_config_val_2__(cfg,
+                                                               'sentence_location',
+                                                               'sentence_weight_file',
+                                                               SummaryConfig.DEFAULT_SENTENCE_WEIGHT_FILE)
 
         self.ARTICLE_FILE = self.__read_config_val_2__(cfg,
                                                        'one_file',
