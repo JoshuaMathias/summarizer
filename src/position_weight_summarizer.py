@@ -40,15 +40,17 @@ class PositionWeights():
         return self.article_weights.weight_value(summary_index, article_index) * self.sentence_weights.weight_value(summary_index, sentence_index)
 
     def sortedValues(self, summary_index):
+        if summary_index > 9:
+            summary_index = 9
         return self.combined_weights[summary_index].argsort()[::-1]
 
     def select_sentence(self, summary_idx, summary, article_list, available_space):
         cand_idcs = self.sortedValues(summary_idx)
         for idx in cand_idcs:
-            article_idx = idx / self.sentence_weights.max_horizontal
+            article_idx = int(idx / self.sentence_weights.max_horizontal)
             sentence_idx = idx % self.sentence_weights.max_horizontal
             if len(article_list) > article_idx and len(article_list[article_idx]) > sentence_idx:
-                candidate_sentence = article_list[article_idx, sentence_idx]
+                candidate_sentence = article_list[article_idx][sentence_idx]
                 if candidate_sentence not in summary and len(candidate_sentence.split()) <= available_space:
                     return candidate_sentence
 
@@ -61,9 +63,6 @@ class PositionWeights():
             for paragraph in article.paragraphs:
                 text_list += nltk.tokenize.sent_tokenize(paragraph)
             article_list.append(text_list)
-
-        print('ArticleIndex is of length %d' % len(article_list))
-        print('Article One is of length %d' % len(article_list[0]))
 
         summary = list()
         summary_text = ''
