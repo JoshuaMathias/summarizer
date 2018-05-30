@@ -88,5 +88,5 @@ class TopicIndex():
                 if docset_type == 'docseta' or docset_type == 'docsetb':
                     if docset.type.lower() == docset_type:
                         yield docset
-                else:
+                elif docset_type == 'all':
                     yield docset
