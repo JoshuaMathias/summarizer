@@ -150,7 +150,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets, summary_wei
                     weights = [1.0] * 10
                     if config.SENTENCE_LOCATION:
                         for summary_line_idx in range(10):
-                            weights[summary_line_idx] = 1.0 + summary_weights.combined_weight(summary_line_idx, article_count, sent_index)
+                            weights[summary_line_idx] = 1.0 + (summary_weights.combined_weight(summary_line_idx, article_count, sent_index) * config.SENTENCE_LOCATION_WEIGHT_FACTOR)
                     all_sentences.append([sentence, norm_words, [None], sentence_position, len(article_length), 0, priority, weights])
                     if len(words) < short:
                         short = len(words)

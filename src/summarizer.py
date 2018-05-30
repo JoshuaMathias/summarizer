@@ -99,6 +99,7 @@ if __name__ == "__main__":
 
     if config.SENTENCE_LOCATION:
         logger.info('config.SENTENCE_LOCATION = TRUE')
+        logger.info('config.SENTENCE_LOCATION_WEIGHT_FACTOR = %f', config.SENTENCE_LOCATION_WEIGHT_FACTOR)
     else:
         logger.info('config.SENTENCE_LOCATION = FALSE')
 
