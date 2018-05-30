@@ -7,8 +7,21 @@
 
 # Caller needs to set the E2JK_CONFIG to the config file we should be using.
 
-#export E2JK_CONFIG=bin/config_patas_D3jg.yml
 export E2JK_CONFIG=bin/config_patas_D4.yml
 echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
 
+# Setup Stanford CoreNLP Server
+echo "Setting up Stanford Server"
+# source "bin/coref2/bin/activate"
+
+# export CORE_NLP="stanford-corenlp-full-2018-02-27"
+export CORE_NLP="/NLP_TOOLS/CoreNLP"
+
+python3 -m pynlp -t 600000 & # Dont throw timeout exceptions until 10 min lockup
+
+sleep 10s # Allow server to initiate
+
 bin/summarizer -c "$E2JK_CONFIG"
+
+# shutdown Stanford server
+wget "localhost:9000/shutdown?key=`cat /tmp/corenlp.shutdown`" -O -

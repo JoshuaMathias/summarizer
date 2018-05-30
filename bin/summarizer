@@ -12,14 +12,15 @@
 #   Mon May 21 15:45:19 PDT 2018
 
 # Setup Stanford CoreNLP Server
-# echo "Setting up Stanford Server"
+echo "Setting up Stanford Server"
 # source "bin/coref2/bin/activate"
 
 # export CORE_NLP="stanford-corenlp-full-2018-02-27"
+export CORE_NLP="/NLP_TOOLS/CoreNLP"
 
-# python3 -m pynlp -t 600000 & # Dont throw timeout exceptions until 10 min lockup
+python3 -m pynlp -t 600000 & # Dont throw timeout exceptions until 10 min lockup
 
-# sleep 10s # Allow server to initiate
+sleep 10s # Allow server to initiate
 
 # environment setup things are (hopefully) all consolidated in bin/ej2k.env.
 echo ""
@@ -81,6 +82,6 @@ fi
 echo "$0: after \"$step\" - ran ok."
 
 # shutdown Stanford server
-# wget "localhost:9000/shutdown?key=`cat /tmp/corenlp.shutdown`" -O -
+wget "localhost:9000/shutdown?key=`cat /tmp/corenlp.shutdown`" -O -
 
 echo "$0: Done." >&2
