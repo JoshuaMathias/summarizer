@@ -94,15 +94,13 @@ if __name__ == "__main__":
     logger.info('config.ARTICLE_WEIGHT_FILE      ="%s"', config.ARTICLE_WEIGHT_FILE )
     logger.info('config.SENTENCE_WEIGHT_FILE     ="%s"', config.SENTENCE_WEIGHT_FILE )
 
-    if config.QRMATRIX:
-        logger.info('config.QRMATRIX          = TRUE')
-    else:
-        logger.info('config.QRMATRIX          = FALSE')
+    if config.NO_QRMATRIX:
+        logger.info('config.NO_QRMATRIX          = QR Matrix Disabled')
 
     if config.SENTENCE_LOCATION:
         logger.info('config.SENTENCE_LOCATION = TRUE')
     else:
-        logger.info('config.QRMATRIX          = FALSE')
+        logger.info('config.SENTENCE_LOCATION = FALSE')
 
     summary_word_counts = { }
 
@@ -153,7 +151,7 @@ if __name__ == "__main__":
             print('%s : %s' % (docset.id, docset.topic_title)) # requried in stdout
             smry.summary = ''
             smry.summary_size = 0
-            if config.QRMATRIX:
+            if not config.NO_QRMATRIX:
                 summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets)
                 summary_word_count = len( summary_text.split() )
                 logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )

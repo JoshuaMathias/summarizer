@@ -85,7 +85,7 @@ class SummaryConfig():
                                                     SummaryConfig.DEFAULT_MAX_WORDS)
 
         self.AQUAINT = 'aquaint' in cfg
-        self.QRMATRIX = 'qrmatrix' in cfg
+        self.NO_QRMATRIX = 'noqrmatrix' in cfg
         self.SENTENCE_LOCATION = 'sentence_location' in cfg
 
         self.ARTICLE_WEIGHT_FILE = self.__read_config_val_2__(cfg,

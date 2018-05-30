@@ -13,5 +13,3 @@ output:
     summary_dir: outputs/D2
     results_dir: results
     max_words: 100
-
-qrmatrix:
