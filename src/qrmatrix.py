@@ -21,12 +21,15 @@ from scipy import spatial
 # ac: number of articles (total article count)
 # dc: number of documents the word appears in
 def get_tfidf(tally, ac, dc):
-    return tally * (math.log(ac / (1 + dc)))
+    base = 10
+    return tally * ((base/(1 + dc))+1 + math.log10(ac / (1 + dc)))
 
 # tf * document frequency
 # Muliply by -1 so that it's a positive number (dc is always less than ac+1)
 def get_tfdf(tally, ac, dc, lowest_df):
-    return tally * (1+(math.log(dc / (1 + ac)) - lowest_df)) # Subtract lowest df to normalize and get a positive number (higher is better). Add 1 so we never get 0.
+    base = 10
+    return tally * (ac/base+1 + (math.log10(dc / (ac)))) # Add ac/base, which is 1 since there are 10 articles in a docset. This ensures >= 0.
+
 
 # Document frequency from FastSum paper
 def get_doc_freq(ac, dc):
@@ -94,7 +97,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
         # Extract date from article id
         title = article.id
         date = "x"
-        # print(title)
+        print("title: "+str(title)) 
         if len(title) < 17:
             date = title[3:11]
         else:
@@ -179,7 +182,7 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
     #     if highest_word_count < trained_word_stats[0]:
     #         highest_word_count = trained_word_stats[0]
     # lowest_df = math.log(lowest_word_docs) / (1 + (article_count / num_trained_docsets)) # Used to normalize (and make positive) the value of tfdf for each word
-    lowest_df = math.log(lowest_word_docs) / (1 + (article_count)) # Used to normalize (and make positive) the value of tfdf for each word
+    lowest_df = math.log(lowest_word_docs / (1 + (article_count))) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
         # print("\n\n", sentence[0], "\n", sentence[3], sentence[4])
 
@@ -187,18 +190,19 @@ def qr_sum(docset, config, trained_word_counts, num_trained_docsets):
 
         for word in sentence[1]:
             if word in words_dict:
-                # word_val = words_tally[word]
-                # trained_word_count = 1
-                # trained_docset_count = 1
-                # if num_trained_docsets > 0:
-                #     if word in trained_word_counts:
-                #         word_stats = trained_word_counts[word]
-                #         trained_word_count = word_stats[0]
-                #         trained_docset_count = word_stats[1]
+                #word_val = words_tally[word]
+                trained_word_count = 1
+                trained_docset_count = 1
+                if num_trained_docsets > 0:
+                    if word in trained_word_counts:
+                        word_stats = trained_word_counts[word]
+                        trained_docset_count = word_stats[0]
+                        trained_word_count = word_stats[1]
                 word_val = get_tfdf(words_tally[word], article_count, len(words_docs[word]), lowest_df)
-                # word_val = get_tfidf(words_tally[word], num_trained_docsets, trained_docset_count)
+                word_val = get_tfidf(word_val, num_trained_docsets, trained_docset_count)
                 # word_val = get_doc_freq(article_count, len(words_docs[word]))
                 # word_val *= words_tally[word]
+                # print("word val: "+str(word_val)+" article count: "+str(article_count)+" words_docs count: "+str(len(words_docs[word]))+" num_trained_docsets: "+str(num_trained_docsets)+" trained_docset_count: "+str(trained_docset_count))
                 feat_vec[words_dict[word]] = word_val
 
         # print(sum(feat_vec))
