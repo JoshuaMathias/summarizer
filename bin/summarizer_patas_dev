@@ -7,16 +7,8 @@
 
 # Caller needs to set the E2JK_CONFIG to the config file we should be using.
 
-# export E2JK_CONFIG=bin/D4_devtest.yml
-# echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
-# bin/summarizer -c "$E2JK_CONFIG"
-
-#--- jgreve: added for 2nd part of D4 deliverable to run "evaltest" as well.
-
-# export E2JK_CONFIG=bin/D4_devtest.yml
-# echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
-# bin/summarizer -c "$E2JK_CONFIG"
-
-export E2JK_CONFIG=bin/D4_evaltest.yml
+#export E2JK_CONFIG=bin/config_patas_D3jg.yml
+export E2JK_CONFIG=bin/config_patas_D4_dev.yml
 echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
+
 bin/summarizer -c "$E2JK_CONFIG"
