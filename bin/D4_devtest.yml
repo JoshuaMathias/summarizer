@@ -1,0 +1,25 @@
+project:
+    team_id: 9
+    release_title: D4_devtest
+aquaint:
+    aquaint1_directory: /dropbox/17-18/573/AQUAINT
+    aquaint2_directory: /dropbox/17-18/573/AQUAINT-2
+
+    # aquaint_doc_dir: 
+    aquaint_test_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
+    aquaint_train_topic_index: /dropbox/17-18/573/Data/Documents/training/2009/UpdateSumm09_test_topics.xml
+    shelve_db_dev: 'shelve_db_dev'
+    shelve_db_train: 'shelve_db_train'
+    shelve_db_test: 'shelve_db_test'
+
+output:
+    summary_dir: outputs/D4_devtest
+    results_dir: results
+    # jgreve: note that bin/rouge.sh will combine restuls_dir + release_title + '_rouge_scores.out'
+    #       : So the above should yield:  "results/D4_devtest_rouge_scores.out"
+    max_words: 100
+    word_counts_file: word_counts.txt
+
+# Test configuration to read one article file only
+# one_config:
+#    article_file: aquaint_test1/nyt/1999/19990330_NYT
