@@ -4,8 +4,9 @@ logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 
 import shelve
 import argparse
-import sys
+import os
 import bs4
+import gzip
 
 import article_content
 
@@ -14,12 +15,18 @@ class ArticleReader():
         self.dbname = dbname
         self.AQUAINT_DIR = aquaint
         self.AQUAINT2_DIR = aquaint2
+        self.ENG_GW = '/opt/dropbox/17-18/573/ENG-GW'
 
     def __aquaint_filename__(self, doc_id):
-        if doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 files
+        if doc_id[3:8] == '_ENG_':  # True for AQUAINT-2 or ENG-GW files
             filename = '%s/data/%s/%s.xml' % (self.AQUAINT2_DIR,
                                               doc_id[0:7].lower(),
                                               doc_id[0:doc_id.find('.')-2].lower())
+            # If that file isn't there, look in ENG-GW
+            if not os.path.exists(filename):
+                filename = '%s/data/%s/%s.gz' % (self.ENG_GW,
+                                                 doc_id[0:7].lower(),
+                                                 doc_id[0:doc_id.find('.')-2].lower())
         else:
             #--------------------------
             # Wow, this is ugly.
@@ -115,7 +122,11 @@ class ArticleReader():
     def __load_doc_ids__(self, doc_id, doc_ids, db):
         article_filename = self.__aquaint_filename__(doc_id)
         try:
-            article_file = open(article_filename, 'r')
+            if article_filename.endswith('.gz'):
+                article_file = gzip.open(article_filename, 'rb')
+            else:
+                article_file = open(article_filename, 'r')
+
             doctree = bs4.BeautifulSoup(article_file.read(), 'html.parser')
             articles = self.__load_doc_ids_from_doc_tree__(doctree, doc_ids)
             return articles
