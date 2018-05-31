@@ -9,6 +9,10 @@ aquaint:
     aquaint_doc_dir: 
     aquaint_topic_index: src/GuidedSumm10_test_topics.xml
 
+# jgreve: added 5/31 to support rouge.sh, haven't test run this *.yml
+rouge:
+    modeldata_dir: /dropbox/17-18/573/Data/models/devtest
+
 output:
     summary_dir: outputs/D2
     results_dir: results

@@ -13,6 +13,10 @@ output:
     #results_dir: outputs/results   (jgreve: not supposed to be child of outputs)
     results_dir: results
     max_words: 100
+#
+# jgreve: added 5/31 to support rouge.sh, haven't test run this *.yml
+rouge:
+    modeldata_dir: /dropbox/17-18/573/Data/models/devtest
 
 # Test configuration to read one article file only
 # one_config:
