@@ -39,8 +39,9 @@ echo "$0: after \"$step\" - ran ok."
 # remove log files (if any)
 rm -f err.log info.log
 
-# count summary sizes.
-export E2JK_OUTPUT_SUMMARY_DIR="outputs/D3jg"
+#         # count summary sizes.
+# jgreve: why was this still here? I'm sure I had a good reason:
+#     export E2JK_OUTPUT_SUMMARY_DIR="outputs/D3jg"
 
 echo "--- begin E2JK env-vars ---"
 set | grep "^E2JK"
