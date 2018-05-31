@@ -20,6 +20,7 @@ John Greve, Eric Lindberg, Joshua Mathias, and Kekoa Riggin
 Instructions for running the summarizer code on pandas.
 The two examples below show how to run via condor and the command line.
 
+### ROUGE Scores on Output
 ### Change for D4
 
 The rouge score generation has been included with the summarizer
@@ -84,7 +85,7 @@ to define a family of E2JK_ variables.
 
 e2jk.env uses bin/fyml.sh uses (src/fyml.py) for details.
 
-## Run the D2 Summarizer:
+## Run the D4 Summarizer:
 
 To run via condor:
 
@@ -120,7 +121,7 @@ There are three main components to the software, the Topic Loader, the Summarize
 ```
 -------------------------------------
   (i)   bin/summarizer_patas
- (ii)   bin/summarizer bin/config_patas_D4.yml
+ (ii)   bin/summarizer bin/config_patas_d4.yml
 (iii)   src/summarizer.py -c bin/config_patas.yml
 
 (i) is just a stub shell that has a suitable D4 config file hardwired into it.
@@ -148,16 +149,16 @@ so we don't know if other topic.xml files will cause issues.
 | aquaint:
 |     aquaint1_directory: /dropbox/17-18/573/AQUAINT
 |     aquaint2_directory: /dropbox/17-18/573/AQUAINT-2
-| 
-|     aquaint_doc_dir: 
+|
+|     aquaint_doc_dir:
 |     aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
-| 
+|
 | output:
 |     summary_dir: outputs/D4
 |     #results_dir: outputs/results   (jgreve: not supposed to be child of outputs)
 |     results_dir: results
 |     max_words: 100
-| 
+|
 | # Test configuration to read one article file only
 | # one_config:
 | #    article_file: aquaint_test1/nyt/1999/19990330_NYT
