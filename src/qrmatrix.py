@@ -339,6 +339,6 @@ def qr_sum(docset, config, _word_counts, num__docsets, summary_weights):
     filename = directory + "/" + full_file_name
     logger.info('%s: writing summary for %s to file="%s"', fname, docset, filename )
     with open(filename, "w+") as wout:
-        wout.write(summary)
+        wout.write(summary.encode('latin-1', 'ignore').decode('latin-1'))
 
     return summary
