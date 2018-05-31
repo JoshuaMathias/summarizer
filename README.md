@@ -1,17 +1,17 @@
 <!--
-#D3 "README" file
+#D4 "README" file
 
 ##LING 573 Summarization Group Project  
 ##summarizer.py v. 2.0 by team #e2jkplusplus  
 
-updated for D3 (jgreve Mon May 14 15:27:25 PDT 2018)
+updated for D4 (jgreve Mon May 14 15:27:25 PDT 2018)
 -----------------------------------------------------------
 
-note: the D3 requirements specify a "README" file, so here it is.
+note: the D4 requirements specify a "README" file, so here it is.
 We didn't want to assume "README.md" and miss the requirements.
 -->
 
-# Summarization System: Deliverable 3
+# Summarization System: Deliverable 4
 
 John Greve, Eric Lindberg, Joshua Mathias, and Kekoa Riggin
 
@@ -20,7 +20,7 @@ John Greve, Eric Lindberg, Joshua Mathias, and Kekoa Riggin
 Instructions for running the summarizer code on pandas.
 The two examples below show how to run via condor and the command line.
 
-### Change for D3
+### Change for D4
 
 The rouge score generation has been included with the summarizer
 logic so no extra rouge step is required.
@@ -46,7 +46,7 @@ Most values are parameterized via config.yml.
 The summarizer .../bin/ commands pay attention to the
 current config&ast;.yml, which is set in "bin/summarizer_patas"
 on line 10:
-    export E2JK_CONFIG=bin/config_patas_D3.yml
+    export E2JK_CONFIG=bin/config_patas_D4.yml
 
 ## Optional Run Methods
 
@@ -59,20 +59,20 @@ to set E2JK_CONFIG to a suitable config&ast;.yml.
 For example:
 
 ```
-$ export E2JK_CONFIG=bin/config_patas_D3.yml
+$ export E2JK_CONFIG=bin/config_patas_D4.yml
 $ bin/summarizer
 $ bin/rouge.sh
 ```
 
 Actually it will base the file name on the $E2JK_CONFIG
-release_title, which is just "D3" in .../config_patas_D3.yml
-which would write the rouge scores to .../results/D3_rouge_scores.out
+release_title, which is just "D4" in .../config_patas_D4.yml
+which would write the rouge scores to .../results/D4_rouge_scores.out
 
 The summarizer script uses a legacy -c option from D2 because of
 a dependency in its underlying python program.
 
 ```
-$ export E2JK_CONFIG=bin/config_patas_D3.yml
+$ export E2JK_CONFIG=bin/config_patas_D4.yml
 $ bin/summarizer -c $E2JK_CONFIG
 ```
 
@@ -90,7 +90,7 @@ To run via condor:
 
 ```
 $ cd summarizer
-$ condor_submit D3.cmd
+$ condor_submit D4.cmd
 $ bin/condor_status.sh
 ```
 
@@ -120,12 +120,12 @@ There are three main components to the software, the Topic Loader, the Summarize
 ```
 -------------------------------------
   (i)   bin/summarizer_patas
- (ii)   bin/summarizer bin/config_patas_d3.yml
+ (ii)   bin/summarizer bin/config_patas_D4.yml
 (iii)   src/summarizer.py -c bin/config_patas.yml
 
-(i) is just a stub shell that has a suitable D3 config file hardwired into it.
+(i) is just a stub shell that has a suitable D4 config file hardwired into it.
 (ii) passes the config file from (i) into (iii).
-     NOTE: (ii) will also clear the outputs/D3 directory.
+     NOTE: (ii) will also clear the outputs/D4 directory.
 ```
 
 ## Configuration Information
@@ -138,13 +138,13 @@ the value on the aquaint_topic_index property.
 So far we have only tested with `devtest/GuidedSumm10_test_topics.xml`
 so we don't know if other topic.xml files will cause issues.
 
-### sample config file (used for D3)
+### sample config file (used for D4)
 
 ```
-+--- begin config_patas_D3.yml ---
++--- begin config_patas_D4.yml ---
 | project:
 |     team_id: 9
-|     release_title: D3
+|     release_title: D4
 | aquaint:
 |     aquaint1_directory: /dropbox/17-18/573/AQUAINT
 |     aquaint2_directory: /dropbox/17-18/573/AQUAINT-2
@@ -153,7 +153,7 @@ so we don't know if other topic.xml files will cause issues.
 |     aquaint_topic_index: /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
 | 
 | output:
-|     summary_dir: outputs/D3
+|     summary_dir: outputs/D4
 |     #results_dir: outputs/results   (jgreve: not supposed to be child of outputs)
 |     results_dir: results
 |     max_words: 100
@@ -161,7 +161,7 @@ so we don't know if other topic.xml files will cause issues.
 | # Test configuration to read one article file only
 | # one_config:
 | #    article_file: aquaint_test1/nyt/1999/19990330_NYT
-+--- end config_patas_D3.yml ---
++--- end config_patas_D4.yml ---
 ```
 
 ## Logging note

@@ -26,7 +26,7 @@ def get_tfidf(tally, ac, dc):
 
 # tf * document frequency
 # Muliply by -1 so that it's a positive number (dc is always less than ac+1)
-def get_tfdf(tally, ac, dc, lowest_df):
+def get_tfdf(tally, ac, dc):
     base = 10
     return tally * (ac/base+1 + (math.log10(dc / (ac)))) # Add ac/base, which is 1 since there are 10 articles in a docset. This ensures >= 0.
 
@@ -106,7 +106,7 @@ def qr_sum(docset, config, _word_counts, num__docsets, summary_weights):
         # Extract date from article id
         title = article.id
         date = "x"
-        print("title: "+str(title))
+        # print("title: "+str(title))
         if len(title) < 17:
             date = title[3:11]
         else:
@@ -185,11 +185,11 @@ def qr_sum(docset, config, _word_counts, num__docsets, summary_weights):
 
         article_length.append(article_word_count)
 
-    if len(words_docs) > 0:
-        lowest_word_docs = float("inf")
-        for word_docs in words_docs:
-            if len(word_docs) < lowest_word_docs:
-                lowest_word_docs = len(word_docs)
+    # if len(words_docs) > 0:
+    #     lowest_word_docs = float("inf")
+    #     for word_docs in words_docs:
+    #         if len(word_docs) < lowest_word_docs:
+    #             lowest_word_docs = len(word_docs)
 
 # CREATE FEATURE VECTORS
     # highest_word_count = 0
@@ -197,7 +197,7 @@ def qr_sum(docset, config, _word_counts, num__docsets, summary_weights):
     #     if highest_word_count < _word_stats[0]:
     #         highest_word_count = _word_stats[0]
     # lowest_df = math.log(lowest_word_docs) / (1 + (article_count / num__docsets)) # Used to normalize (and make positive) the value of tfdf for each word
-    lowest_df = math.log(lowest_word_docs / (1 + (article_count))) # Used to normalize (and make positive) the value of tfdf for each word
+    # lowest_df = math.log(lowest_word_docs / (1 + (article_count))) # Used to normalize (and make positive) the value of tfdf for each word
     for sentence in all_sentences:
         # print("\n\n", sentence[0], "\n", sentence[3], sentence[4])
 
@@ -219,7 +219,7 @@ def qr_sum(docset, config, _word_counts, num__docsets, summary_weights):
                 if word in topic_words:
                     topic_weighted_tally *= 3.5 # weight of 3.5 returns the best results. 4 is good too.
 
-                word_val = get_tfdf(topic_weighted_tally, article_count, len(words_docs[word]), lowest_df)
+                word_val = get_tfdf(topic_weighted_tally, article_count, len(words_docs[word]))
                 word_val = get_tfidf(word_val, num__docsets, _docset_count)
                 # word_val = get_doc_freq(article_count, len(words_docs[word]))
                 # word_val *= words_tally[word]
