@@ -26,15 +26,15 @@ fi
 echo "$0: after \"$step\" - ran ok."
 
 # check our output directory
-#echo "$0: checking E2JK_OUTPUT_RESULTS_DIR=\"$E2JK_OUTPUT_RESULTS_DIR\"" >&2
-#if [ -d "$E2JK_OUTPUT_RESULTS_DIR" ]; then
-#    if [ -z "$(ls "$E2JK_OUTPUT_RESULTS_DIR")" ]; then
-#        echo "summarizer: E2JK_OUTPUT_RESULTS_DIR empty, nothing to clean up" >&2
-#    else
-#        echo "summarizer: E2JK_OUTPUT_RESULTS_DIR is not empty, cleaning up...." >&2
-#        rm  "$E2JK_OUTPUT_RESULTS_DIR"/*
-#    fi
-#fi
+# echo "$0: checking E2JK_OUTPUT_RESULTS_DIR=\"$E2JK_OUTPUT_RESULTS_DIR\"" >&2
+# if [ -d "$E2JK_OUTPUT_RESULTS_DIR" ]; then
+#     if [ -z "$(ls "$E2JK_OUTPUT_RESULTS_DIR")" ]; then
+#         echo "summarizer: E2JK_OUTPUT_RESULTS_DIR empty, nothing to clean up" >&2
+#     else
+#         echo "summarizer: E2JK_OUTPUT_RESULTS_DIR is not empty, cleaning up...." >&2
+#         rm  "$E2JK_OUTPUT_RESULTS_DIR"/*
+#     fi
+# fi
 
 # remove log files (if any)
 rm -f err.log info.log
