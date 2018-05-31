@@ -18,6 +18,10 @@ output:
     results_dir: results
     max_words: 100
 
+# jgreve: added 5/31 to support rouge.sh, haven't test run this *.yml
+rouge:
+    modeldata_dir: /dropbox/17-18/573/Data/models/devtest
+
 # Test configuration to read one article file only
 # one_config:
 #    article_file: aquaint_test1/nyt/1999/19990330_NYT

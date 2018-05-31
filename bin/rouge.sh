@@ -20,12 +20,15 @@ ROUGE_OUT=${E2JK_OUTPUT_RESULTS_DIR}/${E2JK_PROJECT_RELEASE_TITLE}_rouge_scores.
 #set -x
 
 # Python part, creates the rouge config file for perl.
-MYDATA_DIR="outputs/D2"
+# MYDATA_DIR="outputs/D2"
 # OLD: export E2JK_OUTPUT_SUMMARY_DIR="outputs/D3"
 # Use this one which is dynamically derived by bin/e2jk.env:
 #    E2JK_OUTPUT_SUMMARY_DIR=outputs/D3jg
 
-MODELDATA_DIR="/dropbox/17-18/573/Data/models/devtest"
+#MODELDATA_DIR="/dropbox/17-18/573/Data/models/devtest"
+echo "" >&2
+echo "$0: E2JK_ROUGE_MODELDATA_DIR=$E2JK_ROUGE_MODELDATA_DIR"
+
 # for use with:
 #    /dropbox/17-18/573/Data/Documents/devtest/GuidedSumm10_test_topics.xml
 # See: bin/summarizer_patas
@@ -36,7 +39,7 @@ ROUGE_CONFIG=${E2JK_OUTPUT_RESULTS_DIR}/${E2JK_PROJECT_RELEASE_TITLE}_rouge.xml
 #     ROUGE_CONFIG=results/D3_rouge.xml
 
 
-src/create_config.py "$E2JK_OUTPUT_SUMMARY_DIR" "$MODELDATA_DIR" "$ROUGE_CONFIG"
+src/create_config.py "$E2JK_OUTPUT_SUMMARY_DIR" "$E2JK_ROUGE_MODELDATA_DIR" "$ROUGE_CONFIG"
 # from create_config.py:
 #    p.add_argument('MYDATA_DIR',    help="The directory containing your system's outputs.")
 #    p.add_argument('MODELDATA_DIR', help='The directory containing the model summaries.')
