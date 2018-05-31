@@ -70,8 +70,7 @@ class PositionWeights():
             available_space = 100 - len(summary_text.split())
             candidate_sentence = self.select_sentence(len(summary), summary, article_list, available_space)
             if len(candidate_sentence) > 0:
-                if len(summary_text) > 0:
-                    summary_text += ' ' + candidate_sentence
+                summary_text += candidate_sentence + '\n'
                 summary.append(candidate_sentence)
             else:
                 break
