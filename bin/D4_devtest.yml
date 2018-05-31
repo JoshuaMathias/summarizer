@@ -23,8 +23,6 @@ output:
 # jgreve: added 5/31 to support rouge.sh, have tested this *.yml via "condor_submit D4.cmd"
 rouge:
     modeldata_dir: /dropbox/17-18/573/Data/models/devtest
-rouge:
-    modeldata_dir: /dropbox/17-18/573/Data/models/devtest
 
 # Test configuration to read one article file only
 # one_config:
