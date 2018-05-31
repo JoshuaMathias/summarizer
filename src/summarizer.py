@@ -12,6 +12,7 @@ logger = u.get_logger( __name__ ) # will call setup_logging() if necessary
 import argparse
 import topic_index_reader
 import sum_config
+import position_weight_summarizer
 import nltk
 import os
 import sys
@@ -87,13 +88,24 @@ if __name__ == "__main__":
     logger.info('config.AQUAINT                  ="%s"', config.AQUAINT )
     logger.info('config.AQUAINT1_DIRECTORY       ="%s"', config.AQUAINT1_DIRECTORY )
     logger.info('config.AQUAINT2_DIRECTORY       ="%s"', config.AQUAINT2_DIRECTORY )
-    logger.info('config.ONE_FILE                 ="%s"', config.ONE_FILE )
     logger.info('config.ARTICLE_FILE             ="%s"', config.ARTICLE_FILE )
-    logger.info('config.WORD_COUNTS_FILE             ="%s"', config.WORD_COUNTS_FILE )
+    logger.info('config.WORD_COUNTS_FILE         ="%s"', config.WORD_COUNTS_FILE )
+
+    logger.info('config.ARTICLE_WEIGHT_FILE      ="%s"', config.ARTICLE_WEIGHT_FILE )
+    logger.info('config.SENTENCE_WEIGHT_FILE     ="%s"', config.SENTENCE_WEIGHT_FILE )
+
+    if config.NO_QRMATRIX:
+        logger.info('config.NO_QRMATRIX          = QR Matrix Disabled')
+
+    if config.SENTENCE_LOCATION:
+        logger.info('config.SENTENCE_LOCATION = TRUE')
+    else:
+        logger.info('config.SENTENCE_LOCATION = FALSE')
 
     summary_word_counts = { }
 
     source_description = "*unkown*" # set this to a suitable label for our statistics summary.
+
     if config.AQUAINT:
         if args.final:
             test_index_reader = topic_index_reader.TopicIndexReader(config.AQUAINT_TEST_TOPIC_INDEX_FILE,
@@ -130,6 +142,8 @@ if __name__ == "__main__":
 
         logger.debug( '\n\n--- for docset in topic_index.... ---' )
         source_description = str(test_topic_index)
+        logger.info('Reading weights from "%s" and "%s"', config.ARTICLE_WEIGHT_FILE, config.SENTENCE_WEIGHT_FILE )
+        summary_weights = position_weight_summarizer.PositionWeights(config.ARTICLE_WEIGHT_FILE, config.SENTENCE_WEIGHT_FILE)
         for docset in test_topic_index.documentSets(docset_type='docseta'):
             msg = 'processing %s' % docset
             u.eprint( msg  ) # high level summary to stdout for our user.
@@ -137,22 +151,19 @@ if __name__ == "__main__":
             print('%s : %s' % (docset.id, docset.topic_title)) # requried in stdout
             smry.summary = ''
             smry.summary_size = 0
-            summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets)
-            summary_word_count = len( summary_text.split() )
-            logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
-            summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)
+            if not config.NO_QRMATRIX:
+                summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets)
+                summary_word_count = len( summary_text.split() )
+                logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
+                summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)
+            elif config.SENTENCE_LOCATION:
+                logger.info('summary_weights.position_sum(docset (%s))', docset.id)
+                summary_text = summary_weights.position_sum(docset)
+                summary_word_count = len(summary_text.split())
+                logger.info('summary_weights.position_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text)
+                print('summary_weights.position_sum(docset=%s): summary_word_count=%d, summary_text="%s"' % (docset, summary_word_count, summary_text))
 
-    elif config.ONE_FILE:
-        smry = Summarizer(config.MAX_WORDS)
-
-        u.eprint('config.ARTICLE_FILE="{}"'.format( config.ARTICLE_FILE ))
-        source_description = str(config.ARTICLE_FILE)
-        articles = content_provider.ContentReader().read_raw_files(config.ARTICLE_FILE)
-
-        for article in articles:
-            logger.info('article=%s', article )
-            print(smry.summarize(article))
-
+                summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count, 0)
 
     # qrmatrix.write_statistics( source_description ) # write some output for what happened.
     u.write_values( sys.stderr, "summary_word_counts", summary_word_counts)
