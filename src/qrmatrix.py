@@ -52,7 +52,7 @@ def get_doc_freq(ac, dc):
 
 
 
-def qr_sum(docset, config, _word_counts, num__docsets):
+def qr_sum(docset, config, _word_counts, num__docsets, summary_weights):
     global STOP_TOKENIZE        # jgreve: these flags are additions to the original D3 logic, note that
     global STOP_QRFLAG          # the local stop_words variable (used below) is left as-is.
     global STOP_DEBUG_CUTOFF
@@ -121,6 +121,7 @@ def qr_sum(docset, config, _word_counts, num__docsets):
             continue
 
         sentence_position = 0
+        sent_index = 0
         for paragraph in article.paragraphs:
             sentences = preprocessor.preprocess_sents(paragraph)
 
@@ -155,7 +156,11 @@ def qr_sum(docset, config, _word_counts, num__docsets):
                     last_char = True
 
                 if len(words) > 6 and first_char == True and last_char == True: #arbitrary length of fragments
-                    all_sentences.append([sentence, norm_words, [None], sentence_position, len(article_length), 0, priority])
+                    weights = [1.0] * 10
+                    if config.SENTENCE_LOCATION:
+                        for summary_line_idx in range(10):
+                            weights[summary_line_idx] = 1.0 + (summary_weights.combined_weight(summary_line_idx, article_count, sent_index) * config.SENTENCE_LOCATION_WEIGHT_FACTOR)
+                    all_sentences.append([sentence, norm_words, [None], sentence_position, len(article_length), 0, priority, weights])
                     if len(words) < short:
                         short = len(words)
 
@@ -176,6 +181,7 @@ def qr_sum(docset, config, _word_counts, num__docsets):
 
                         words_docs[word] = temp_article_id
 
+                sent_index += 1
 
         article_length.append(article_word_count)
 
@@ -243,7 +249,10 @@ def qr_sum(docset, config, _word_counts, num__docsets):
                 nonzeros = sum(sentence[2])
                 score = nonzeros * (g * math.exp(-8*(sentence[3]/article_length[sentence[4]]) + t))
                 # print(score)
-                sentence[5] = score
+                summary_index = len(selected_content)
+                if summary_index > 9:
+                    summary_index = 9
+                sentence[5] = score * sentence[7][summary_index]
                 # print(sentence[0], sentence[5])
 
         ranked = sorted(all_sentences, key=itemgetter(5), reverse=True)

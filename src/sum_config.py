@@ -22,6 +22,8 @@ class SummaryConfig():
     DEFAULT_ARTICLE_WEIGHT_FILE = 'outputs/position_data/sample_article_data.csv'
     DEFAULT_SENTENCE_WEIGHT_FILE = 'outputs/position_data/sample_sentence_data.csv'
 
+    DEFAULT_SENTENCE_LOCATION_FACTOR = 1.0
+
     def __init__(self, config_file):
         with open(config_file, 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
@@ -96,6 +98,10 @@ class SummaryConfig():
                                                                'sentence_location',
                                                                'sentence_weight_file',
                                                                SummaryConfig.DEFAULT_SENTENCE_WEIGHT_FILE)
+        self.SENTENCE_LOCATION_WEIGHT_FACTOR = float(self.__read_config_val_2__(cfg,
+                                                                          'sentence_location',
+                                                                          'weight_factor',
+                                                                          SummaryConfig.DEFAULT_SENTENCE_LOCATION_FACTOR))
 
         self.ARTICLE_FILE = self.__read_config_val_2__(cfg,
                                                        'one_file',

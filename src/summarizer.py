@@ -99,6 +99,7 @@ if __name__ == "__main__":
 
     if config.SENTENCE_LOCATION:
         logger.info('config.SENTENCE_LOCATION = TRUE')
+        logger.info('config.SENTENCE_LOCATION_WEIGHT_FACTOR = %f', config.SENTENCE_LOCATION_WEIGHT_FACTOR)
     else:
         logger.info('config.SENTENCE_LOCATION = FALSE')
 
@@ -152,7 +153,7 @@ if __name__ == "__main__":
             smry.summary = ''
             smry.summary_size = 0
             if not config.NO_QRMATRIX:
-                summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets)
+                summary_text = qrmatrix.qr_sum(docset, config, trained_word_counts, num_trained_docsets, summary_weights)
                 summary_word_count = len( summary_text.split() )
                 logger.info('qrmatrix.qr_sum(docset=%s): summary_word_count=%d, summary_text="%s"', docset, summary_word_count, summary_text )
                 summary_word_counts[summary_word_count] = 1 + summary_word_counts.get(summary_word_count,0)
