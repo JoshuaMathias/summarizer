@@ -13,9 +13,9 @@
 
 #--- jgreve: added for 2nd part of D4 deliverable to run "evaltest" as well.
 
-# export E2JK_CONFIG=bin/D4_devtest.yml
-# echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
-# bin/summarizer -c "$E2JK_CONFIG"
+export E2JK_CONFIG=bin/D4_devtest.yml
+echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
+bin/summarizer -c "$E2JK_CONFIG"
 
 export E2JK_CONFIG=bin/D4_evaltest.yml
 echo "$0: E2JK_CONFIG=$E2JK_CONFIG"
