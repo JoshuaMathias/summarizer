@@ -16,7 +16,7 @@ aquaint:
     shelve_db_test: 'shelve_db_test'
 
 output:
-    summary_dir: outputs/D4
+    summary_dir: outputs/D4_evaltest
     results_dir: results
     # jgreve: note that bin/rouge.sh will combine restuls_dir + release_title + '_rouge_scores.out'
     #       : So the above should yield:  "results/D4_evaltest_rouge_scores.out"
